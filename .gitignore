@@ -1,0 +1,25 @@
+# VB6
+*.exe
+*.dll
+*.ocx
+*.vbw
+*.oca
+*.scc
+*.log
+
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.pdb
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temp
+*.tmp
+*.bak
