@@ -265,7 +265,7 @@ Sub HandleData(ByVal Rdata As String)
                 Close #1
                 If tempint = Val(ReadField(2, Rdata, 44)) Then
                     'Si es la vers correcta cambiamos el mapa
-                    Call SwitchMap(UserMap)
+                    Call SwitchMap(UserMap, UserPos.X, UserPos.Y)
                     If bLluvia(UserMap) = 0 Then
                         If bRain Then
                             'Call StopSound("lluviain.MP3")
