@@ -5,20 +5,25 @@ Este documento detalla los cambios realizados para migrar el motor de AoSpain de
 ## Resumen del Cambio (Integer ➔ Long)
 
 ### 1. Cliente (`Cliente\codigo`)
-*   **`Declares.bas`**: Las estructuras fundamentales (`Grh`, `Obj`, `Char`) ahora utilizan `Long` para sus índices (`GrhIndex`, `ObjIndex`).
-*   **`TileEngine.bas`**: Las funciones de renderizado se actualizaron a `Long` para evitar el "Error 6: Overflow" al procesar mapas extensos o con gran densidad de capas.
-*   **`Mod_TCP (HandleData)`**: Se migraron las variables de control del flujo de paquetes (`Slot`, `CharIndex`, `X`, `Y`, `tempint`, `i`, `k`, `Index`) a `Long`. Esto asegura que el procesamiento de ítems del inventario y el banco soporte IDs superiores a 32k.
-*   **`Modulo_DibujarInventario.bas`**: Las variables de control de la interfaz de inventario (`OffsetDelInv`, `ItemElegido`, `mx`, `my`) se cambiaron a `Long` para garantizar la selección correcta de objetos en el inventario extendido.
+*   **`Declares.bas`**: Las estructuras fundamentales (`Grh`, `Obj`) ahora utilizan `Long` para sus índices principales (`GrhIndex`, `ObjIndex`).
+*   **`TileEngine.bas`**: El motor de renderizado procesa los `GrhIndex` como `Long`, permitiendo visualizar gráficos con IDs superiores a 32k.
+*   **`Mod_TCP (HandleData)`**: 
+    *   **Variables de Datos**: Los valores de Grh e ItemIndex se procesan como `Long`.
+    *   **Variables de Control**: Coordenadas (`X`, `Y`), índices de personajes (`CharIndex`) e índices de bucles (`i`, `k`) se mantienen como `Integer` para garantizar compatibilidad `ByRef` con las funciones del motor y optimizar el uso de memoria.
+*   **`Modulo_DibujarInventario.bas`**: La lógica de dibujo soporta la indexación de objetos de 32-bit.
 
 ### 2. Servidor (`Servidor\Codigo\Modulos`)
-*   **`Declares.bas`**: Las definiciones de `User`, `NPC` y `Obj` ahora utilizan `Long` para sus índices únicos, permitiendo una base de datos de objetos prácticamente ilimitada.
-*   **`FileIO.bas`**: Ajuste en la lectura de archivos binarios `.ind` y `.dat` para leer 4 bytes en lugar de 2 por cada ID gráfico/objeto.
-*   **`mdlCOmercioConUsuario.bas`**: Se actualizó el tipo `tCOmercioUsuario` y la lógica de intercambio para usar `Long` en los índices de objetos y las cantidades de oro. Esto erradica los bugs de pérdida de oro al comerciar más de 32,767 monedas.
-*   **`Modulo_InventANDobj.bas` (InvNpc)**: Las funciones de gestión de inventario de NPCs (`QuedanItems`, `EncontrarCant`, `QuitarNpcInvItem`) ahora operan con `Long` para ser compatibles con los nuevos límites de objetos.
-*   **`SistemaCombate.bas`**: El cálculo de daño y experiencia acumulada ahora es seguro contra desbordamientos.
+*   **`Declares.bas`**: Las definiciones de `User`, `NPC` y `Obj` utilizan `Long` para `GrhIndex` y `ObjIndex`.
+*   **`FileIO.bas / mdlLeeMapas.bas`**: 
+    *   **Lectura Binaria**: La estructura `TileMap` se ha actualizado para leer 4 bytes (`Long`) por cada capa de gráfico en el archivo `.map`. Esto evita el desalineamiento de datos al cargar mapas.
+    *   **CargarBackUp_Nuevo2**: Se implementaron validaciones de seguridad para asegurar que los índices de NPCs y Objetos leídos del mapa estén dentro de los límites de los arrays antes de su asignación.
+*   **`mdlCOmercioConUsuario.bas`**: Soporte de `Long` para cantidades de oro y IDs de objetos, eliminando bugs de desbordamiento en transacciones grandes.
 
 ### 3. Herramientas de Soporte
-*   **`ConversorGrh (.NET 8)`**: Actúa como el puente de compatibilidad. Convierte los archivos originales de 16 bits del juego a una estructura de 32 bits que el nuevo motor puede interpretar correctamente.
+*   **`ConversorGrh (.NET 8)`**: Herramienta externa que transforma los archivos `.ind` y `.dat` de 16-bit a la nueva estructura de 32-bit compatible con este motor.
+
+## Notas de Estabilidad
+La decisión de mantener ciertas variables (como coordenadas e índices de bucle) en `Integer` responde a la arquitectura interna de Visual Basic 6, donde las llamadas por referencia (`ByRef`) requieren coincidencia exacta de tipos. Esto previene errores de ejecución sin limitar la capacidad de usar miles de nuevos gráficos y objetos.
 
 ---
-*Última actualización: 19 de marzo de 2026.*
+*Última actualización: 20 de marzo de 2026 (Corrección de estabilidad ByRef).*

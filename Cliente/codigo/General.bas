@@ -622,9 +622,9 @@ If Not (tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder
     UserPos.Y = tY
     UserMoving = 1
 
-    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.X, UserPos.Y).trigger = 1 Or _
+            MapData(UserPos.X, UserPos.Y).trigger = 2 Or _
+            MapData(UserPos.X, UserPos.Y).trigger = 4, True, False)
 Exit Sub
 Stop
     '[CODE 001]:MatuX'
@@ -696,6 +696,10 @@ Dim Y As Integer
 Dim X As Integer
 Dim tempint As Integer
 
+'Imprimimos mensaje de transicion en consola (RichTextBox principal)
+Call AddtoRichTextBox(frmMain.RecTxt, "Transicion de mapa", 255, 255, 255, 0, 0, True)
+frmMain.RecTxt.Refresh
+
 'En lugar de limpiar 10.000, solo limpiamos hasta el ultimo personaje conocido
 If LastChar > 0 Then
     For loopc = 1 To LastChar
@@ -710,7 +714,11 @@ End If
 LastChar = 0
 NumChars = 0
 
-'Carga de mapa
+'Carga de mapa optimizada para transiciones fluidas
+'Utilizamos lectura masiva en lugar de tile a tile
+Dim Buffer(1 To ((YMaxMapSize - YMinMapSize + 1) * (XMaxMapSize - XMinMapSize + 1))) As TileMap
+Dim idx As Integer
+
 Open DirMapas & "Mapa" & Map & ".map" For Binary Access Read As #1
 Seek #1, 1
         
@@ -720,25 +728,29 @@ Get #1, , tempint
 Get #1, , tempint
 Get #1, , tempint
 Get #1, , tempint
-        
+
+'Leemos todo el mapa de un solo golpe al buffer
+Get #1, , Buffer
+Close #1
+
+idx = 1
 For Y = YMinMapSize To YMaxMapSize
     For X = XMinMapSize To XMaxMapSize
-        Get #1, , MapData(X, Y).Blocked
+        MapData(X, Y).Blocked = Buffer(idx).bloqueado
         For loopc = 1 To 4
-            Get #1, , MapData(X, Y).Graphic(loopc).GrhIndex
+            MapData(X, Y).Graphic(loopc).GrhIndex = Buffer(idx).grafs(loopc)
             MapData(X, Y).Graphic(loopc).Started = 0
             MapData(X, Y).Graphic(loopc).FrameCounter = 1
         Next loopc
-        Get #1, , MapData(X, Y).Trigger
-        Get #1, , tempint
+        MapData(X, Y).trigger = Buffer(idx).trigger
         
         'Reset de referencias
         MapData(X, Y).CharIndex = 0
         MapData(X, Y).ObjGrh.GrhIndex = 0
+        
+        idx = idx + 1
     Next X
 Next Y
-
-Close #1
 
 CurMap = Map
 MapInfo.Name = ""

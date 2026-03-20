@@ -4,9 +4,14 @@
 
 **AoSpain** es un proyecto basado en el motor clásico de **Argentum Online**, profundamente optimizado y modernizado para soportar arquitecturas de **32 bits (Long)**. Esta mejora rompe los límites históricos de 16 bits (32k), permitiendo bases de datos de objetos, gráficos y mapas virtualmente ilimitadas.
 
-## 🚀 Características Principales
+## 🚀 Mejoras Recientes (20 de Marzo, 2026)
 
-### 🏗️ Motor de 32 bits (Migración Long)
+*   **Carga de Mapas Ultra-Rápida:** Se ha implementado un sistema de lectura por buffer masivo en el Cliente y Servidor. Ahora los mapas se cargan en un solo bloque de memoria, eliminando el "stutter" o saltito al cambiar de mapa.
+*   **Compatibilidad de Gráficos (Long):** El motor ahora lee correctamente capas de gráficos en formato `Long` (4 bytes), permitiendo IDs superiores a 32,767.
+*   **Estabilidad del Cliente:** Corregidos errores de desbordamiento y conflictos de tipos `ByRef` en el módulo de red (`TCP.bas`).
+*   **Mensajería de Transición:** Añadida notificación visual en consola al cambiar de mapa para confirmar la carga fluida.
+
+## 🏗️ Motor de 32 bits (Migración Long)
 Se ha realizado una migración quirúrgica en el Cliente y el Servidor, cambiando los índices críticos de `Integer` a `Long`.
 - **Gráficos e Índices:** Soporte para más de 2 mil millones de IDs de gráficos y animaciones.
 - **Objetos y Comercio:** Solución definitiva al bug de pérdida de oro al comerciar más de 32,767 monedas.

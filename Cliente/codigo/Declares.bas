@@ -35,6 +35,13 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public Type TileMap
+    bloqueado As Byte
+    grafs(1 To 4) As Long
+    trigger As Integer
+    t1 As Integer 'espacio al pedo
+End Type
+
 Public RawServersList As String
 
 Public Type tServerInfo
