@@ -1,6 +1,6 @@
 Attribute VB_Name = "ES"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÑrquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "ES"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÑmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÑdigo Postal 1900
+'Pablo Ignacio MÑrquez
 Option Explicit
 
 Public Sub CargarSpawnList()
@@ -413,10 +413,10 @@ Sub LoadOBJData()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'¡¡¡¡ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
+'ÑÑÑÑ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
 '
-'El que ose desafiar esta LEY, se las tendrá que ver
-'con migo. Para leer desde el OBJ.DAT se deberá usar
+'El que ose desafiar esta LEY, se las tendrÑ que ver
+'con migo. Para leer desde el OBJ.DAT se deberÑ usar
 'la nueva clase clsLeerInis.
 '
 'Alejo
@@ -516,7 +516,7 @@ For Object = 1 To NumObjDatas
     'Helios
     If ObjData(Object).ObjType = OBJTYPE_WEAPON Then
             ObjData(Object).WeaponAnim = val(Leer.DarValor("OBJ" & Object, "Anim"))
-            ObjData(Object).Apuñala = val(Leer.DarValor("OBJ" & Object, "Apuñala"))
+            ObjData(Object).ApuÑala = val(Leer.DarValor("OBJ" & Object, "ApuÑala"))
 '            ObjData(Object).Paraliza = val(Leer.DarValor("OBJ" & Object, "Paraliza")) 'Helios
 '            ObjData(Object).Ceguera = val(Leer.DarValor("OBJ" & Object, "Ceguera")) 'Helios
 '            ObjData(Object).Estupidez = val(Leer.DarValor("OBJ" & Object, "Estupidez")) 'Helios
@@ -1070,29 +1070,33 @@ For Map = 1 To NumMaps
             
             MapData(Map, X, Y).NpcIndex = buffer2(idx).npc
             If MapData(Map, X, Y).NpcIndex > 0 Then
+                Dim NIndex As Integer
+                NIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
                 
-                If MapData(Map, X, Y).NpcIndex > 499 Then
-                        npcfile = DatPath & "NPCs-HOSTILES.dat"
+                If NIndex <= MAXNPCS Then
+                    MapData(Map, X, Y).NpcIndex = NIndex
+                    
+                    If MapData(Map, X, Y).NpcIndex > 499 Then
+                            npcfile = DatPath & "NPCs-HOSTILES.dat"
+                    Else
+                            npcfile = DatPath & "NPCs.dat"
+                    End If
+                    
+                    'Si el npc debe hacer respawn en la pos original la guardamos
+                    If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
+                        Npclist(NIndex).Orig.Map = Map
+                        Npclist(NIndex).Orig.X = X
+                        Npclist(NIndex).Orig.Y = Y
+                    End If
+                    
+                    Npclist(NIndex).Pos.Map = Map
+                    Npclist(NIndex).Pos.X = X
+                    Npclist(NIndex).Pos.Y = Y
+                    
+                    Call MakeNPCChar(ToNone, 0, 0, NIndex, Map, X, Y)
                 Else
-                        npcfile = DatPath & "NPCs.dat"
+                    MapData(Map, X, Y).NpcIndex = 0
                 End If
-                
-                'Si el npc debe hacer respawn en la pos
-                'original la guardamos
-                If val(GetVar(npcfile, "NPC" & MapData(Map, X, Y).NpcIndex, "PosOrig")) = 1 Then
-                    MapData(Map, X, Y).NpcIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
-                    Npclist(MapData(Map, X, Y).NpcIndex).Orig.Map = Map
-                    Npclist(MapData(Map, X, Y).NpcIndex).Orig.X = X
-                    Npclist(MapData(Map, X, Y).NpcIndex).Orig.Y = Y
-                Else
-                    MapData(Map, X, Y).NpcIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
-                End If
-                
-                Npclist(MapData(Map, X, Y).NpcIndex).Pos.Map = Map
-                Npclist(MapData(Map, X, Y).NpcIndex).Pos.X = X
-                Npclist(MapData(Map, X, Y).NpcIndex).Pos.Y = Y
-                
-                Call MakeNPCChar(ToNone, 0, 0, MapData(Map, X, Y).NpcIndex, Map, X, Y)
             End If
 
             If buffer2(idx).obj_ind > 0 And buffer2(idx).obj_ind <= UBound(ObjData) Then
@@ -1688,7 +1692,7 @@ Call WriteVar(UserFile, "GUILD", "ClanFundado", UserList(UserIndex).GuildInfo.Cl
 Call WriteVar(UserFile, "GUILD", "ClanesParticipo", Str(UserList(UserIndex).GuildInfo.ClanesParticipo))
 Call WriteVar(UserFile, "GUILD", "GuildPts", Str(UserList(UserIndex).GuildInfo.GuildPoints))
 
-'¿Fueron modificados los atributos del usuario?
+'ÑFueron modificados los atributos del usuario?
 If Not UserList(UserIndex).Flags.TomoPocion Then
     For LoopC = 1 To UBound(UserList(UserIndex).Stats.UserAtributos)
         Call WriteVar(UserFile, "ATRIBUTOS", "AT" & LoopC, val(UserList(UserIndex).Stats.UserAtributos(LoopC)))

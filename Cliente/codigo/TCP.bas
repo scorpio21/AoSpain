@@ -62,7 +62,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim retVal As Variant
     Dim X As Long
     Dim Y As Long
-    Dim CharIndex As Long
+    Dim CharIndex As Integer
     Dim tempint As Long
     Dim tempstr As String
     Dim Slot As Long

@@ -150,6 +150,9 @@ Public Const Le—a = 58
 
 
 Public Const MAXNPCS = 10000
+Public Const MAX_NPC_DATA = 1000
+
+Public NpcData(1 To MAX_NPC_DATA) As npc
 Public Const MAXCHARS = 10000
 
 Public Const HACHA_LE—ADOR = 127
@@ -556,7 +559,7 @@ Public Type ObjData
     'Solo contenedores
     MaxItems As Integer
     Conte As Inventario
-    ApuÒala As Byte
+    Apu—ala As Byte
     
     HechizoIndex As Integer
     

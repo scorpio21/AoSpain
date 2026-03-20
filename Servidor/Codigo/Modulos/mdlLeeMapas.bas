@@ -9,11 +9,7 @@ Option Explicit
 
 Public Type TileMap
     bloqueado As Byte
-    grafs(1 To 4) As Integer
-    'grafs1 As Integer
-    'grafs2 As Integer
-    'grafs3 As Integer
-    'grafs4 As Integer
+    grafs(1 To 4) As Long
     trigger As Integer
 
     t1 As Integer 'espacio al pedo

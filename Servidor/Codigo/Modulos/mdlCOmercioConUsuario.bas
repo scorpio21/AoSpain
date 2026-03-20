@@ -158,7 +158,7 @@ If TerminarAhora = True Then
 End If
 
 '[CORREGIDO]
-'Desde acï¿½ corregï¿½ el bug que cuando se ofrecian mas de
+'Desde acÑ corregÑ el bug que cuando se ofrecian mas de
 '10k de oro no le llegaban al destinatario.
 
 'pone el oro directamente en la billetera

@@ -1,6 +1,6 @@
 Attribute VB_Name = "NPCs"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÑrquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,25 +24,25 @@ Attribute VB_Name = "NPCs"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÑmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÑdigo Postal 1900
+'Pablo Ignacio MÑrquez
 
 
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 '                        Modulo NPC
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 'Contiene todas las rutinas necesarias para cotrolar los
 'NPCs meno la rutina de AI que se encuentra en el modulo
 'AI_NPCs para su mejor comprension.
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
+'?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 
 Option Explicit
 
@@ -81,7 +81,7 @@ On Error GoTo errhandler
 
 '   Call LogTarea("Sub MuereNpc")
    
-   Dim MiNPC As Npc
+   Dim MiNPC As npc
    MiNPC = Npclist(NpcIndex)
    
    'Quitamos el npc
@@ -319,9 +319,9 @@ Function TestSpawnTrigger(Pos As WorldPos) As Boolean
 
 If LegalPos(Pos.Map, Pos.X, Pos.Y) Then
     TestSpawnTrigger = _
-    MapData(Pos.Map, Pos.X, Pos.Y).Trigger <> 3 And _
-    MapData(Pos.Map, Pos.X, Pos.Y).Trigger <> 2 And _
-    MapData(Pos.Map, Pos.X, Pos.Y).Trigger <> 1
+    MapData(Pos.Map, Pos.X, Pos.Y).trigger <> 3 And _
+    MapData(Pos.Map, Pos.X, Pos.Y).trigger <> 2 And _
+    MapData(Pos.Map, Pos.X, Pos.Y).trigger <> 1
 End If
 
 End Function
@@ -539,7 +539,7 @@ Dim n As Integer
 n = RandomNumber(1, 100)
 If n < 30 Then
     UserList(UserIndex).Flags.Envenenado = 1
-    Call SendData(ToIndex, UserIndex, 0, "||¡¡La criatura te ha envenenado!!" & FONTTYPE_FIGHT)
+    Call SendData(ToIndex, UserIndex, 0, "||ÑÑLa criatura te ha envenenado!!" & FONTTYPE_FIGHT)
 End If
 
 End Sub
@@ -609,7 +609,7 @@ SpawnNpc = NIndex
 
 End Function
 
-Sub ReSpawnNpc(MiNPC As Npc)
+Sub ReSpawnNpc(MiNPC As npc)
 
 If (MiNPC.Flags.Respawn = 0) Then Call CrearNPC(MiNPC.Numero, MiNPC.Pos.Map, MiNPC.Orig)
 
@@ -625,7 +625,7 @@ Dim cont As Integer
 cont = 0
 For NpcIndex = 0 To LastNPC
 
-    '¿esta vivo?
+    'Ñesta vivo?
     If Npclist(NpcIndex).Flags.NPCActive _
        And Npclist(NpcIndex).Pos.Map = Map _
        And Npclist(NpcIndex).Hostile = 1 And _
@@ -640,7 +640,7 @@ NPCHostiles = cont
 
 End Function
 
-Sub NPCTirarOro(MiNPC As Npc)
+Sub NPCTirarOro(MiNPC As npc)
 
 'SI EL NPC TIENE ORO LO TIRAMOS
 If MiNPC.GiveGLD > 0 Then
@@ -654,17 +654,152 @@ End Sub
 
 
 
+
+Sub LoadNpcData()
+    Dim n As Integer, i As Integer, npcfile As String
+    Dim Leer As New clsLeerInis
+    Dim ln As String, LoopC As Integer
+    
+    If frmMain.Visible Then frmMain.txStatus.Caption = "Cargando plantillas de NPCs..."
+    
+    ' Cargar NPCs Normales
+    npcfile = DatPath & "NPCs.dat"
+    Leer.Abrir npcfile
+    n = val(Leer.DarValor("INIT", "NumNPCs"))
+    
+    For i = 1 To n
+        Call CargarPlantilla(Leer, i)
+    Next i
+    
+    ' Cargar NPCs Hostiles (a partir del 500)
+    npcfile = DatPath & "NPCs-HOSTILES.dat"
+    Leer.Abrir npcfile
+    n = val(Leer.DarValor("INIT", "NumNPCs"))
+    
+    For i = 1 To n
+        ' Buscamos el ID real que suele estar en el INI, o usamos el correlativo + 500
+        ' En AO el NumNPCs de Hostiles suele empezar en 500
+        Dim idHostil As Integer
+        idHostil = 499 + i
+        If idHostil <= MAX_NPC_DATA Then
+            Call CargarPlantilla(Leer, idHostil)
+        End If
+    Next i
+    
+    If frmMain.Visible Then frmMain.txStatus.Caption = "Plantillas de NPCs cargadas."
+End Sub
+
+Private Sub CargarPlantilla(ByRef Leer As clsLeerInis, ByVal NpcNumber As Integer)
+    Dim Section As String
+    Section = "NPC" & NpcNumber
+    
+    ' Si la secciÃ³n no tiene nombre, es que no existe este NPC
+    If Leer.DarValor(Section, "Name") = "" Then Exit Sub
+    
+    With NpcData(NpcNumber)
+        .Numero = NpcNumber
+        .Name = Leer.DarValor(Section, "Name")
+        .Desc = Leer.DarValor(Section, "Desc")
+        
+        .Movement = val(Leer.DarValor(Section, "Movement"))
+        .Flags.OldMovement = .Movement
+        
+        .Flags.AguaValida = val(Leer.DarValor(Section, "AguaValida"))
+        .Flags.TierraInvalida = val(Leer.DarValor(Section, "TierraInValida"))
+        .Flags.Faccion = val(Leer.DarValor(Section, "Faccion"))
+        
+        .NPCtype = val(Leer.DarValor(Section, "NpcType"))
+        
+        .Char.Body = val(Leer.DarValor(Section, "Body"))
+        .Char.Head = val(Leer.DarValor(Section, "Head"))
+        .Char.Heading = val(Leer.DarValor(Section, "Heading"))
+        
+        .Attackable = val(Leer.DarValor(Section, "Attackable"))
+        .Comercia = val(Leer.DarValor(Section, "Comercia"))
+        .Hostile = val(Leer.DarValor(Section, "Hostile"))
+        .Flags.OldHostil = .Hostile
+        
+        .GiveEXP = val(Leer.DarValor(Section, "GiveEXP"))
+        .Veneno = val(Leer.DarValor(Section, "Veneno"))
+        .Flags.Domable = val(Leer.DarValor(Section, "Domable"))
+        .GiveGLD = val(Leer.DarValor(Section, "GiveGLD"))
+        
+        .PoderAtaque = val(Leer.DarValor(Section, "PoderAtaque"))
+        .PoderEvasion = val(Leer.DarValor(Section, "PoderEvasion"))
+        .InvReSpawn = val(Leer.DarValor(Section, "InvReSpawn"))
+        
+        .Stats.MaxHP = val(Leer.DarValor(Section, "MaxHP"))
+        .Stats.MinHP = val(Leer.DarValor(Section, "MinHP"))
+        .Stats.MaxHIT = val(Leer.DarValor(Section, "MaxHIT"))
+        .Stats.MinHIT = val(Leer.DarValor(Section, "MinHIT"))
+        .Stats.Def = val(Leer.DarValor(Section, "DEF"))
+        .Stats.Alineacion = val(Leer.DarValor(Section, "Alineacion"))
+        .Stats.ImpactRate = val(Leer.DarValor(Section, "ImpactRate"))
+        
+        ' Items
+        Dim LoopC As Integer
+        Dim ln As String
+        .Invent.NroItems = val(Leer.DarValor(Section, "NROITEMS"))
+        For LoopC = 1 To .Invent.NroItems
+            ln = Leer.DarValor(Section, "Obj" & LoopC)
+            .Invent.Object(LoopC).ObjIndex = val(ReadField(1, ln, 45))
+            .Invent.Object(LoopC).Amount = val(ReadField(2, ln, 45))
+        Next LoopC
+        
+        ' Spells
+        .Flags.LanzaSpells = val(Leer.DarValor(Section, "LanzaSpells"))
+        If .Flags.LanzaSpells > 0 Then
+            ReDim .Spells(1 To .Flags.LanzaSpells)
+            For LoopC = 1 To .Flags.LanzaSpells
+                .Spells(LoopC) = val(Leer.DarValor(Section, "Sp" & LoopC))
+            Next LoopC
+        End If
+        
+        ' Criaturas Entrenador
+        If .NPCtype = NPCTYPE_ENTRENADOR Then
+            .NroCriaturas = val(Leer.DarValor(Section, "NroCriaturas"))
+            If .NroCriaturas > 0 Then
+                ReDim .Criaturas(1 To .NroCriaturas) As tCriaturasEntrenador
+                For LoopC = 1 To .NroCriaturas
+                    .Criaturas(LoopC).NpcIndex = val(Leer.DarValor(Section, "CI" & LoopC))
+                    .Criaturas(LoopC).NpcName = Leer.DarValor(Section, "CN" & LoopC)
+                Next LoopC
+            End If
+        End If
+        
+        .Inflacion = val(Leer.DarValor(Section, "Inflacion"))
+        
+        ' Flags adicionales
+        .Flags.Respawn = val(Leer.DarValor(Section, "ReSpawn"))
+        .Flags.BackUp = val(Leer.DarValor(Section, "BackUp"))
+        .Flags.RespawnOrigPos = val(Leer.DarValor(Section, "OrigPos"))
+        .Flags.AfectaParalisis = val(Leer.DarValor(Section, "AfectaParalisis"))
+        .Flags.GolpeExacto = val(Leer.DarValor(Section, "GolpeExacto"))
+        
+        .Flags.Snd1 = val(Leer.DarValor(Section, "Snd1"))
+        .Flags.Snd2 = val(Leer.DarValor(Section, "Snd2"))
+        .Flags.Snd3 = val(Leer.DarValor(Section, "Snd3"))
+        .Flags.Snd4 = val(Leer.DarValor(Section, "Snd4"))
+        
+        ' Expresiones
+        Dim aux As String
+        aux = Leer.DarValor(Section, "NROEXP")
+        If aux <> "" Then
+            .NroExpresiones = val(aux)
+            ReDim .Expresiones(1 To .NroExpresiones) As String
+            For LoopC = 1 To .NroExpresiones
+                .Expresiones(LoopC) = Leer.DarValor(Section, "Exp" & LoopC)
+            Next LoopC
+        End If
+        
+        .TipoItems = val(Leer.DarValor(Section, "TipoItems"))
+    End With
+End Sub
+
 Function OpenNPC(ByVal NpcNumber As Integer, Optional ByVal Respawn = True) As Integer
 
 Dim NpcIndex As Integer
-Dim npcfile As String
-
-If NpcNumber > 499 Then
-        npcfile = DatPath & "NPCs-HOSTILES.dat"
-Else
-        npcfile = DatPath & "NPCs.dat"
-End If
-
+Dim LoopC As Integer
 
 NpcIndex = NextOpenNPC
 
@@ -673,123 +808,41 @@ If NpcIndex > MAXNPCS Then 'Limite de npcs
     Exit Function
 End If
 
-Npclist(NpcIndex).Numero = NpcNumber
-Npclist(NpcIndex).Name = GetVar(npcfile, "NPC" & NpcNumber, "Name")
-Npclist(NpcIndex).Desc = GetVar(npcfile, "NPC" & NpcNumber, "Desc")
+' Copia rapida de la plantilla pre-cargada
+Npclist(NpcIndex) = NpcData(NpcNumber)
 
-Npclist(NpcIndex).Movement = val(GetVar(npcfile, "NPC" & NpcNumber, "Movement"))
-Npclist(NpcIndex).Flags.OldMovement = Npclist(NpcIndex).Movement
-
-Npclist(NpcIndex).Flags.AguaValida = val(GetVar(npcfile, "NPC" & NpcNumber, "AguaValida"))
-Npclist(NpcIndex).Flags.TierraInvalida = val(GetVar(npcfile, "NPC" & NpcNumber, "TierraInValida"))
-Npclist(NpcIndex).Flags.Faccion = val(GetVar(npcfile, "NPC" & NpcNumber, "Faccion"))
-
-Npclist(NpcIndex).NPCtype = val(GetVar(npcfile, "NPC" & NpcNumber, "NpcType"))
-
-Npclist(NpcIndex).Char.Body = val(GetVar(npcfile, "NPC" & NpcNumber, "Body"))
-Npclist(NpcIndex).Char.Head = val(GetVar(npcfile, "NPC" & NpcNumber, "Head"))
-Npclist(NpcIndex).Char.Heading = val(GetVar(npcfile, "NPC" & NpcNumber, "Heading"))
-
-Npclist(NpcIndex).Attackable = val(GetVar(npcfile, "NPC" & NpcNumber, "Attackable"))
-Npclist(NpcIndex).Comercia = val(GetVar(npcfile, "NPC" & NpcNumber, "Comercia"))
-Npclist(NpcIndex).Hostile = val(GetVar(npcfile, "NPC" & NpcNumber, "Hostile"))
-Npclist(NpcIndex).Flags.OldHostil = Npclist(NpcIndex).Hostile
-
-Npclist(NpcIndex).GiveEXP = val(GetVar(npcfile, "NPC" & NpcNumber, "GiveEXP"))
-
-Npclist(NpcIndex).Veneno = val(GetVar(npcfile, "NPC" & NpcNumber, "Veneno"))
-
-Npclist(NpcIndex).Flags.Domable = val(GetVar(npcfile, "NPC" & NpcNumber, "Domable"))
-
-
-Npclist(NpcIndex).GiveGLD = val(GetVar(npcfile, "NPC" & NpcNumber, "GiveGLD"))
-
-Npclist(NpcIndex).PoderAtaque = val(GetVar(npcfile, "NPC" & NpcNumber, "PoderAtaque"))
-Npclist(NpcIndex).PoderEvasion = val(GetVar(npcfile, "NPC" & NpcNumber, "PoderEvasion"))
-
-Npclist(NpcIndex).InvReSpawn = val(GetVar(npcfile, "NPC" & NpcNumber, "InvReSpawn"))
-
-
-Npclist(NpcIndex).Stats.MaxHP = val(GetVar(npcfile, "NPC" & NpcNumber, "MaxHP"))
-Npclist(NpcIndex).Stats.MinHP = val(GetVar(npcfile, "NPC" & NpcNumber, "MinHP"))
-Npclist(NpcIndex).Stats.MaxHIT = val(GetVar(npcfile, "NPC" & NpcNumber, "MaxHIT"))
-Npclist(NpcIndex).Stats.MinHIT = val(GetVar(npcfile, "NPC" & NpcNumber, "MinHIT"))
-Npclist(NpcIndex).Stats.Def = val(GetVar(npcfile, "NPC" & NpcNumber, "DEF"))
-Npclist(NpcIndex).Stats.Alineacion = val(GetVar(npcfile, "NPC" & NpcNumber, "Alineacion"))
-Npclist(NpcIndex).Stats.ImpactRate = val(GetVar(npcfile, "NPC" & NpcNumber, "ImpactRate"))
-
-
-Dim LoopC As Integer
-Dim ln As String
-Npclist(NpcIndex).Invent.NroItems = val(GetVar(npcfile, "NPC" & NpcNumber, "NROITEMS"))
-For LoopC = 1 To Npclist(NpcIndex).Invent.NroItems
-    ln = GetVar(npcfile, "NPC" & NpcNumber, "Obj" & LoopC)
-    Npclist(NpcIndex).Invent.Object(LoopC).ObjIndex = val(ReadField(1, ln, 45))
-    Npclist(NpcIndex).Invent.Object(LoopC).Amount = val(ReadField(2, ln, 45))
-Next LoopC
-
-Npclist(NpcIndex).Flags.LanzaSpells = val(GetVar(npcfile, "NPC" & NpcNumber, "LanzaSpells"))
-If Npclist(NpcIndex).Flags.LanzaSpells > 0 Then ReDim Npclist(NpcIndex).Spells(1 To Npclist(NpcIndex).Flags.LanzaSpells)
-For LoopC = 1 To Npclist(NpcIndex).Flags.LanzaSpells
-    Npclist(NpcIndex).Spells(LoopC) = val(GetVar(npcfile, "NPC" & NpcNumber, "Sp" & LoopC))
-Next LoopC
-
-
-If Npclist(NpcIndex).NPCtype = NPCTYPE_ENTRENADOR Then
-    Npclist(NpcIndex).NroCriaturas = val(GetVar(npcfile, "NPC" & NpcNumber, "NroCriaturas"))
-    ReDim Npclist(NpcIndex).Criaturas(1 To Npclist(NpcIndex).NroCriaturas) As tCriaturasEntrenador
-    For LoopC = 1 To Npclist(NpcIndex).NroCriaturas
-        Npclist(NpcIndex).Criaturas(LoopC).NpcIndex = GetVar(npcfile, "NPC" & NpcNumber, "CI" & LoopC)
-        Npclist(NpcIndex).Criaturas(LoopC).NpcName = GetVar(npcfile, "NPC" & NpcNumber, "CN" & LoopC)
+' Copiamos arrays dinÃ¡micos manualmente para evitar que apunten a la misma memoria
+If NpcData(NpcNumber).Flags.LanzaSpells > 0 Then
+    ReDim Npclist(NpcIndex).Spells(1 To NpcData(NpcNumber).Flags.LanzaSpells)
+    For LoopC = 1 To NpcData(NpcNumber).Flags.LanzaSpells
+        Npclist(NpcIndex).Spells(LoopC) = NpcData(NpcNumber).Spells(LoopC)
     Next LoopC
 End If
 
+If NpcData(NpcNumber).NroCriaturas > 0 Then
+    ReDim Npclist(NpcIndex).Criaturas(1 To NpcData(NpcNumber).NroCriaturas) As tCriaturasEntrenador
+    For LoopC = 1 To NpcData(NpcNumber).NroCriaturas
+        Npclist(NpcIndex).Criaturas(LoopC) = NpcData(NpcNumber).Criaturas(LoopC)
+    Next LoopC
+End If
 
-Npclist(NpcIndex).Inflacion = val(GetVar(npcfile, "NPC" & NpcNumber, "Inflacion"))
+If NpcData(NpcNumber).NroExpresiones > 0 Then
+    ReDim Npclist(NpcIndex).Expresiones(1 To NpcData(NpcNumber).NroExpresiones) As String
+    For LoopC = 1 To NpcData(NpcNumber).NroExpresiones
+        Npclist(NpcIndex).Expresiones(LoopC) = NpcData(NpcNumber).Expresiones(LoopC)
+    Next LoopC
+End If
 
 Npclist(NpcIndex).Flags.NPCActive = True
 Npclist(NpcIndex).Flags.UseAINow = False
 
-If Respawn Then
-    Npclist(NpcIndex).Flags.Respawn = val(GetVar(npcfile, "NPC" & NpcNumber, "ReSpawn"))
-Else
+If Not Respawn Then
     Npclist(NpcIndex).Flags.Respawn = 1
 End If
-
-Npclist(NpcIndex).Flags.BackUp = val(GetVar(npcfile, "NPC" & NpcNumber, "BackUp"))
-Npclist(NpcIndex).Flags.RespawnOrigPos = val(GetVar(npcfile, "NPC" & NpcNumber, "OrigPos"))
-Npclist(NpcIndex).Flags.AfectaParalisis = val(GetVar(npcfile, "NPC" & NpcNumber, "AfectaParalisis"))
-Npclist(NpcIndex).Flags.GolpeExacto = val(GetVar(npcfile, "NPC" & NpcNumber, "GolpeExacto"))
-
-
-Npclist(NpcIndex).Flags.Snd1 = val(GetVar(npcfile, "NPC" & NpcNumber, "Snd1"))
-Npclist(NpcIndex).Flags.Snd2 = val(GetVar(npcfile, "NPC" & NpcNumber, "Snd2"))
-Npclist(NpcIndex).Flags.Snd3 = val(GetVar(npcfile, "NPC" & NpcNumber, "Snd3"))
-Npclist(NpcIndex).Flags.Snd4 = val(GetVar(npcfile, "NPC" & NpcNumber, "Snd4"))
-
-'<<<<<<<<<<<<<< Expresiones >>>>>>>>>>>>>>>>
-
-Dim aux As String
-aux = GetVar(npcfile, "NPC" & NpcNumber, "NROEXP")
-If aux = "" Then
-    Npclist(NpcIndex).NroExpresiones = 0
-Else
-    Npclist(NpcIndex).NroExpresiones = val(aux)
-    ReDim Npclist(NpcIndex).Expresiones(1 To Npclist(NpcIndex).NroExpresiones) As String
-    For LoopC = 1 To Npclist(NpcIndex).NroExpresiones
-        Npclist(NpcIndex).Expresiones(LoopC) = GetVar(npcfile, "NPC" & NpcNumber, "Exp" & LoopC)
-    Next LoopC
-End If
-
-'<<<<<<<<<<<<<< Expresiones >>>>>>>>>>>>>>>>
-
-'Tipo de items con los que comercia
-Npclist(NpcIndex).TipoItems = val(GetVar(npcfile, "NPC" & NpcNumber, "TipoItems"))
 
 'Update contadores de NPCs
 If NpcIndex > LastNPC Then LastNPC = NpcIndex
 NumNPCs = NumNPCs + 1
-
 
 'Devuelve el nuevo Indice
 OpenNPC = NpcIndex

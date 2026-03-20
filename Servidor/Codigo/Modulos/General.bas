@@ -1,6 +1,6 @@
 Attribute VB_Name = "General"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÑrquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "General"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÑmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÑdigo Postal 1900
+'Pablo Ignacio MÑrquez
 
 
 Option Explicit
@@ -285,7 +285,7 @@ ListaClases(9) = "Paladin"
 ListaClases(10) = "Cazador"
 ListaClases(11) = "Pescador"
 ListaClases(12) = "Herrero"
-ListaClases(13) = "Leñador"
+ListaClases(13) = "LeÑador"
 ListaClases(14) = "Minero"
 ListaClases(15) = "Carpintero"
 ListaClases(16) = "Pirata"
@@ -308,7 +308,7 @@ SkillsNames(3) = "Robar"
 SkillsNames(4) = "Tacticas de combate"
 SkillsNames(5) = "Combate con armas"
 SkillsNames(6) = "Meditar"
-SkillsNames(7) = "Apuñalar"
+SkillsNames(7) = "ApuÑalar"
 SkillsNames(8) = "Ocultarse"
 SkillsNames(9) = "Supervivencia"
 SkillsNames(10) = "Talar arboles"
@@ -363,14 +363,17 @@ Call LoadGuildsDB
 
 Call CargarSpawnList
 Call CargarForbidenWords
-'¿?¿?¿?¿?¿?¿?¿?¿ CARGAMOS DATOS DESDE ARCHIVOS ¿??¿?¿?¿?¿?¿?¿?¿
+'Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ CARGAMOS DATOS DESDE ARCHIVOS Ñ??Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 frmCargando.Label1(2).Caption = "Cargando Server.ini"
 
 Call LoadSini
 
 frmCargando.Label1(2).Caption = "Cargando Obj.Dat"
 Call LoadOBJData
-    
+
+frmCargando.Label1(2).Caption = "Cargando plantillas de NPCs..."
+Call LoadNpcData
+
 frmCargando.Label1(2).Caption = "Cargando Hechizos.Dat"
 Call CargarHechizos
     
@@ -388,7 +391,7 @@ Else
     Call LoadMapData
 End If
 
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?ÑÑ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 
 Dim LoopC As Integer
 
@@ -402,7 +405,7 @@ frmMain.AutoSave.Enabled = True
 
 
 
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?ÑÑ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 'Configuracion de los sockets
 frmCargando.Label1(2).Caption = "Configurando Sockets"
 
@@ -419,7 +422,7 @@ Call ConfigListeningSocket(frmMain.Socket1, puerto)
 
 
 If frmMain.Visible Then frmMain.txStatus.Caption = "Escuchando conexiones entrantes ..."
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?ÑÑ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ?Ñ
 
 
 
@@ -513,95 +516,65 @@ End Sub
 
 
 Public Sub LogCriticEvent(Desc As String)
-On Error GoTo errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\Eventos.log" For Append Shared As #nfile
-Print #nfile, Date & " " & Time & " " & Desc
-Close #nfile
-
-Exit Sub
-
-errhandler:
-
+    On Error Resume Next
+    Dim nfile As Integer
+    nfile = FreeFile
+    Open App.Path & "\logs\Eventos.log" For Append Shared As #nfile
+    Print #nfile, "[" & Date & " " & Time & "] " & Desc
+    Close #nfile
 End Sub
 
 Public Sub LogEjercitoReal(Desc As String)
-On Error GoTo errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\EjercitoReal.log" For Append Shared As #nfile
-Print #nfile, Desc
-Close #nfile
-
-Exit Sub
-
-errhandler:
-
+    On Error Resume Next
+    Dim nfile As Integer
+    nfile = FreeFile
+    Open App.Path & "\logs\EjercitoReal.log" For Append Shared As #nfile
+    Print #nfile, "[" & Date & " " & Time & "] " & Desc
+    Close #nfile
 End Sub
 
 Public Sub LogEjercitoCaos(Desc As String)
-On Error GoTo errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\EjercitoCaos.log" For Append Shared As #nfile
-Print #nfile, Desc
-Close #nfile
-
-Exit Sub
-
-errhandler:
+    On Error Resume Next
+    Dim nfile As Integer
+    nfile = FreeFile
+    Open App.Path & "\logs\EjercitoCaos.log" For Append Shared As #nfile
+    Print #nfile, "[" & Date & " " & Time & "] " & Desc
+    Close #nfile
+End Sub
 
 End Sub
 
 
 Public Sub LogError(Desc As String)
-On Error GoTo errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\errores.log" For Append Shared As #nfile
-Print #nfile, Date & " " & Time & " " & Desc
-Close #nfile
-
-Exit Sub
-
-errhandler:
-
-End Sub
-
-Public Sub LogStatic(Desc As String)
-On Error GoTo errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\Stats.log" For Append Shared As #nfile
-Print #nfile, Date & " " & Time & " " & Desc
-Close #nfile
-
-Exit Sub
-
-errhandler:
-
+    On Error Resume Next
+    Dim nfile As Integer
+    nfile = FreeFile
+    Open App.Path & "\logs\errores.log" For Append Shared As #nfile
+    ' Erl devuelve el nÃºmero de lonea del error si existe
+    If Erl <> 0 Then
+        Print #nfile, "[" & Date & " " & Time & "] LINEA: " & Erl & " - " & Desc & " (Err: " & Err.Number & " - " & Err.Description & ")"
+    Else
+        Print #nfile, "[" & Date & " " & Time & "] " & Desc & " (Err: " & Err.Number & " - " & Err.Description & ")"
+    End If
+    Close #nfile
 End Sub
 
 Public Sub LogTarea(Desc As String)
-On Error GoTo errhandler
+    On Error Resume Next
+    Dim nfile As Integer
+    nfile = FreeFile
+    Open App.Path & "\logs\haciendo.log" For Append Shared As #nfile
+    Print #nfile, "[" & Date & " " & Time & "] " & Desc
+    Close #nfile
+End Sub
 
-Dim nfile As Integer
-nfile = FreeFile(1) ' obtenemos un canal
-Open App.Path & "\logs\haciendo.log" For Append Shared As #nfile
-Print #nfile, Date & " " & Time & " " & Desc
-Close #nfile
-
-Exit Sub
-
-errhandler:
-
-
+Public Sub LogStatic(Desc As String)
+    On Error Resume Next
+    Dim nfile As Integer
+    nfile = FreeFile
+    Open App.Path & "\logs\Stats.log" For Append Shared As #nfile
+    Print #nfile, "[" & Date & " " & Time & "] " & Desc
+    Close #nfile
 End Sub
 
 Public Sub LogGM(Nombre As String, texto As String)
@@ -824,7 +797,7 @@ If UserList(UserIndex).Flags.UserLogged Then
                 Dim modifi As Long
                 modifi = Porcentaje(UserList(UserIndex).Stats.MaxSta, 3)
                 Call QuitarSta(UserIndex, modifi)
-                Call SendData(ToIndex, UserIndex, 0, "||¡LLUEVE!!." & FONTTYPE_INFO)
+                Call SendData(ToIndex, UserIndex, 0, "||ÑLLUEVE!!." & FONTTYPE_INFO)
                 Call SendUserStatsBox(UserIndex)
     End If
 End If
@@ -856,18 +829,18 @@ If UserList(UserIndex).Counters.Frio < IntervaloFrio Then
   UserList(UserIndex).Counters.Frio = UserList(UserIndex).Counters.Frio + 1
 Else
   If MapInfo(UserList(UserIndex).Pos.Map).Terreno = Nieve Then
-    Call SendData(ToIndex, UserIndex, 0, "||¡¡Tienes mucho FRIO!!." & FONTTYPE_INFO)
+    Call SendData(ToIndex, UserIndex, 0, "||ÑÑTienes mucho FRIO!!." & FONTTYPE_INFO)
     modifi = Porcentaje(UserList(UserIndex).Stats.MaxHP, 5)
     UserList(UserIndex).Stats.MinHP = UserList(UserIndex).Stats.MinHP - modifi
     If UserList(UserIndex).Stats.MinHP < 1 Then
-            Call SendData(ToIndex, UserIndex, 0, "||¡¡Has muerto de frio!!." & FONTTYPE_INFO)
+            Call SendData(ToIndex, UserIndex, 0, "||ÑÑHas muerto de frio!!." & FONTTYPE_INFO)
             UserList(UserIndex).Stats.MinHP = 0
             Call UserDie(UserIndex)
     End If
   Else
     modifi = Porcentaje(UserList(UserIndex).Stats.MaxSta, 5)
     Call QuitarSta(UserIndex, modifi)
-    Call SendData(ToIndex, UserIndex, 0, "||¡Pierdes Energia!." & FONTTYPE_INFO)
+    Call SendData(ToIndex, UserIndex, 0, "||ÑPierdes Energia!." & FONTTYPE_INFO)
   End If
   
   UserList(UserIndex).Counters.Frio = 0
