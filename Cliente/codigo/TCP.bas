@@ -60,15 +60,15 @@ Sub HandleData(ByVal Rdata As String)
     On Error Resume Next
     
     Dim retVal As Variant
-    Dim X As Long
-    Dim Y As Long
+    Dim X As Integer
+    Dim Y As Integer
     Dim CharIndex As Integer
-    Dim tempint As Long
+    Dim tempint As Integer
     Dim tempstr As String
-    Dim Slot As Long
+    Dim Slot As Integer
     Dim MapNumber As String
-    Dim i As Long, k As Long
-    Dim cad$, Index As Long, m As Long
+    Dim i As Integer, k As Integer
+    Dim cad$, Index As Integer, m As Integer
     
     Dim sData As String
     sData = UCase(Rdata)
