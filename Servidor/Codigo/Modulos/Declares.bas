@@ -226,7 +226,7 @@ Public Const Robar = 3
 Public Const Tacticas = 4
 Public Const Armas = 5
 Public Const Meditar = 6
-Public Const ApuÑalar = 7
+Public Const Apuñalar = 7
 Public Const Ocultarse = 8
 Public Const Supervivencia = 9
 Public Const Talar = 10
@@ -559,7 +559,7 @@ Public Type ObjData
     'Solo contenedores
     MaxItems As Integer
     Conte As Inventario
-    ApuÑala As Byte
+    Apuñala As Byte
     
     HechizoIndex As Integer
     

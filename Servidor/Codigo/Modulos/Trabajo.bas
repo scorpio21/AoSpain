@@ -346,7 +346,7 @@ Sub CarpinteroQuitarMateriales(ByVal UserIndex As Integer, ByVal ItemIndex As In
 '[Efestos]
     Dim c As Integer
     c = ObjData(ItemIndex).Madera * Cantidad
-    If ObjData(ItemIndex).Madera > 0 Then Call QuitarObjetos(Leña, c, UserIndex)
+    If ObjData(ItemIndex).Madera > 0 Then Call QuitarObjetos(LeÑa, c, UserIndex)
 '[Efestos]
 End Sub
 
@@ -355,7 +355,7 @@ Function CarpinteroTieneMateriales(ByVal UserIndex As Integer, ByVal ItemIndex A
 Dim c As Long
     If ObjData(ItemIndex).Madera > 0 Then
             c = val(ObjData(ItemIndex).Madera) * Cantidad
-            If Not TieneObjetos(Leña, c, UserIndex) Then
+            If Not TieneObjetos(LeÑa, c, UserIndex) Then
                     Call SendData(ToIndex, UserIndex, 0, "||No tenes suficientes madera." & FONTTYPE_INFO)
                     CarpinteroTieneMateriales = False
                     Exit Function
@@ -859,17 +859,17 @@ End If
 End Sub
 
 
-Public Function ObjEsRobable(ByVal VictimaIndex As Integer, ByVal Slot As Integer) As Boolean
+Public Function ObjEsRobable(ByVal VictimaIndex As Integer, ByVal SLOT As Integer) As Boolean
 ' Agregué los barcos
 ' Esta funcion determina qué objetos son robables.
 
 Dim OI As Integer
 
-OI = UserList(VictimaIndex).Invent.Object(Slot).ObjIndex
+OI = UserList(VictimaIndex).Invent.Object(SLOT).ObjIndex
 
 ObjEsRobable = _
 ObjData(OI).ObjType <> OBJTYPE_LLAVES And _
-UserList(VictimaIndex).Invent.Object(Slot).Equipped = 0 And _
+UserList(VictimaIndex).Invent.Object(SLOT).Equipped = 0 And _
 ObjData(OI).Real = 0 And _
 ObjData(OI).Caos = 0 And _
 ObjData(OI).ObjType <> OBJTYPE_CABALLOS And _
@@ -1006,7 +1006,7 @@ Dim res As Integer
 
 
 If UserList(UserIndex).Clase = "Leñador" Or UserList(UserIndex).Clase = "Aldeano" Then 'Neptuno
-    Call QuitarSta(UserIndex, EsfuerzoTalarLeñador)
+    Call QuitarSta(UserIndex, EsfuerzoTalarLeÑador)
 Else
     Call QuitarSta(UserIndex, EsfuerzoTalarGeneral)
 End If
@@ -1056,7 +1056,7 @@ If res < 6 Then
         MiObj.Amount = 1
     End If
     
-    MiObj.ObjIndex = Leña
+    MiObj.ObjIndex = LeÑa
     
     
     If Not MeterItemEnInventario(UserIndex, MiObj) Then

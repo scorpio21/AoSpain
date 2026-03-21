@@ -1,6 +1,6 @@
 Attribute VB_Name = "ES"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 MÑrquez Pablo Ignacio
+'Copyright (C) 2002 Mñrquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "ES"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nÑmero 983 piso 7 dto A
+'Calle 3 nñmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'CÑdigo Postal 1900
-'Pablo Ignacio MÑrquez
+'Cñdigo Postal 1900
+'Pablo Ignacio Mñrquez
 Option Explicit
 
 Public Sub CargarSpawnList()
@@ -413,10 +413,10 @@ Sub LoadOBJData()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'ÑÑÑÑ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
+'ññññ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
 '
-'El que ose desafiar esta LEY, se las tendrÑ que ver
-'con migo. Para leer desde el OBJ.DAT se deberÑ usar
+'El que ose desafiar esta LEY, se las tendrñ que ver
+'con migo. Para leer desde el OBJ.DAT se deberñ usar
 'la nueva clase clsLeerInis.
 '
 'Alejo
@@ -516,7 +516,7 @@ For Object = 1 To NumObjDatas
     'Helios
     If ObjData(Object).ObjType = OBJTYPE_WEAPON Then
             ObjData(Object).WeaponAnim = val(Leer.DarValor("OBJ" & Object, "Anim"))
-            ObjData(Object).ApuÑala = val(Leer.DarValor("OBJ" & Object, "ApuÑala"))
+            ObjData(Object).Apuñala = val(Leer.DarValor("OBJ" & Object, "Apuñala"))
 '            ObjData(Object).Paraliza = val(Leer.DarValor("OBJ" & Object, "Paraliza")) 'Helios
 '            ObjData(Object).Ceguera = val(Leer.DarValor("OBJ" & Object, "Ceguera")) 'Helios
 '            ObjData(Object).Estupidez = val(Leer.DarValor("OBJ" & Object, "Estupidez")) 'Helios
@@ -1083,6 +1083,7 @@ For Map = 1 To NumMaps
                     End If
                     
                     'Si el npc debe hacer respawn en la pos original la guardamos
+                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aqu
                     If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
                         Npclist(NIndex).Orig.Map = Map
                         Npclist(NIndex).Orig.X = X
@@ -1113,29 +1114,38 @@ For Map = 1 To NumMaps
 
     Close #1
     Close #2
-    MapInfo(Map).Name = GetVar(c$, "Mapa" & Map, "Name")
-    MapInfo(Map).Music = GetVar(c$, "Mapa" & Map, "MusicNum")
-'    MapInfo(Map).MinLevel = val(GetVar(c$, "Mapa" & Map, "MinLevel"))
-'    MapInfo(Map).PuedeMascotas = CByte(val(GetVar(c$, "Mapa" & Map, "PuedeMascotas")))
+    
+    'Optimizacin: Carga del archivo .dat en memoria una sola vez
+    Dim LeerMap As New clsLeerInis
+    LeerMap.Abrir c$
+    
+    Dim Section As String
+    Section = "Mapa" & Map
+    
+    MapInfo(Map).Name = LeerMap.DarValor(Section, "Name")
+    MapInfo(Map).Music = LeerMap.DarValor(Section, "MusicNum")
 
-'    MapInfo(Map).MagiaSinEfecto = val(GetVar(c$, "Mapa" & Map, "MagiaSinEfecto"))
     Dim tmps As String
-    tmps = GetVar(c$, "Mapa" & Map, "StartPos")
-If (tmps <> "") Then
-    MapInfo(Map).StartPos.Map = val(ReadField(1, tmps, 45))
-    MapInfo(Map).StartPos.X = val(ReadField(2, tmps, 45))
-    MapInfo(Map).StartPos.Y = val(ReadField(3, tmps, 45))
-End If
+    tmps = LeerMap.DarValor(Section, "StartPos")
+    If (tmps <> "") Then
+        MapInfo(Map).StartPos.Map = val(ReadField(1, tmps, 45))
+        MapInfo(Map).StartPos.X = val(ReadField(2, tmps, 45))
+        MapInfo(Map).StartPos.Y = val(ReadField(3, tmps, 45))
+    End If
 
-    If val(GetVar(c$, "Mapa" & Map, "Pk")) = 0 Then
+    If val(LeerMap.DarValor(Section, "Pk")) = 0 Then
           MapInfo(Map).Pk = True
     Else
           MapInfo(Map).Pk = False
     End If
-    MapInfo(Map).Restringir = GetVar(c$, "Mapa" & Map, "Restringir")
-    MapInfo(Map).BackUp = val(GetVar(c$, "Mapa" & Map, "BackUp"))
-    MapInfo(Map).Terreno = GetVar(c$, "Mapa" & Map, "Terreno")
-    MapInfo(Map).Zona = GetVar(c$, "Mapa" & Map, "Zona")
+    
+    MapInfo(Map).Restringir = LeerMap.DarValor(Section, "Restringir")
+    MapInfo(Map).BackUp = val(LeerMap.DarValor(Section, "BackUp"))
+    MapInfo(Map).Terreno = LeerMap.DarValor(Section, "Terreno")
+    MapInfo(Map).Zona = LeerMap.DarValor(Section, "Zona")
+    
+    Set LeerMap = Nothing
+    
     frmCargando.cargar.Value = frmCargando.cargar.Value + 1
     
     DoEvents
@@ -1692,7 +1702,7 @@ Call WriteVar(UserFile, "GUILD", "ClanFundado", UserList(UserIndex).GuildInfo.Cl
 Call WriteVar(UserFile, "GUILD", "ClanesParticipo", Str(UserList(UserIndex).GuildInfo.ClanesParticipo))
 Call WriteVar(UserFile, "GUILD", "GuildPts", Str(UserList(UserIndex).GuildInfo.GuildPoints))
 
-'ÑFueron modificados los atributos del usuario?
+'ñFueron modificados los atributos del usuario?
 If Not UserList(UserIndex).Flags.TomoPocion Then
     For LoopC = 1 To UBound(UserList(UserIndex).Stats.UserAtributos)
         Call WriteVar(UserFile, "ATRIBUTOS", "AT" & LoopC, val(UserList(UserIndex).Stats.UserAtributos(LoopC)))

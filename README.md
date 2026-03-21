@@ -6,7 +6,7 @@
 
 ## 🚀 Mejoras Recientes (20 de Marzo, 2026)
 
-*   **Carga de Mapas Ultra-Rápida:** Se ha implementado un sistema de lectura por buffer masivo en el Cliente y Servidor. Ahora los mapas se cargan en un solo bloque de memoria, eliminando el "stutter" o saltito al cambiar de mapa.
+*   **Carga de Mapas Ultra-Rápida:** Se ha implementado un sistema de lectura por buffer masivo y procesamiento de INIs en memoria (`clsLeerInis`) tanto en el Cliente como en el Servidor. Ahora los mapas y el backup se cargan de forma instantánea, eliminando esperas y "stutter" al cambiar de zona.
 *   **Compatibilidad de Gráficos (Long):** El motor ahora lee correctamente capas de gráficos en formato `Long` (4 bytes), permitiendo IDs superiores a 32,767.
 *   **Estabilidad del Cliente:** Corregidos errores de desbordamiento y conflictos de tipos `ByRef` en el módulo de red (`TCP.bas`).
 *   **Mensajería de Transición:** Añadida notificación visual en consola al cambiar de mapa para confirmar la carga fluida.
