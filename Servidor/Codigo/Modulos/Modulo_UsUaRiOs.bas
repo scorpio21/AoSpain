@@ -882,7 +882,7 @@ Function PuedeApuñalar(ByVal UserIndex As Integer) As Boolean
 
 If UserList(UserIndex).Invent.WeaponEqpObjIndex > 0 Then
  PuedeApuñalar = _
- ((UserList(UserIndex).Stats.UserSkills(Apuñalar) >= MIN_APUÑALAR) _
+ ((UserList(UserIndex).Stats.UserSkills(Apuñalar) >= MIN_ApuñalaR) _
  And (ObjData(UserList(UserIndex).Invent.WeaponEqpObjIndex).Apuñala = 1)) _
  Or _
   ((UserList(UserIndex).Clase = "Asesino") And _
@@ -1281,4 +1281,5 @@ If MascotasReales <> UserList(UserIndex).NroMacotas Then UserList(UserIndex).Nro
 
 
 End Sub
+
 

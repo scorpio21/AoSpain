@@ -2118,3 +2118,4 @@ End Sub
 Function ControlVelocidad(ByVal LastTime As Long) As Boolean
 ControlVelocidad = (GetTickCount - LastTime > 20)
 End Function
+

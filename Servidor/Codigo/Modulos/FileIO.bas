@@ -516,7 +516,7 @@ For Object = 1 To NumObjDatas
     'Helios
     If ObjData(Object).ObjType = OBJTYPE_WEAPON Then
             ObjData(Object).WeaponAnim = val(Leer.DarValor("OBJ" & Object, "Anim"))
-            ObjData(Object).Apuï¿½ala = val(Leer.DarValor("OBJ" & Object, "Apuï¿½ala"))
+            ObjData(Object).Apuñala = val(Leer.DarValor("OBJ" & Object, "Apuñala"))
 '            ObjData(Object).Paraliza = val(Leer.DarValor("OBJ" & Object, "Paraliza")) 'Helios
 '            ObjData(Object).Ceguera = val(Leer.DarValor("OBJ" & Object, "Ceguera")) 'Helios
 '            ObjData(Object).Estupidez = val(Leer.DarValor("OBJ" & Object, "Estupidez")) 'Helios
@@ -2074,6 +2074,7 @@ Print #mifile, UserList(BannedIndex).Name
 Close #mifile
 
 End Sub
+
 
 
 

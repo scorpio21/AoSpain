@@ -978,17 +978,17 @@ res = RandomNumber(1, Suerte)
 If res = 3 Then
     If VictimUserIndex <> 0 Then
         UserList(VictimUserIndex).Stats.MinHP = UserList(VictimUserIndex).Stats.MinHP - (daño * 1.5)
-        Call SendData(ToIndex, UserIndex, 0, "||Has apuñalado a " & UserList(VictimUserIndex).Name & " por " & (daño * 2) & FONTTYPE_FIGHT)
-        Call SendData(ToIndex, VictimUserIndex, 0, "||Te ha apuñalado " & UserList(UserIndex).Name & " por " & (daño * 2) & FONTTYPE_FIGHT)
+        Call SendData(ToIndex, UserIndex, 0, "||Has Apuñalado a " & UserList(VictimUserIndex).Name & " por " & (daño * 2) & FONTTYPE_FIGHT)
+        Call SendData(ToIndex, VictimUserIndex, 0, "||Te ha Apuñalado " & UserList(UserIndex).Name & " por " & (daño * 2) & FONTTYPE_FIGHT)
     Else
         Npclist(VictimNpcIndex).Stats.MinHP = Npclist(VictimNpcIndex).Stats.MinHP - (daño * 2)
         If Npclist(VictimNpcIndex).Stats.MinHP < 0 Then Npclist(VictimNpcIndex).Stats.MinHP = 0
-        Call SendData(ToIndex, UserIndex, 0, "||Has apuñalado la criatura por " & (daño * 2) & " (" & Npclist(VictimNpcIndex).Stats.MinHP & "/" & Npclist(VictimNpcIndex).Stats.MaxHP & ")" & FONTTYPE_FIGHT)
+        Call SendData(ToIndex, UserIndex, 0, "||Has Apuñalado la criatura por " & (daño * 2) & " (" & Npclist(VictimNpcIndex).Stats.MinHP & "/" & Npclist(VictimNpcIndex).Stats.MaxHP & ")" & FONTTYPE_FIGHT)
         Call SubirSkill(UserIndex, Apuñalar)
     End If
     
 Else
-    Call SendData(ToIndex, UserIndex, 0, "||¡No has logrado apuñalar a tu enemigo!" & FONTTYPE_FIGHT)
+    Call SendData(ToIndex, UserIndex, 0, "||¡No has logrado Apuñalar a tu enemigo!" & FONTTYPE_FIGHT)
 End If
 
 End Sub
@@ -1282,6 +1282,7 @@ If res = 1 Then
 End If
 Next
 End Sub
+
 
 
 

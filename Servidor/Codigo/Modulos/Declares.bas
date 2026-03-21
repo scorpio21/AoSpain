@@ -180,7 +180,7 @@ Public Const NPCTYPE_GUARDIASMALVADOS = 8
 Public Const FX_TELEPORT_INDEX = 1
 
 
-Public Const MIN_APUÑALAR = 10
+Public Const MIN_ApuñalaR = 10
 
 '********** CONSTANTANTES ***********
 Public Const NUMSKILLS = 22 '[Efestos]
@@ -264,17 +264,17 @@ Public Const AdicionalSTLeÑador = 23
 Public Const AdicionalSTPescador = 20
 Public Const AdicionalSTMinero = 25
 
-'TamaÑo del mapa
+'Tamaño del mapa
 Public Const XMaxMapSize = 100
 Public Const XMinMapSize = 1
 Public Const YMaxMapSize = 100
 Public Const YMinMapSize = 1
 
-'TamaÑo del tileset
+'Tamaño del tileset
 Public Const TileSizeX = 32
 Public Const TileSizeY = 32
 
-'TamaÑo en Tiles de la pantalla de visualizacion
+'Tamaño en Tiles de la pantalla de visualizacion
 Public Const XWindow = 17
 Public Const YWindow = 13
 
@@ -1205,4 +1205,5 @@ Dim rc As Integer
 rc = sndPlaySound(file, SND_ASYNC)
 
 End Sub
+
 

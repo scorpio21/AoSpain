@@ -1036,7 +1036,7 @@ SkillsNames(3) = "Robar"
 SkillsNames(4) = "Tacticas de combate"
 SkillsNames(5) = "Combate con armas"
 SkillsNames(6) = "Meditar"
-SkillsNames(7) = "Apuï¿½alar"
+SkillsNames(7) = "Apuñalar"
 SkillsNames(8) = "Ocultarse"
 SkillsNames(9) = "Supervivencia"
 SkillsNames(10) = "Talar ï¿½rboles"
@@ -1397,5 +1397,6 @@ End Function
         End If
     End Sub
     
+
 
 

@@ -143,7 +143,7 @@ Public Const Robar = 3
 Public Const Tacticas = 4
 Public Const Armas = 5
 Public Const Meditar = 6
-Public Const Apuï¿½alar = 7
+Public Const Apuñalar = 7
 Public Const Ocultarse = 8
 Public Const Supervivencia = 9
 Public Const Talar = 10
@@ -336,4 +336,5 @@ End Type
 
 'ï¿½Carga los txt de la web?
 Public DescargarTxt(4) As Boolean
+
 
