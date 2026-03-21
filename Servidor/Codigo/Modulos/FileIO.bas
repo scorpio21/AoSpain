@@ -1083,7 +1083,7 @@ For Map = 1 To NumMaps
                     End If
                     
                     'Si el npc debe hacer respawn en la pos original la guardamos
-                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aqu
+                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aquí
                     If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
                         Npclist(NIndex).Orig.Map = Map
                         Npclist(NIndex).Orig.X = X
@@ -1115,7 +1115,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
     
-    'Optimizacin: Carga del archivo .dat en memoria una sola vez
+    'Optimización: Carga del archivo .dat en memoria una sola vez
     Dim LeerMap As New clsLeerInis
     LeerMap.Abrir c$
     
@@ -1304,7 +1304,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
     
-    'Optimizacin: Carga del archivo .dat en memoria
+    'Optimización: Carga del archivo .dat en memoria
     Dim LeerMap As New clsLeerInis
     Dim Section As String
     Section = "Mapa" & Map
@@ -1475,7 +1475,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
 
-    'Optimizacin: Carga del archivo .dat del mapa en memoria
+    'Optimización: Carga del archivo .dat del mapa en memoria
     Dim LeerMap As New clsLeerInis
     Dim Section As String
     Section = "Mapa" & Map
@@ -2074,5 +2074,6 @@ Print #mifile, UserList(BannedIndex).Name
 Close #mifile
 
 End Sub
+
 
 
