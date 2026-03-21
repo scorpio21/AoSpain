@@ -94,9 +94,9 @@ Sub HandleData(ByVal Rdata As String)
                  frmtip.Visible = True
                  PrimeraVez = False
             End If
-            bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+            bTecho = IIf(MapData(UserPos.X, UserPos.Y).trigger = 1 Or _
+            MapData(UserPos.X, UserPos.Y).trigger = 2 Or _
+            MapData(UserPos.X, UserPos.Y).trigger = 4, True, False)
             Call DoFogataFx
             Exit Sub
         Case "QTDL"              ' >>>>> Quitar Dialogos :: QTDL
@@ -213,13 +213,13 @@ Sub HandleData(ByVal Rdata As String)
             Comerciando = False
             '[/Alejo]
         Case "RECPASSOK"
-            Call MsgBox("ï¿½ï¿½ï¿½El password fue enviado con ï¿½xito!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
+            Call MsgBox("¡¡ï¿½El password fue enviado con ï¿½xito!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
             frmRecuperar.MousePointer = 0
             frmMain.Socket1.Disconnect
             Unload frmRecuperar
             Exit Sub
         Case "RECPASSER"
-            Call MsgBox("ï¿½ï¿½ï¿½No coinciden los datos con los del personaje en el servidor, el password no ha sido enviado.!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
+            Call MsgBox("¡¡ï¿½No coinciden los datos con los del personaje en el servidor, el password no ha sido enviado.!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
             frmRecuperar.MousePointer = 0
             frmMain.Socket1.Disconnect
             Unload frmRecuperar
@@ -305,43 +305,43 @@ Sub HandleData(ByVal Rdata As String)
             i = Val(ReadField(1, Rdata, 44))
             Select Case i
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½La criatura te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½La criatura te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½La criatura te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½La criatura te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½La criatura te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½La criatura te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "U2" ' <<--- El user ataco un npc e impacato
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a la criatura por " & Rdata & "!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a la criatura por " & Rdata & "!!", 255, 0, 0, True, False, False)
             Exit Sub
         Case "U3" ' <<--- El user ataco un user y falla
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & Rdata & " te ataco y fallo!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & Rdata & " te ataco y fallo!!", 255, 0, 0, True, False, False)
             Exit Sub
         Case "N4" ' <<--- user nos impacto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             i = Val(ReadField(1, Rdata, 44))
             Select Case i
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & ReadField(3, Rdata, 44) & " te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & ReadField(3, Rdata, 44) & " te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & ReadField(3, Rdata, 44) & " te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & ReadField(3, Rdata, 44) & " te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & ReadField(3, Rdata, 44) & " te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½" & ReadField(3, Rdata, 44) & " te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "N5" ' <<--- impactamos un user
@@ -349,17 +349,17 @@ Sub HandleData(ByVal Rdata As String)
             i = Val(ReadField(1, Rdata, 44))
             Select Case i
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a " & ReadField(3, Rdata, 44) & " en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "ï¿½ï¿½Le has pegado a " & ReadField(3, Rdata, 44) & " en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "||"                 ' >>>>> Dialogo de Usuarios y NPCs :: ||
@@ -510,9 +510,9 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "LLU"                  ' >>>>> LLuvia!
             If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
-            bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+            bTecho = IIf(MapData(UserPos.X, UserPos.Y).trigger = 1 Or _
+            MapData(UserPos.X, UserPos.Y).trigger = 2 Or _
+            MapData(UserPos.X, UserPos.Y).trigger = 4, True, False)
             If Not bRain Then
                 bRain = True
             Else
@@ -569,7 +569,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.Exp.Caption = "Exp:" & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp:" & UserExp & "/" & UserPasarNivel
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
             If UserMaxMAN > 0 Then

@@ -197,23 +197,23 @@ Sub Addtostatus(RichTextBox As RichTextBox, Text As String, RED As Byte, GREEN A
 'apperance!
 '******************************************
 
-frmCargando.Status.SelStart = Len(RichTextBox.Text)
-frmCargando.Status.SelLength = 0
-frmCargando.Status.SelColor = RGB(RED, GREEN, BLUE)
+frmCargando.status.SelStart = Len(RichTextBox.Text)
+frmCargando.status.SelLength = 0
+frmCargando.status.SelColor = RGB(RED, GREEN, BLUE)
 
 If Bold Then
-    frmCargando.Status.SelBold = True
+    frmCargando.status.SelBold = True
 Else
-    frmCargando.Status.SelBold = False
+    frmCargando.status.SelBold = False
 End If
 
 If Italic Then
-    frmCargando.Status.SelItalic = True
+    frmCargando.status.SelItalic = True
 Else
-    frmCargando.Status.SelItalic = False
+    frmCargando.status.SelItalic = False
 End If
 
-frmCargando.Status.SelText = Chr(13) & Chr(10) & Text
+frmCargando.status.SelText = Chr(13) & Chr(10) & Text
 
 End Sub
 
@@ -702,9 +702,11 @@ mapName = GetVar(DirMapas & "Mapa" & Map & ".dat", "Mapa" & Map, "Name")
 
 'Imprimimos mensaje detallado de transicion en consola con coordenadas
 If mapName <> "" Then
-    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " (" & mapName & ") en X:" & X_Pos & " Y:" & Y_Pos, 255, 255, 255, 0, 0, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " (" & mapName & ") en X:" & X_Pos & " Y:" & Y_Pos, 100, 100, 120, True, False, False)
+    'Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " (" & mapName & ") en X:" & X_Pos & " Y:" & Y_Pos, 255, 255, 255, 0, 0, True)
 Else
-    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " en X:" & X_Pos & " Y:" & Y_Pos, 255, 255, 255, 0, 0, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " en X:" & X_Pos & " Y:" & Y_Pos, 100, 100, 120, True, False, False)
+    'Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " en X:" & X_Pos & " Y:" & Y_Pos, 255, 255, 255, 0, 0, True)
 End If
 frmMain.RecTxt.Refresh
 
@@ -860,7 +862,7 @@ For i = 1 To Cont
     cur$ = ReadField(i, RawServersList, Asc(";"))
     ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
     ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
-    ServersLst(i).Desc = ReadField(4, cur$, Asc(":"))
+    ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
     ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
 Next i
 
@@ -955,8 +957,8 @@ frmCargando.Refresh
 
 UserParalizado = False
 
-frmConnect.Version = "v" & App.Major & "." & App.Minor & " Beta: 1"
-AddtoRichTextBox frmCargando.Status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
+frmConnect.version = "v" & App.Major & "." & App.Minor & " Beta: 1"
+AddtoRichTextBox frmCargando.status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
 
 'frmMain.Inet1.URL = "http://www.caratula2000.net/power/poweraoiplist3.txt"
 'RawServersList = frmMain.Inet1.OpenURL
@@ -979,8 +981,8 @@ Call InitServersList(RawServersList)
 'IPdelServidor =
 'PuertoDelServidor = 7666
 
-AddtoRichTextBox frmCargando.Status, "Ok", , , , 1
-AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Ok", , , , 1
+AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
 
 ReDim Ciudades(1 To NUMCIUDADES) As String
 Ciudades(1) = "Ullathorpe"
@@ -1064,12 +1066,12 @@ AtributosNames(5) = "Constitucion"
 frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
 frmOldPersonaje.PasswordTxt.Text = ""
 
-AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 IniciarObjetosDirectX
 
-AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -1087,7 +1089,7 @@ ENDC = Chr(1)
 
     End If
 'Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extras.", 2, 51, 223, 1, 1)
-Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
 
 
 Call CargarAnimsExtra
@@ -1098,7 +1100,7 @@ Call CargarAnimArmas
 Call CargarAnimEscudos
 
 
-AddtoRichTextBox frmCargando.Status, "                    �Bienvenido a Argentum Online!", , , , 1
+AddtoRichTextBox frmCargando.status, "                    �Bienvenido a Argentum Online!", , , , 1
 
 
 Unload frmCargando
@@ -1262,7 +1264,7 @@ Loop
 
 EngineRun = False
 frmCargando.Show
-AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
 LiberarObjetosDX
 
 
