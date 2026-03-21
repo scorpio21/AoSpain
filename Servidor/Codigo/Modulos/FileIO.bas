@@ -1,6 +1,6 @@
 Attribute VB_Name = "ES"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 Mñrquez Pablo Ignacio
+'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "ES"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nñmero 983 piso 7 dto A
+'Calle 3 nï¿½mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Cñdigo Postal 1900
-'Pablo Ignacio Mñrquez
+'Cï¿½digo Postal 1900
+'Pablo Ignacio Mï¿½rquez
 Option Explicit
 
 Public Sub CargarSpawnList()
@@ -413,10 +413,10 @@ Sub LoadOBJData()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'ññññ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
+'ï¿½ï¿½ï¿½ï¿½ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
 '
-'El que ose desafiar esta LEY, se las tendrñ que ver
-'con migo. Para leer desde el OBJ.DAT se deberñ usar
+'El que ose desafiar esta LEY, se las tendrï¿½ que ver
+'con migo. Para leer desde el OBJ.DAT se deberï¿½ usar
 'la nueva clase clsLeerInis.
 '
 'Alejo
@@ -516,7 +516,7 @@ For Object = 1 To NumObjDatas
     'Helios
     If ObjData(Object).ObjType = OBJTYPE_WEAPON Then
             ObjData(Object).WeaponAnim = val(Leer.DarValor("OBJ" & Object, "Anim"))
-            ObjData(Object).Apuñala = val(Leer.DarValor("OBJ" & Object, "Apuñala"))
+            ObjData(Object).Apuï¿½ala = val(Leer.DarValor("OBJ" & Object, "Apuï¿½ala"))
 '            ObjData(Object).Paraliza = val(Leer.DarValor("OBJ" & Object, "Paraliza")) 'Helios
 '            ObjData(Object).Ceguera = val(Leer.DarValor("OBJ" & Object, "Ceguera")) 'Helios
 '            ObjData(Object).Estupidez = val(Leer.DarValor("OBJ" & Object, "Estupidez")) 'Helios
@@ -1192,6 +1192,10 @@ MapPath = GetVar(DatPath & "Map.dat", "INIT", "MapPath")
 
 ReDim MapData(1 To NumMaps, XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
 ReDim MapInfo(1 To NumMaps) As MapInfo
+
+Dim buffer(1 To ((YMaxMapSize - YMinMapSize + 1) * (XMaxMapSize - XMinMapSize + 1))) As TileMap
+Dim buffer2(1 To ((YMaxMapSize - YMinMapSize + 1) * (XMaxMapSize - XMinMapSize + 1))) As TileInf
+Dim idx As Integer
   
 For Map = 1 To NumMaps
     
@@ -1207,115 +1211,132 @@ For Map = 1 To NumMaps
         c$ = App.Path & MapPath & "Mapa" & Map & ".dat"
     End If
     
-        Seek #1, 1
-        Seek #2, 1
-        'map Header
-        Get #1, , MapInfo(Map).MapVersion
-        Get #1, , MiCabecera
-        Get #1, , TempInt
-        Get #1, , TempInt
-        Get #1, , TempInt
-        Get #1, , TempInt
-        'inf Header
-        Get #2, , TempInt
-        Get #2, , TempInt
-        Get #2, , TempInt
-        Get #2, , TempInt
-        Get #2, , TempInt
-        'Load arrays
-                    DoEvents
-        For Y = YMinMapSize To YMaxMapSize
-            For X = XMinMapSize To XMaxMapSize
-                    '.dat file
-                    Get #1, , MapData(Map, X, Y).Blocked
-                    
-                    'Get GRH number
-                    For LoopC = 1 To 4
-                        Get #1, , MapData(Map, X, Y).Graphic(LoopC)
-                    Next LoopC
-                    
-                    'Space holder for future expansion
-                    Get #1, , MapData(Map, X, Y).trigger
-                    Get #1, , TempInt
-                    
-                                        
-                    '.inf file
-                    Get #2, , MapData(Map, X, Y).TileExit.Map
-                    Get #2, , MapData(Map, X, Y).TileExit.X
-                    Get #2, , MapData(Map, X, Y).TileExit.Y
-                    
-                    'Get and make NPC
-                    Get #2, , MapData(Map, X, Y).NpcIndex
-                    If MapData(Map, X, Y).NpcIndex > 0 Then
-                        MapData(Map, X, Y).NpcIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
-                        'Si el npc debe hacer respawn en la pos
-                        'original la guardamos
-                        
-                        If Npclist(MapData(Map, X, Y).NpcIndex).Numero > 499 Then
-                            npcfile = DatPath & "NPCs-HOSTILES.dat"
-                        Else
-                            npcfile = DatPath & "NPCs.dat"
-                        End If
-                        
-                        Dim fl As Byte
-                        fl = val(GetVar(npcfile, "NPC" & Npclist(MapData(Map, X, Y).NpcIndex).Numero, "PosOrig"))
-                        If fl = 1 Then
-                            Npclist(MapData(Map, X, Y).NpcIndex).Orig.Map = Map
-                            Npclist(MapData(Map, X, Y).NpcIndex).Orig.X = X
-                            Npclist(MapData(Map, X, Y).NpcIndex).Orig.Y = Y
-                        Else
-                            Npclist(MapData(Map, X, Y).NpcIndex).Orig.Map = 0
-                            Npclist(MapData(Map, X, Y).NpcIndex).Orig.X = 0
-                            Npclist(MapData(Map, X, Y).NpcIndex).Orig.Y = 0
-                        End If
-        
-                        Npclist(MapData(Map, X, Y).NpcIndex).Pos.Map = Map
-                        Npclist(MapData(Map, X, Y).NpcIndex).Pos.X = X
-                        Npclist(MapData(Map, X, Y).NpcIndex).Pos.Y = Y
-                        
-                        
-                        'Si existe el backup lo cargamos
-                        If Npclist(MapData(Map, X, Y).NpcIndex).Flags.BackUp = 1 Then
-                                'cargamos el nuevo del backup
-                                Call CargarNpcBackUp(MapData(Map, X, Y).NpcIndex, Npclist(MapData(Map, X, Y).NpcIndex).Numero)
+    Seek #1, 1
+    Seek #2, 1
+    'map Header
+    Get #1, , MapInfo(Map).MapVersion
+    Get #1, , MiCabecera
+    Get #1, , TempInt
+    Get #1, , TempInt
+    Get #1, , TempInt
+    Get #1, , TempInt
+    'inf Header
+    Get #2, , TempInt
+    Get #2, , TempInt
+    Get #2, , TempInt
+    Get #2, , TempInt
+    Get #2, , TempInt
+    
+    'Load arrays fast
+    Get #1, , buffer
+    Get #2, , buffer2
+    
+    idx = 1
+    For Y = YMinMapSize To YMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
+            
+            MapData(Map, X, Y).Blocked = buffer(idx).bloqueado
+            MapData(Map, X, Y).Graphic(1) = buffer(idx).grafs(1)
+            MapData(Map, X, Y).Graphic(2) = buffer(idx).grafs(2)
+            MapData(Map, X, Y).Graphic(3) = buffer(idx).grafs(3)
+            MapData(Map, X, Y).Graphic(4) = buffer(idx).grafs(4)
+            MapData(Map, X, Y).trigger = buffer(idx).trigger
                                 
-                        End If
-                        
-                        Call MakeNPCChar(ToNone, 0, 0, MapData(Map, X, Y).NpcIndex, Map, X, Y)
+            MapData(Map, X, Y).TileExit.Map = buffer2(idx).dest_mapa
+            MapData(Map, X, Y).TileExit.X = buffer2(idx).dest_x
+            MapData(Map, X, Y).TileExit.Y = buffer2(idx).dest_y
+            
+            'Get and make NPC
+            MapData(Map, X, Y).NpcIndex = buffer2(idx).npc
+            If MapData(Map, X, Y).NpcIndex > 0 Then
+                Dim nIndex As Integer
+                nIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
+                
+                If nIndex <= MAXNPCS Then
+                    MapData(Map, X, Y).NpcIndex = nIndex
+                    
+                    If MapData(Map, X, Y).NpcIndex > 499 Then
+                        npcfile = DatPath & "NPCs-HOSTILES.dat"
+                    Else
+                        npcfile = DatPath & "NPCs.dat"
                     End If
+                    
+                    Dim fl As Byte
+                    fl = val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig"))
+                    If fl = 1 Then
+                        Npclist(nIndex).Orig.Map = Map
+                        Npclist(nIndex).Orig.X = X
+                        Npclist(nIndex).Orig.Y = Y
+                    Else
+                        Npclist(nIndex).Orig.Map = 0
+                        Npclist(nIndex).Orig.X = 0
+                        Npclist(nIndex).Orig.Y = 0
+                    End If
+    
+                    Npclist(nIndex).Pos.Map = Map
+                    Npclist(nIndex).Pos.X = X
+                    Npclist(nIndex).Pos.Y = Y
+                    
+                    'Si existe el backup lo cargamos
+                    If Npclist(nIndex).Flags.BackUp = 1 Then
+                            Call CargarNpcBackUp(nIndex, Npclist(nIndex).Numero)
+                    End If
+                    
+                    Call MakeNPCChar(ToNone, 0, 0, nIndex, Map, X, Y)
+                Else
+                    MapData(Map, X, Y).NpcIndex = 0
+                End If
+            End If
 
-                    'Get and make Object
-                    Get #2, , MapData(Map, X, Y).OBJInfo.ObjIndex
-                    Get #2, , MapData(Map, X, Y).OBJInfo.Amount
-        
-                    'Space holder for future expansion (Objects, ect.
-                    Get #2, , DummyInt
-                    Get #2, , DummyInt
-            Next X
-        Next Y
-        Close #1
-        Close #2
-          MapInfo(Map).Name = GetVar(c$, "Mapa" & Map, "Name")
-          MapInfo(Map).Music = GetVar(c$, "Mapa" & Map, "MusicNum")
-'          MapInfo(Map).MinLevel = val(GetVar(c$, "Mapa" & Map, "MinLevel"))
-'          MapInfo(Map).PuedeMascotas = CByte(val(GetVar(c$, "Mapa" & Map, "PuedeMascotas")))
-'          MapInfo(Map).MagiaSinEfecto = val(GetVar(c$, "Mapa" & Map, "MagiaSinEfecto"))
-          MapInfo(Map).StartPos.Map = val(ReadField(1, GetVar(c$, "Mapa" & Map, "StartPos"), 45))
-          MapInfo(Map).StartPos.X = val(ReadField(2, GetVar(c$, "Mapa" & Map, "StartPos"), 45))
-          MapInfo(Map).StartPos.Y = val(ReadField(3, GetVar(c$, "Mapa" & Map, "StartPos"), 45))
-          If val(GetVar(c$, "Mapa" & Map, "Pk")) = 0 Then
-                MapInfo(Map).Pk = True
-          Else
-                MapInfo(Map).Pk = False
-          End If
-          MapInfo(Map).Restringir = GetVar(c$, "Mapa" & Map, "Restringir")
-          MapInfo(Map).BackUp = val(GetVar(c$, "Mapa" & Map, "BackUp"))
-          MapInfo(Map).Terreno = GetVar(c$, "Mapa" & Map, "Terreno")
-          MapInfo(Map).Zona = GetVar(c$, "Mapa" & Map, "Zona")
-          
-          frmCargando.cargar.Value = frmCargando.cargar.Value + 1
-          
-          DoEvents
+            'Get and make Object
+            If buffer2(idx).obj_ind > 0 And buffer2(idx).obj_ind <= UBound(ObjData) Then
+                MapData(Map, X, Y).OBJInfo.ObjIndex = buffer2(idx).obj_ind
+                MapData(Map, X, Y).OBJInfo.Amount = buffer2(idx).obj_cant
+            Else
+                MapData(Map, X, Y).OBJInfo.ObjIndex = 0
+                MapData(Map, X, Y).OBJInfo.Amount = 0
+            End If
+            
+            idx = idx + 1
+        Next X
+    Next Y
+    
+    Close #1
+    Close #2
+    
+    'Optimizacin: Carga del archivo .dat en memoria
+    Dim LeerMap As New clsLeerInis
+    Dim Section As String
+    Section = "Mapa" & Map
+    
+    LeerMap.Abrir c$
+    
+    MapInfo(Map).Name = LeerMap.DarValor(Section, "Name")
+    MapInfo(Map).Music = LeerMap.DarValor(Section, "MusicNum")
+    
+    Dim tmps As String
+    tmps = LeerMap.DarValor(Section, "StartPos")
+    If (tmps <> "") Then
+        MapInfo(Map).StartPos.Map = val(ReadField(1, tmps, 45))
+        MapInfo(Map).StartPos.X = val(ReadField(2, tmps, 45))
+        MapInfo(Map).StartPos.Y = val(ReadField(3, tmps, 45))
+    End If
+    
+    If val(LeerMap.DarValor(Section, "Pk")) = 0 Then
+        MapInfo(Map).Pk = True
+    Else
+        MapInfo(Map).Pk = False
+    End If
+    
+    MapInfo(Map).Restringir = LeerMap.DarValor(Section, "Restringir")
+    MapInfo(Map).BackUp = val(LeerMap.DarValor(Section, "BackUp"))
+    MapInfo(Map).Terreno = LeerMap.DarValor(Section, "Terreno")
+    MapInfo(Map).Zona = LeerMap.DarValor(Section, "Zona")
+    
+    Set LeerMap = Nothing
+    
+    frmCargando.cargar.Value = frmCargando.cargar.Value + 1
+    DoEvents
 Next Map
 
 FrmStat.Visible = False
@@ -1357,10 +1378,12 @@ MapPath = GetVar(DatPath & "Map.dat", "INIT", "MapPath")
 
 ReDim MapData(1 To NumMaps, XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
 ReDim MapInfo(1 To NumMaps) As MapInfo
-  
+
+Dim buffer(1 To ((YMaxMapSize - YMinMapSize + 1) * (XMaxMapSize - XMinMapSize + 1))) As TileMap
+Dim buffer2(1 To ((YMaxMapSize - YMinMapSize + 1) * (XMaxMapSize - XMinMapSize + 1))) As TileInf
+Dim idx As Integer
+
 For Map = 1 To NumMaps
-    DoEvents
-    
     
     Open App.Path & MapPath & "Mapa" & Map & ".map" For Binary As #1
     Seek #1, 1
@@ -1383,61 +1406,68 @@ For Map = 1 To NumMaps
     Get #2, , TempInt
     Get #2, , TempInt
     Get #2, , TempInt
+    
+    'Load arrays fast
+    Get #1, , buffer
+    Get #2, , buffer2
         
+    idx = 1
     For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
-            '.dat file
-            Get #1, , MapData(Map, X, Y).Blocked
             
-            For LoopC = 1 To 4
-                Get #1, , MapData(Map, X, Y).Graphic(LoopC)
-            Next LoopC
-            
-            Get #1, , MapData(Map, X, Y).trigger
-            Get #1, , TempInt
-            
+            MapData(Map, X, Y).Blocked = buffer(idx).bloqueado
+            MapData(Map, X, Y).Graphic(1) = buffer(idx).grafs(1)
+            MapData(Map, X, Y).Graphic(2) = buffer(idx).grafs(2)
+            MapData(Map, X, Y).Graphic(3) = buffer(idx).grafs(3)
+            MapData(Map, X, Y).Graphic(4) = buffer(idx).grafs(4)
+            MapData(Map, X, Y).trigger = buffer(idx).trigger
                                 
-            '.inf file
-            Get #2, , MapData(Map, X, Y).TileExit.Map
-            Get #2, , MapData(Map, X, Y).TileExit.X
-            Get #2, , MapData(Map, X, Y).TileExit.Y
+            MapData(Map, X, Y).TileExit.Map = buffer2(idx).dest_mapa
+            MapData(Map, X, Y).TileExit.X = buffer2(idx).dest_x
+            MapData(Map, X, Y).TileExit.Y = buffer2(idx).dest_y
             
             'Get and make NPC
-            Get #2, , MapData(Map, X, Y).NpcIndex
+            MapData(Map, X, Y).NpcIndex = buffer2(idx).npc
             If MapData(Map, X, Y).NpcIndex > 0 Then
+                Dim nIndex As Integer
+                nIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
                 
-                If MapData(Map, X, Y).NpcIndex > 499 Then
-                        npcfile = DatPath & "NPCs-HOSTILES.dat"
+                If nIndex <= MAXNPCS Then
+                    MapData(Map, X, Y).NpcIndex = nIndex
+                    
+                    If MapData(Map, X, Y).NpcIndex > 499 Then
+                            npcfile = DatPath & "NPCs-HOSTILES.dat"
+                    Else
+                            npcfile = DatPath & "NPCs.dat"
+                    End If
+                    
+                    'Si el npc debe hacer respawn en la pos original la guardamos
+                    If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
+                        Npclist(nIndex).Orig.Map = Map
+                        Npclist(nIndex).Orig.X = X
+                        Npclist(nIndex).Orig.Y = Y
+                    End If
+                    
+                    Npclist(nIndex).Pos.Map = Map
+                    Npclist(nIndex).Pos.X = X
+                    Npclist(nIndex).Pos.Y = Y
+                    
+                    Call MakeNPCChar(ToNone, 0, 0, nIndex, Map, X, Y)
                 Else
-                        npcfile = DatPath & "NPCs.dat"
+                    MapData(Map, X, Y).NpcIndex = 0
                 End If
-                
-                'Si el npc debe hacer respawn en la pos
-                'original la guardamos
-                If val(GetVar(npcfile, "NPC" & MapData(Map, X, Y).NpcIndex, "PosOrig")) = 1 Then
-                    MapData(Map, X, Y).NpcIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
-                    Npclist(MapData(Map, X, Y).NpcIndex).Orig.Map = Map
-                    Npclist(MapData(Map, X, Y).NpcIndex).Orig.X = X
-                    Npclist(MapData(Map, X, Y).NpcIndex).Orig.Y = Y
-                Else
-                    MapData(Map, X, Y).NpcIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
-                End If
-                
-                Npclist(MapData(Map, X, Y).NpcIndex).Pos.Map = Map
-                Npclist(MapData(Map, X, Y).NpcIndex).Pos.X = X
-                Npclist(MapData(Map, X, Y).NpcIndex).Pos.Y = Y
-                
-                Call MakeNPCChar(ToNone, 0, 0, MapData(Map, X, Y).NpcIndex, Map, X, Y)
             End If
 
             'Get and make Object
-            Get #2, , MapData(Map, X, Y).OBJInfo.ObjIndex
-            Get #2, , MapData(Map, X, Y).OBJInfo.Amount
-
-            'Space holder for future expansion (Objects, ect.
-            Get #2, , DummyInt
-            Get #2, , DummyInt
-        
+            If buffer2(idx).obj_ind > 0 And buffer2(idx).obj_ind <= UBound(ObjData) Then
+                MapData(Map, X, Y).OBJInfo.ObjIndex = buffer2(idx).obj_ind
+                MapData(Map, X, Y).OBJInfo.Amount = buffer2(idx).obj_cant
+            Else
+                MapData(Map, X, Y).OBJInfo.ObjIndex = 0
+                MapData(Map, X, Y).OBJInfo.Amount = 0
+            End If
+            
+            idx = idx + 1
         Next X
     Next Y
 
@@ -1445,33 +1475,48 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
 
-  
-    MapInfo(Map).Name = GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "Name")
-    MapInfo(Map).Music = GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "MusicNum")
-'    MapInfo(Map).MinLevel = val(GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "MinLevel"))
-'    MapInfo(Map).PuedeMascotas = CByte(val(GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "PuedeMascotas")))
-    MapInfo(Map).StartPos.Map = val(ReadField(1, GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "StartPos"), 45))
-    MapInfo(Map).StartPos.X = val(ReadField(2, GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "StartPos"), 45))
-    MapInfo(Map).StartPos.Y = val(ReadField(3, GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "StartPos"), 45))
-'    MapInfo(Map).MagiaSinEfecto = val(GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "MagiaSinEfecto"))
+    'Optimizacin: Carga del archivo .dat del mapa en memoria
+    Dim LeerMap As New clsLeerInis
+    Dim Section As String
+    Section = "Mapa" & Map
     
-    If val(GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "Pk")) = 0 Then
+    LeerMap.Abrir App.Path & MapPath & "Mapa" & Map & ".dat"
+    
+    MapInfo(Map).Name = LeerMap.DarValor(Section, "Name")
+    MapInfo(Map).Music = LeerMap.DarValor(Section, "MusicNum")
+
+    Dim tmps As String
+    tmps = LeerMap.DarValor(Section, "StartPos")
+    If (tmps <> "") Then
+        MapInfo(Map).StartPos.Map = val(ReadField(1, tmps, 45))
+        MapInfo(Map).StartPos.X = val(ReadField(2, tmps, 45))
+        MapInfo(Map).StartPos.Y = val(ReadField(3, tmps, 45))
+    End If
+    
+    If val(LeerMap.DarValor(Section, "Pk")) = 0 Then
         MapInfo(Map).Pk = True
     Else
         MapInfo(Map).Pk = False
     End If
     
-    
-    MapInfo(Map).Terreno = GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "Terreno")
+    MapInfo(Map).Terreno = LeerMap.DarValor(Section, "Terreno")
+    MapInfo(Map).Zona = LeerMap.DarValor(Section, "Zona")
+    MapInfo(Map).Restringir = LeerMap.DarValor(Section, "Restringir")
+    MapInfo(Map).BackUp = val(LeerMap.DarValor(Section, "BACKUP"))
 
-    MapInfo(Map).Zona = GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "Zona")
-    
-    MapInfo(Map).Restringir = GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "Restringir")
-    
-    MapInfo(Map).BackUp = val(GetVar(App.Path & MapPath & "Mapa" & Map & ".dat", "Mapa" & Map, "BACKUP"))
+    Set LeerMap = Nothing
 
     frmCargando.cargar.Value = frmCargando.cargar.Value + 1
 Next Map
+
+Exit Sub
+
+man:
+    MsgBox ("Error durante la carga de mapas, el mapa " & Map & " contiene errores")
+    Call LogError(Date & " " & Err.Description & " " & Err.HelpContext & " " & Err.HelpFile & " " & Err.Source)
+
+    
+End Sub
 
 Exit Sub
 
@@ -1702,7 +1747,7 @@ Call WriteVar(UserFile, "GUILD", "ClanFundado", UserList(UserIndex).GuildInfo.Cl
 Call WriteVar(UserFile, "GUILD", "ClanesParticipo", Str(UserList(UserIndex).GuildInfo.ClanesParticipo))
 Call WriteVar(UserFile, "GUILD", "GuildPts", Str(UserList(UserIndex).GuildInfo.GuildPoints))
 
-'ñFueron modificados los atributos del usuario?
+'ï¿½Fueron modificados los atributos del usuario?
 If Not UserList(UserIndex).Flags.TomoPocion Then
     For LoopC = 1 To UBound(UserList(UserIndex).Stats.UserAtributos)
         Call WriteVar(UserFile, "ATRIBUTOS", "AT" & LoopC, val(UserList(UserIndex).Stats.UserAtributos(LoopC)))
