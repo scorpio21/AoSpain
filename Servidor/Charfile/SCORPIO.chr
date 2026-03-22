@@ -80,7 +80,7 @@ Arma= 11
 Escudo= 2
 Casco= 2
 LastIP=127.0.0.1
-Position=34-73-9
+Position=34-73-11
 [STATS]
 GLD= 0
 BANCO= 0
@@ -91,7 +91,7 @@ FIT= 1
 MaxSTA= 40
 MinSTA= 40
 MaxMAN= 105
-MinMAN= 69
+MinMAN= 105
 MaxHIT= 2
 MinHIT= 1
 MaxAGU= 100

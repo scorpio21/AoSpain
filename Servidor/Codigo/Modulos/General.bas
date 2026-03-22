@@ -542,7 +542,6 @@ Public Sub LogEjercitoCaos(Desc As String)
     Close #nfile
 End Sub
 
-End Sub
 
 
 Public Sub LogError(Desc As String)

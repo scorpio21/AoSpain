@@ -1,10 +1,10 @@
 Attribute VB_Name = "Mod_TCP"
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matï¿½as Fernando Pequeï¿½o
+'Copyright (C) 2002 Mataas Fernando Pequeao
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@ Attribute VB_Name = "Mod_TCP"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nï¿½mero 983 piso 7 dto A
+'Calle 3 namero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Cï¿½digo Postal 1900
-'Pablo Ignacio Mï¿½rquez
+'Cadigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 Option Explicit
@@ -60,8 +60,8 @@ Sub HandleData(ByVal Rdata As String)
     On Error Resume Next
     
     Dim retVal As Variant
-    Dim X As Integer
-    Dim Y As Integer
+    Dim x As Integer
+    Dim y As Integer
     Dim CharIndex As Integer
     Dim tempint As Integer
     Dim tempstr As String
@@ -94,9 +94,9 @@ Sub HandleData(ByVal Rdata As String)
                  frmtip.Visible = True
                  PrimeraVez = False
             End If
-            bTecho = IIf(MapData(UserPos.X, UserPos.Y).trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).trigger = 4, True, False)
+            bTecho = IIf(MapData(UserPos.x, UserPos.y).trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).trigger = 4, True, False)
             Call DoFogataFx
             Exit Sub
         Case "QTDL"              ' >>>>> Quitar Dialogos :: QTDL
@@ -115,7 +115,16 @@ Sub HandleData(ByVal Rdata As String)
             UserMeditar = False
             UserDescansar = False
             UserNavegando = False
-            frmConnect.Visible = True
+            
+            ' Si estÃ¡bamos en modo de cuenta, volver al panel de cuentas
+            If EstadoLogin = LoginAccount Then
+                Load frmCuent
+                frmCuent.Visible = True
+            Else
+                Load frmConnect
+                frmConnect.Visible = True
+            End If
+            
             Call frmMain.StopSound
             frmMain.IsPlaying = plNone
             bRain = False
@@ -213,16 +222,16 @@ Sub HandleData(ByVal Rdata As String)
             Comerciando = False
             '[/Alejo]
         Case "RECPASSOK"
-            Call MsgBox("¡¡ï¿½El password fue enviado con ï¿½xito!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
-            frmRecuperar.MousePointer = 0
+            Call MsgBox("!!!El password fue enviado con axito!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
+            frmRecuperarpj.MousePointer = 0
             frmMain.Socket1.Disconnect
-            Unload frmRecuperar
+            Unload frmRecuperarpj
             Exit Sub
         Case "RECPASSER"
-            Call MsgBox("¡¡ï¿½No coinciden los datos con los del personaje en el servidor, el password no ha sido enviado.!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
-            frmRecuperar.MousePointer = 0
+            Call MsgBox("!!!No coinciden los datos con los del personaje en el servidor, el password no ha sido enviado.!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
+            frmRecuperarpj.MousePointer = 0
             frmMain.Socket1.Disconnect
-            Unload frmRecuperar
+            Unload frmRecuperarpj
             Exit Sub
         Case "BORROK"
             Call MsgBox("El personaje ha sido borrado.", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Borrado de personaje")
@@ -265,7 +274,7 @@ Sub HandleData(ByVal Rdata As String)
                 Close #1
                 If tempint = Val(ReadField(2, Rdata, 44)) Then
                     'Si es la vers correcta cambiamos el mapa
-                    Call SwitchMap(UserMap, UserPos.X, UserPos.Y)
+                    Call SwitchMap(UserMap, UserPos.x, UserPos.y)
                     If bLluvia(UserMap) = 0 Then
                         If bRain Then
                             'Call StopSound("lluviain.MP3")
@@ -278,70 +287,70 @@ Sub HandleData(ByVal Rdata As String)
                     End If
                 Else
                     'vers incorrecta
-                    MsgBox "Error en los mapas, algun archivo ha sido modificado o esta daï¿½ado."
+                    MsgBox "Error en los mapas, algun archivo ha sido modificado o esta daaado."
                     Call LiberarObjetosDX
                     Call UnloadAllForms
                     End
                 End If
             Else
                 'no encontramos el mapa en el hd
-                MsgBox "Error en los mapas, algun archivo ha sido modificado o esta daï¿½ado."
+                MsgBox "Error en los mapas, algun archivo ha sido modificado o esta daaado."
                 Call LiberarObjetosDX
                 Call UnloadAllForms
                 Call EscribirGameIni(Config_Inicio)
                 End
             End If
             Exit Sub
-        Case "PU"                 ' >>>>> Actualiza Posiciï¿½n Usuario :: PU
+        Case "PU"                 ' >>>>> Actualiza Posician Usuario :: PU
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            MapData(UserPos.X, UserPos.Y).CharIndex = 0
-            UserPos.X = CInt(ReadField(1, Rdata, 44))
-            UserPos.Y = CInt(ReadField(2, Rdata, 44))
-            MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
-            CharList(UserCharIndex).POS = UserPos
+            MapData(UserPos.x, UserPos.y).CharIndex = 0
+            UserPos.x = CInt(ReadField(1, Rdata, 44))
+            UserPos.y = CInt(ReadField(2, Rdata, 44))
+            MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
+            CharList(UserCharIndex).Pos = UserPos
             Exit Sub
         Case "N2" ' <<--- Npc nos impacto (Ahorramos ancho de banda)
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             i = Val(ReadField(1, Rdata, 44))
             Select Case i
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLa criatura te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLa criatura te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLa criatura te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLa criatura te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLa criatura te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLa criatura te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "U2" ' <<--- El user ataco un npc e impacato
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a la criatura por " & Rdata & "!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a la criatura por " & Rdata & "!!", 255, 0, 0, True, False, False)
             Exit Sub
         Case "U3" ' <<--- El user ataco un user y falla
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & Rdata & " te ataco y fallo!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, "aa" & Rdata & " te ataco y fallo!!", 255, 0, 0, True, False, False)
             Exit Sub
         Case "N4" ' <<--- user nos impacto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             i = Val(ReadField(1, Rdata, 44))
             Select Case i
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aa" & ReadField(3, Rdata, 44) & " te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aa" & ReadField(3, Rdata, 44) & " te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aa" & ReadField(3, Rdata, 44) & " te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aa" & ReadField(3, Rdata, 44) & " te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aa" & ReadField(3, Rdata, 44) & " te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aa" & ReadField(3, Rdata, 44) & " te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "N5" ' <<--- impactamos un user
@@ -349,17 +358,17 @@ Sub HandleData(ByVal Rdata As String)
             i = Val(ReadField(1, Rdata, 44))
             Select Case i
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a " & ReadField(3, Rdata, 44) & " en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a " & ReadField(3, Rdata, 44) & " en el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a " & ReadField(3, Rdata, 44) & " en el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a " & ReadField(3, Rdata, 44) & " en la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a " & ReadField(3, Rdata, 44) & " en la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "aaLe has pegado a " & ReadField(3, Rdata, 44) & " en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "||"                 ' >>>>> Dialogo de Usuarios y NPCs :: ||
@@ -387,20 +396,20 @@ Sub HandleData(ByVal Rdata As String)
         Case "IP"                ' >>>>> Indice de Personaje de Usuario :: IP
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             UserCharIndex = Val(Rdata)
-            UserPos = CharList(UserCharIndex).POS
+            UserPos = CharList(UserCharIndex).Pos
             Exit Sub
         Case "CC"              ' >>>>> Crear un Personaje :: CC
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             CharIndex = ReadField(4, Rdata, 44)
-            X = ReadField(5, Rdata, 44)
-            Y = ReadField(6, Rdata, 44)
+            x = ReadField(5, Rdata, 44)
+            y = ReadField(6, Rdata, 44)
             
             CharList(CharIndex).Fx = Val(ReadField(9, Rdata, 44))
             CharList(CharIndex).FxLoopTimes = Val(ReadField(10, Rdata, 44))
-            CharList(CharIndex).Nombre = ReadField(12, Rdata, 44)
+            CharList(CharIndex).nombre = ReadField(12, Rdata, 44)
             CharList(CharIndex).Criminal = Val(ReadField(13, Rdata, 44))
             
-            Call MakeChar(CharIndex, ReadField(1, Rdata, 44), ReadField(2, Rdata, 44), ReadField(3, Rdata, 44), X, Y, Val(ReadField(7, Rdata, 44)), Val(ReadField(8, Rdata, 44)), Val(ReadField(11, Rdata, 44)))
+            Call MakeChar(CharIndex, ReadField(1, Rdata, 44), ReadField(2, Rdata, 44), ReadField(3, Rdata, 44), x, y, Val(ReadField(7, Rdata, 44)), Val(ReadField(8, Rdata, 44)), Val(ReadField(11, Rdata, 44)))
             
             Exit Sub
         Case "BP"             ' >>>>> Borrar un Personaje :: BP
@@ -426,7 +435,7 @@ Sub HandleData(ByVal Rdata As String)
         Case "CP"             ' >>>>> Cambiar Apariencia Personaje :: CP
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             CharIndex = Val(ReadField(1, Rdata, 44))
-            CharList(CharIndex).muerto = Val(ReadField(3, Rdata, 44)) = 500
+            CharList(CharIndex).Muerto = Val(ReadField(3, Rdata, 44)) = 500
             CharList(CharIndex).Body = BodyData(Val(ReadField(2, Rdata, 44)))
             CharList(CharIndex).Head = HeadData(Val(ReadField(3, Rdata, 44)))
             CharList(CharIndex).Heading = Val(ReadField(4, Rdata, 44))
@@ -441,19 +450,19 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "HO"            ' >>>>> Crear un Objeto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            X = Val(ReadField(2, Rdata, 44))
-            Y = Val(ReadField(3, Rdata, 44))
+            x = Val(ReadField(2, Rdata, 44))
+            y = Val(ReadField(3, Rdata, 44))
             'ID DEL OBJ EN EL CLIENTE
-            MapData(X, Y).ObjGrh.GrhIndex = Val(ReadField(1, Rdata, 44))
-            InitGrh MapData(X, Y).ObjGrh, MapData(X, Y).ObjGrh.GrhIndex
+            MapData(x, y).ObjGrh.GrhIndex = Val(ReadField(1, Rdata, 44))
+            InitGrh MapData(x, y).ObjGrh, MapData(x, y).ObjGrh.GrhIndex
             Exit Sub
         Case "BO"           ' >>>>> Borrar un Objeto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            X = Val(ReadField(1, Rdata, 44))
-            Y = Val(ReadField(2, Rdata, 44))
-            MapData(X, Y).ObjGrh.GrhIndex = 0
+            x = Val(ReadField(1, Rdata, 44))
+            y = Val(ReadField(2, Rdata, 44))
+            MapData(x, y).ObjGrh.GrhIndex = 0
             Exit Sub
-        Case "BQ"           ' >>>>> Bloquear Posiciï¿½n
+        Case "BQ"           ' >>>>> Bloquear Posician
             Dim b As Byte
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             MapData(Val(ReadField(1, Rdata, 44)), Val(ReadField(2, Rdata, 44))).Blocked = Val(ReadField(3, Rdata, 44))
@@ -502,17 +511,17 @@ Sub HandleData(ByVal Rdata As String)
             Else
                 bK = CLng(ReadField(1, Rdata, Asc(",")))
                 bO = 100 'CInt(ReadField(1, Rdata, Asc(",")))
-                Call Login(ValidarLoginMSG(CInt(ReadField(2, Rdata, Asc(",")))))
+                Call Login
             End If
             Exit Sub
         Case "BKW"                  ' >>>>> Pausa :: BKW
             pausa = Not pausa
             Exit Sub
         Case "LLU"                  ' >>>>> LLuvia!
-            If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
-            bTecho = IIf(MapData(UserPos.X, UserPos.Y).trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).trigger = 4, True, False)
+            If Not InMapBounds(UserPos.x, UserPos.y) Then Exit Sub
+            bTecho = IIf(MapData(UserPos.x, UserPos.y).trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).trigger = 4, True, False)
             If Not bRain Then
                 bRain = True
             Else
@@ -602,7 +611,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case Robar
                     Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre la victima...", 100, 100, 120, 0, 0)
                 Case Talar
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el ï¿½rbol...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el arbol...", 100, 100, 120, 0, 0)
                 Case Mineria
                     Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el yacimiento...", 100, 100, 120, 0, 0)
                 Case FundirMetal
@@ -743,11 +752,35 @@ Sub HandleData(ByVal Rdata As String)
             Next i
             frmSpawnList.Show
             Exit Sub
+       
+        Case "INI"
+            Rdata = Right$(Rdata, Len(Rdata) - 3)
+            If Left$(Rdata, 2) = "AC" Then
+                Rdata = Right$(Rdata, Len(Rdata) - 2)
+                If Rdata = "0" Then
+                    frmCuent.Label3.Caption = nombrecuent
+                Else
+                    frmCuent.Label3.Caption = ReadField(1, Rdata, 44)
+                End If
+                Call LogError("DEBUG: Cliente va a mostrar frmCuent")
+                Load frmCuent
+                frmCuent.Show
+                Call LogError("DEBUG: frmCuent.Show ejecutado")
+                Unload frmConnect
+                Exit Sub
+            End If
         Case "ERR"
             Rdata = Right$(Rdata, Len(Rdata) - 3)
-            frmOldPersonaje.MousePointer = 1
-            frmPasswd.MousePointer = 1
-            If Not frmCrearPersonaje.Visible Then frmMain.Socket1.Disconnect
+            ' Evitar cuelgue si los formularios no estÃ¡n cargados
+            On Error Resume Next
+            If frmOldPersonaje.Visible Then frmOldPersonaje.MousePointer = 1
+            If frmPasswd.Visible Then frmPasswd.MousePointer = 1
+            On Error GoTo 0
+            
+            ' Si estamos creando personaje, no desconectar - solo mostrar error
+            If Not frmCrearPersonaje.Visible Then 
+                frmMain.Socket1.Disconnect
+            End If
             MsgBox Rdata
             Exit Sub
     End Select
@@ -855,6 +888,33 @@ Sub HandleData(ByVal Rdata As String)
         Case "MEDOK"            ' >>>>> Meditar OK :: MEDOK
             UserMeditar = Not UserMeditar
             Exit Sub
+         Case "INIAC"
+            Rdata = Right$(Rdata, Len(Rdata) - 5)
+            frmCuent.Label3.Caption = ReadField(1, Rdata, 44)
+            frmCuent.Show
+            Unload frmConnect
+            Exit Sub
+        Case "ADDPJ"
+            Rdata = Right$(Rdata, Len(Rdata) - 5)
+            
+            rcvName = ReadField(1, Rdata, 44)
+            rcvIndex = ReadField(2, Rdata, 44)
+            rcvHead = ReadField(3, Rdata, 44)
+            rcvBody = ReadField(4, Rdata, 44)
+            rcvWeapon = ReadField(5, Rdata, 44)
+            rcvShield = ReadField(6, Rdata, 44)
+            rcvCasco = ReadField(7, Rdata, 44)
+            rcvCrimi = ReadField(8, Rdata, 44)
+            rcvBaned = ReadField(9, Rdata, 44)
+            rcvLevel = ReadField(10, Rdata, 44)
+            rcvClase = ReadField(11, Rdata, 44)
+            rcvMuerto = ReadField(12, Rdata, 44)
+            
+            If rcvCrimi = True Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
+            If rcvCrimi = False Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
+            
+            Call DibujarTodo(rcvIndex - 1, rcvBody, rcvHead, rcvCasco, rcvShield, rcvWeapon, rcvBaned, rcvName, rcvLevel, rcvClase, rcvMuerto)
+            Exit Sub
         Case "NOVER"             ' >>>>> Invisible :: NOVER
             Rdata = Right$(Rdata, Len(Rdata) - 5)
             CharIndex = Val(ReadField(1, Rdata, 44))
@@ -863,6 +923,36 @@ Sub HandleData(ByVal Rdata As String)
     End Select
     
     Select Case Left(sData, 6)
+        Case "GENPAS" 'GENERAR PASSWORD PARA RECUPERAR CUENTA [Dylan.-]
+        Rdata = Right(Rdata, Len(Rdata) - 6)
+        Rdata = Right$(Rdata, Len(Rdata) - 6)
+        Dim PassGenerada As String
+        PassGenerada = Rdata
+        'frmMensaje.Show
+        MsgBox "Su nueva contraseÃ±a es: " & PassGenerada & ". Asegurate de cambiar la contraseÃ±a antes de entrar en un personaje, de lo contrario no podras acceder a tus personajes."
+        Unload frmRecuperar
+        Exit Sub
+        Case "PEDPRE" 'ENVIO DE PREGUNTA SECRETA [Dylan.-]
+        Rdata = Right$(Rdata, Len(Rdata) - 6)
+        If frmCambiarPass.Visible = True Then
+        frmCambiarPass.pregunta.Caption = Rdata
+        Exit Sub
+        End If
+        If frmRecuperar.Visible = True Then
+        frmRecuperar.Height = 4980
+        frmRecuperar.txtMail.Locked = True
+        frmRecuperar.txtNombre.Locked = True
+        frmRecuperar.txtPregunta.Visible = True
+        frmRecuperar.txtRespuesta.Visible = True
+        frmRecuperar.txtRespuesta.SetFocus
+        frmRecuperar.Recuperar.Visible = True
+        frmRecuperar.Picture = LoadPicture(App.Path & "\Graficos\Principal\Recuperar2Fin.jpg")
+        frmRecuperar.Siguiente.Visible = False
+        frmRecuperar.Cancelar.Visible = False
+        frmRecuperar.Picture = LoadPicture(App.Path & "\Graficos\Principal\Recuperar2.jpg")
+        frmRecuperar.txtPregunta.Caption = Rdata
+        Exit Sub
+        End If
         Case "NSEGUE"
             UserCiego = False
             Exit Sub
@@ -922,7 +1012,7 @@ Sub HandleData(ByVal Rdata As String)
             Call frmUserRequest.recievePeticion(Rdata)
             Call frmUserRequest.Show(vbModeless, frmMain)
             Exit Sub
-        Case "TRANSOK"           ' Transacciï¿½n OK :: TRANSOK
+        Case "TRANSOK"           ' Transaccian OK :: TRANSOK
             If frmComerciar.Visible Then
                 i = 1
                 Do While i <= UBound(UserInventory)
@@ -1030,41 +1120,43 @@ retcode = frmMain.Socket1.Write(sdData, Len(sdData))
 
 End Sub
 
-Sub Login(ByVal valcode As Integer)
-Dim Passcliente As String
-Passcliente = "orophin"
-
-'Personaje grabado
-If SendNewChar = False Then
-    SendData ("PASSCL" & Passcliente) 'Comprobar pass del cliente ahora
-    SendData ("OLOGIN" & UserName & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & valcode)
-End If
-
-'Crear personaje
-If SendNewChar = True Then
-    SendData ("PASSCL" & Passcliente) 'Comprobar pass del cliente ahora
-    SendData ("NLOGIN" & UserName & "," & UserPassword _
-    & "," & 0 & "," & 0 & "," _
-    & App.Major & "." & App.Minor & "." & App.Revision & _
-    "," & UserRaza & "," & UserSexo & "," & UserClase & "," & _
-    UserAtributos(1) & "," & UserAtributos(2) & "," & UserAtributos(3) _
-    & "," & UserAtributos(4) & "," & UserAtributos(5) _
-     & "," & UserSkills(1) & "," & UserSkills(2) _
-     & "," & UserSkills(3) & "," & UserSkills(4) _
-     & "," & UserSkills(5) & "," & UserSkills(6) _
-     & "," & UserSkills(7) & "," & UserSkills(8) _
-     & "," & UserSkills(9) & "," & UserSkills(10) _
-     & "," & UserSkills(11) & "," & UserSkills(12) _
-     & "," & UserSkills(13) & "," & UserSkills(14) _
-     & "," & UserSkills(15) & "," & UserSkills(16) _
-     & "," & UserSkills(17) & "," & UserSkills(18) _
-     & "," & UserSkills(19) & "," & UserSkills(20) _
-     & "," & UserSkills(21) & "," & UserSkills(22) _
-     & "," & UserEmail & "," & UserHogar & "," & valcode)          '[Efestos]Nuevo skill 22
-End If
-
+Sub Login()
+    If EstadoLogin = Normal Then
+        SendData ("OOLOGI" & PJClickeado & "," & nombrecuent)
+    ElseIf EstadoLogin = CrearNuevoPj Then
+        Call LogError("DEBUG: Cliente enviando NLOGIN - nombrecuent=" & nombrecuent & " UserName=" & UserName & UserRaza & "," & UserSexo & "," & UserSexo & "," & UserClase & "," & UserHogar _
+                & "," & UserSkills(1) & "," & UserSkills(2) _
+                & "," & UserSkills(3) & "," & UserSkills(4) _
+                & "," & UserSkills(5) & "," & UserSkills(6) _
+                & "," & UserSkills(7) & "," & UserSkills(8) _
+                & "," & UserSkills(9) & "," & UserSkills(10) _
+                & "," & UserSkills(11) & "," & UserSkills(12) _
+                & "," & UserSkills(13) & "," & UserSkills(14) _
+                & "," & UserSkills(15) & "," & UserSkills(16) _
+                & "," & UserSkills(17) & "," & UserSkills(18) _
+                & "," & UserSkills(19) & "," & UserSkills(20) _
+                & "," & UserSkills(21) & "," & nombrecuent)
+        SendData ("NLOGIN" & UserName & "," & UserRaza & "," & UserSexo & "," & UserSexo & "," & UserClase & "," & UserHogar _
+                & "," & UserSkills(1) & "," & UserSkills(2) _
+                & "," & UserSkills(3) & "," & UserSkills(4) _
+                & "," & UserSkills(5) & "," & UserSkills(6) _
+                & "," & UserSkills(7) & "," & UserSkills(8) _
+                & "," & UserSkills(9) & "," & UserSkills(10) _
+                & "," & UserSkills(11) & "," & UserSkills(12) _
+                & "," & UserSkills(13) & "," & UserSkills(14) _
+                & "," & UserSkills(15) & "," & UserSkills(16) _
+                & "," & UserSkills(17) & "," & UserSkills(18) _
+                & "," & UserSkills(19) & "," & UserSkills(20) _
+                & "," & UserSkills(21) & "," & nombrecuent)
+     ElseIf EstadoLogin = CrearAccount Then
+     With frmCrearAccount
+        SendData ("NACCNT" & .nombre & "," & .Pass & "," & .Mail & "," & .pregunta & "," & .respuesta)
+End With
+ 
+    ElseIf EstadoLogin = BorrarPj Then
+        SendData ("BORR" & PJClickeado)
+    ElseIf EstadoLogin = LoginAccount Then
+        'MsgBox "Enviando paquete ALOGIN para cuenta: " & nombrecuent
+        SendData ("ALOGIN" & nombrecuent & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & MD5HushYo)
+    End If
 End Sub
-
-
-
-

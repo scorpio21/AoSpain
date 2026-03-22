@@ -147,6 +147,55 @@ Begin VB.Form frmConnect
       Visible         =   0   'False
       Width           =   2895
    End
+   Begin VB.TextBox PasswordTxt 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   225
+      IMEMode         =   3  'DISABLE
+      Left            =   1695
+      PasswordChar    =   "*"
+      TabIndex        =   9
+      Top             =   2500
+      Width           =   1875
+   End
+   Begin VB.TextBox NameTxt 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   225
+      Left            =   3720
+      TabIndex        =   8
+      Top             =   2500
+      Width           =   2895
+   End
+   Begin VB.Image Image2 
+      Height          =   615
+      Left            =   9435
+      MousePointer    =   99  'Custom
+      Top             =   8500
+      Width           =   2205
+   End
    Begin VB.Image Image1 
       Height          =   615
       Index           =   6
@@ -252,10 +301,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Mataas Fernando Pequeao
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -279,17 +328,17 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 namero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Cadigo Postal 1900
+'Pablo Ignacio Marquez
 '
-'Matías Fernando Pequeño
+'Mataas Fernando Pequeao
 'matux@fibertel.com.ar
 'www.noland-studios.com.ar
 'Acoyte 678 Piso 17 Dto B
 'Capital Federal, Buenos Aires - Republica Argentina
-'Código Postal 1405
+'Cadigo Postal 1405
 
 Option Explicit
 
@@ -300,7 +349,7 @@ Dim i As Integer
 lst_servers.Clear
 
 For i = 1 To UBound(ServersLst)
-    lst_servers.AddItem ServersLst(i).desc
+    lst_servers.AddItem ServersLst(i).Desc
 Next i
 
 End Sub
@@ -323,7 +372,7 @@ Else
 End If
 
 Call CargarLst
-DescTxt.Text = ServersLst(CurServer).desc
+DescTxt.Text = ServersLst(CurServer).Desc
 nDirectorio = Dir(App.Path & "\Web", vbDirectory)
 If nDirectorio <> "Web" Then MkDir (App.Path & "\Web")
 
@@ -334,18 +383,18 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "aaGracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -391,7 +440,7 @@ Loop
 '[Efestos]
  '[CODE]:MatuX
  '
- '  El código para mostrar la versión se genera acá para
+ '  El cadigo para mostrar la versian se genera aca para
  ' evitar que por X razones luego desaparezca, como suele
  ' pasar a veces :)
     version.Caption = "v" & App.Major & "." & App.Minor & " Beta: 1"
@@ -409,7 +458,7 @@ Dim nArchivo As String
 Dim eArchivo As String
 
 If Not IsIp(IPTxt) And CurServer <> 0 Then
-    If MsgBox("Atencion, está intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
+    If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. aDesea continuar?", vbYesNo) = vbNo Then
         If CurServer <> 0 Then
             IPTxt = ServersLst(CurServer).Ip
             PortTxt = ServersLst(CurServer).Puerto
@@ -427,19 +476,50 @@ End If
 
 Call PlayWaveDS(SND_CLICK)
 
-Select Case Index
+    Select Case Index
     Case 0
-        
-        If Musica = 0 Then
-            CurMidi = DirMidi & "7.mid"
-            LoopMidi = 1
-            Call CargarMIDI(CurMidi)
-            Call Play_Midi
-        End If
-        
-        frmCrearPersonaje.Show vbModal
+        EstadoLogin = CrearAccount
+        'MsgBox "Intentando conectar a: " & CurServerIp() & ":" & CurServerPort()
+        If frmMain.Socket1.Connected Then
+             frmMain.Socket1.Disconnect
+             frmMain.Socket1.Cleanup
+             DoEvents
+         End If
+         frmMain.Socket1.HostAddress = CurServerIp
+         frmMain.Socket1.RemotePort = CurServerPort
+         frmMain.Socket1.Connect
     Case 1
-        frmOldPersonaje.Show vbModal
+        nombrecuent = NameTxt.Text
+        passcuent = PasswordTxt.Text
+        'MsgBox "Intentando conectar a: " & CurServerIp() & ":" & CurServerPort()
+        If frmMain.Socket1.Connected Then
+        frmMain.Socket1.Disconnect
+        frmMain.Socket1.Cleanup
+        DoEvents
+        End If
+      '  If frmConnect.MousePointer = 99 Then
+      '      Exit Sub
+     '   End If
+        
+        
+        'update user info
+        nombrecuent = NameTxt.Text
+        Dim aux As String
+        aux = PasswordTxt.Text
+#If SeguridadAlkon Then
+        UserPassword = MD5.GetMD5String(aux)
+        Call MD5.MD5Reset
+#Else
+        UserPassword = aux
+#End If
+        If CheckUserData(False) = True Then
+            EstadoLogin = LoginAccount
+            Me.MousePointer = 99
+            frmMain.Socket1.HostAddress = CurServerIp
+            frmMain.Socket1.RemotePort = CurServerPort
+            frmMain.Socket1.Connect
+ 
+        End If
     Case 2
         frmBorrar.Show vbModal
     Case 3
@@ -525,7 +605,7 @@ End Sub
 
 Private Sub imgGetPass_Click()
     Call PlayWaveDS(SND_CLICK)
-    Call frmRecuperar.Show(vbModal, frmConnect)
+    Call frmRecuperarpj.Show(vbModal, frmConnect)
 End Sub
 
 'Private Sub imgServArgentina_Click()
@@ -544,7 +624,7 @@ End Sub
 
 Private Sub lst_servers_Click()
 CurServer = lst_servers.ListIndex + 1
-DescTxt = ServersLst(CurServer).desc
+DescTxt = ServersLst(CurServer).Desc
 IPTxt = ServersLst(CurServer).Ip
 PortTxt = ServersLst(CurServer).Puerto
 End Sub

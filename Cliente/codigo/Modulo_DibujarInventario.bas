@@ -1,10 +1,10 @@
 Attribute VB_Name = "DibujarInventario"
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 M�rquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Mat�as Fernando Peque�o
+'Copyright (C) 2002 Mataas Fernando Pequeao
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@ Attribute VB_Name = "DibujarInventario"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n�mero 983 piso 7 dto A
+'Calle 3 namero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'C�digo Postal 1900
-'Pablo Ignacio M�rquez
+'Cadigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 
@@ -60,9 +60,9 @@ Private rBoxFrame(2) As RECT
 Private iFrameMod    As Integer
 
 
-Function ClicEnItemElegido(X As Integer, Y As Integer) As Boolean
+Function ClicEnItemElegido(x As Integer, Y As Integer) As Boolean
 bInvMod = True
-mx = X \ 32 + 1
+mx = x \ 32 + 1
 my = Y \ 32 + 1
 If ItemElegido = 0 Or FLAGORO Then
     ClicEnItemElegido = False
@@ -71,11 +71,11 @@ Else
 End If
 End Function
 
-Sub ItemClick(X As Integer, Y As Integer)
+Sub ItemClick(x As Integer, Y As Integer)
 Dim lPreItem As Long
 
 bInvMod = False
-mx = X \ 32 + 1
+mx = x \ 32 + 1
 my = Y \ 32 + 1
 
 lPreItem = (mx + (my - 1) * 5) + OffsetDelInv

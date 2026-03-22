@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "cswsk32.ocx"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -311,7 +311,7 @@ Begin VB.Form frmMain
          Left            =   2040
          MouseIcon       =   "frmMain.frx":1D20B
          MousePointer    =   99  'Custom
-         ToolTipText     =   "Muestra las estadísticas de tu pj"
+         ToolTipText     =   "Muestra las estadï¿½sticas de tu pj"
          Top             =   6840
          Width           =   1290
       End
@@ -548,10 +548,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Mataas Fernando Pequeao
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -575,10 +575,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 namero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Cadigo Postal 1900
+'Pablo Ignacio Marquez
 
 Option Explicit
 
@@ -594,7 +594,7 @@ Dim gD As DSBUFFERDESC
 Dim gW As WAVEFORMATEX
 Dim gFileName As String
 Dim dsE As DirectSoundEnum
-Dim POS(0) As DSBPOSITIONNOTIFY
+Dim Pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
 Dim endEvent As Long
@@ -616,7 +616,7 @@ Private Function LoadSoundBufferFromFile(sFile As String) As Integer
             .lReserved = 0
         End With
         Set gDSB = DirectSound.CreateSoundBufferFromFile(DirSound & sFile, gD, gW)
-        With POS(0)
+        With Pos(0)
             .hEventNotify = endEvent
             .lOffset = -1
         End With
@@ -632,9 +632,9 @@ err_out:
 End Function
 
 
-Public Sub Play(ByVal Nombre As String, Optional ByVal LoopSound As Boolean = False)
+Public Sub Play(ByVal nombre As String, Optional ByVal LoopSound As Boolean = False)
     If Fx = 1 Then Exit Sub
-    Call LoadSoundBufferFromFile(Nombre)
+    Call LoadSoundBufferFromFile(nombre)
 
     If LoopSound Then
         gDSB.Play DSBPLAY_LOOPING
@@ -897,8 +897,8 @@ Private Sub Form_Load()
    
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    MouseX = X
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+    MouseX = x
     MouseY = Y
 End Sub
 
@@ -999,25 +999,25 @@ Private Sub picInv_DblClick()
     If ItemElegido <> 0 Then SendData "USA" & ItemElegido
 End Sub
 
-Private Sub picInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInv_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Dim mx As Integer
     Dim my As Integer
     Dim aux As Integer
-    mx = X \ 32 + 1
+    mx = x \ 32 + 1
     my = Y \ 32 + 1
     aux = (mx + (my - 1) * 5) + OffsetDelInv
     If aux > 0 And aux < MAX_INVENTORY_SLOTS Then _
         picInv.ToolTipText = UserInventory(aux).Name
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Call PlayWaveDS(SND_CLICK)
 
-    If (Button = vbRightButton) And (ClicEnItemElegido(CInt(X), CInt(Y))) Then
+    If (Button = vbRightButton) And (ClicEnItemElegido(CInt(x), CInt(Y))) Then
         PopupMenu mnuObj
     End If
 
-    Call ItemClick(CInt(X), CInt(Y))
+    Call ItemClick(CInt(x), CInt(Y))
 End Sub
 
 Private Sub RecTxt_Change()
@@ -1093,11 +1093,12 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''
 
 Private Sub Socket1_Connect()
+    'MsgBox "Socket1_Connect disparado!"
     Dim ServerIp As String
     Dim Temporal1 As Long
     Dim Temporal As Long
-    
-    
+   
+   
     ServerIp = Socket1.PeerAddress
     Temporal = InStr(1, ServerIp, ".")
     Temporal1 = ((Mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
@@ -1109,79 +1110,112 @@ Private Sub Socket1_Connect()
     Temporal1 = Temporal1 + (Mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
     ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
     MixedKey = (Temporal1 + ServerIp)
-    
+   
     Second.Enabled = True
-    
-    If frmCrearPersonaje.Visible Then
-        Call SendData("gIvEmEvAlcOde")
-    ElseIf Not frmRecuperar.Visible Then
-        Call SendData("gIvEmEvAlcOde")
-    Else
-        Dim cmd$
-        cmd$ = "PASSRECO" & frmRecuperar.txtNombre.Text & "~" & frmRecuperar.txtCorreo
-        frmMain.Socket1.Write cmd$, Len(cmd$)
+   
+    'If frmCrearPersonaje.Visible Then
+    If EstadoLogin = E_MODO.CrearNuevoPj Then
+        Call Login
+ 
+    ElseIf EstadoLogin = E_MODO.Normal Then
+        Call Login
+ 
+    ElseIf EstadoLogin = E_MODO.Dados Then
+   frmCrearPersonaje.Show vbModal
+   
+   ElseIf EstadoLogin = E_MODO.CrearAccount Then
+   frmCrearAccount.Show vbModal
+   
+   ElseIf EstadoLogin = E_MODO.LoginAccount Then
+   Call Login
+   
+   ElseIf EstadoLogin = E_MODO.BorrarPj Then
+   Call Login
+ 
     End If
 End Sub
-
+ 
 Private Sub Socket1_Disconnect()
-    LastSecond = 0
+    Dim i As Long
+    
+    
     Second.Enabled = False
     logged = False
     Connected = False
     
-        
+    Socket1.Cleanup
+    
+    frmConnect.MousePointer = vbNormal
+    
+    If frmCrearPersonaje.Visible = True Then 
+    Load frmConnect
     frmConnect.Visible = True
+End If
+    
+    On Local Error Resume Next
+    For i = 0 To Forms.Count - 1
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+            Unload Forms(i)
+        End If
+    Next i
+    On Local Error GoTo 0
     
     frmMain.Visible = False
-
+ 
     pausa = False
     UserMeditar = False
-
+    
+#If SegudidadAlkon Then
+    LOGGING = False
+    LOGSTRING = False
+    LastPressed = 0
+    LastMouse = False
+    LastAmount = 0
+#End If
+ 
     UserClase = ""
     UserSexo = ""
     UserRaza = ""
     UserEmail = ""
-    bO = 100
     
-    Dim i As Integer
     For i = 1 To NUMSKILLS
         UserSkills(i) = 0
     Next i
-
+ 
     For i = 1 To NUMATRIBUTOS
         UserAtributos(i) = 0
     Next i
-
+ 
     SkillPoints = 0
     Alocados = 0
-
-    Dialogos.UltimoDialogo = 0
-    Dialogos.CantidadDialogos = 0
+ 
 End Sub
-
+ 
 Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Response As Integer)
+    MsgBox "Error de socket: " & ErrorCode & " - " & ErrorString
     '*********************************************
     'Handle socket errors
     '*********************************************
     If ErrorCode = 24036 Then
-        Call MsgBox("Por favor espere, intentando completar conexion.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+    frmMensaje.Show
+        frmMensaje.msg.Caption = "Por favor espere, intentando completar conexion."
         Exit Sub
     End If
-    
-    Call MsgBox(ErrorString, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+    frmMensaje.Show
+    frmMensaje.msg.Caption = "Conexion rechazada por el Servidor"
     frmConnect.MousePointer = 1
     Response = 0
-    LastSecond = 0
+ 
     Second.Enabled = False
-
+ 
     frmMain.Socket1.Disconnect
     
-    If frmOldPersonaje.Visible Then
-        frmOldPersonaje.Visible = False
+    If frmConnect.Visible Then
+        frmConnect.Visible = False
     End If
-
+ 
     If Not frmCrearPersonaje.Visible Then
-        If Not frmBorrar.Visible And Not frmRecuperar.Visible Then
+        If Not frmCambiarPass.Visible Then
             frmConnect.Show
         End If
     Else
@@ -1190,7 +1224,7 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
 End Sub
 
 Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
-    Dim loopc As Integer
+    Dim LoopC As Integer
 
     Dim RD As String
     Dim rBuffer(1 To 500) As String
@@ -1213,18 +1247,18 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
 
     'Check for more than one line
     sChar = 1
-    For loopc = 1 To Len(RD)
+    For LoopC = 1 To Len(RD)
 
-        tChar = Mid$(RD, loopc, 1)
+        tChar = Mid$(RD, LoopC, 1)
 
         If tChar = ENDC Then
             CR = CR + 1
-            Echar = loopc - sChar
+            Echar = LoopC - sChar
             rBuffer(CR) = Mid$(RD, sChar, Echar)
-            sChar = loopc + 1
+            sChar = LoopC + 1
         End If
 
-    Next loopc
+    Next LoopC
 
     'Check for broken line and save for next time
     If Len(RD) - (sChar - 1) <> 0 Then
@@ -1232,9 +1266,9 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
     End If
 
     'Send buffer to Handle data
-    For loopc = 1 To CR
-        Call HandleData(rBuffer(loopc))
-    Next loopc
+    For LoopC = 1 To CR
+        Call HandleData(rBuffer(LoopC))
+    Next LoopC
 End Sub
 
 

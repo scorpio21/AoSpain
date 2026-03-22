@@ -1,7 +1,7 @@
 Attribute VB_Name = "Mod_Declaraciones"
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
 '
@@ -27,13 +27,43 @@ Attribute VB_Name = "Mod_Declaraciones"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nï¿½mero 983 piso 7 dto A
+'Calle 3 namero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Cï¿½digo Postal 1900
-'Pablo Ignacio Mï¿½rquez
+'Cadigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 Option Explicit
+
+Public nombrecuent As String
+Public passcuent As String
+Public EstadoLogin As E_MODO
+
+Public Enum E_MODO
+    Normal = 1
+    CrearNuevoPj = 2
+    Dados = 3
+    CrearAccount = 4
+    LoginAccount = 5
+    BorrarPj = 6
+End Enum
+
+Public PJClickeado As String
+ 
+Public rcvName As String
+Public rcvHead As Integer
+Public rcvBody As Integer
+Public rcvShield As Integer
+Public rcvWeapon As Integer
+Public rcvCasco As Integer
+Public rcvIndex As Integer
+Public rcvCrimi As Boolean
+Public rcvBaned As Integer
+Public rcvLevel As Integer
+Public rcvClase As String
+Public rcvMuerto As Integer
+ 
+Public PJSAmount As Integer
 
 Public Type TileMap
     bloqueado As Byte
@@ -47,7 +77,7 @@ Public RawServersList As String
 Public Type tServerInfo
     Ip As String
     Puerto As Integer
-    Desc As String
+    desc As String
     PassRecPort As Integer
 End Type
 
@@ -143,7 +173,7 @@ Public Const Robar = 3
 Public Const Tacticas = 4
 Public Const Armas = 5
 Public Const Meditar = 6
-Public Const Apuñalar = 7
+Public Const Apuaalar = 7
 Public Const Ocultarse = 8
 Public Const Supervivencia = 9
 Public Const Talar = 10
@@ -334,7 +364,7 @@ Public Type tIndiceFx
     OffsetY As Integer
 End Type
 
-'ï¿½Carga los txt de la web?
+'aCarga los txt de la web?
 Public DescargarTxt(4) As Boolean
 
 

@@ -30,6 +30,11 @@ Attribute VB_Name = "Declaraciones"
 'Pablo Ignacio MÑrquez
 
 Option Explicit
+
+Public PJEnCuenta As String
+Public PJEnCuentaB As String
+Public totalAccounts As Long
+Public totalPjs As Long
 Public Const especial = 30
 Public MixedKey As Long
 Public ServerIp As String
@@ -146,7 +151,7 @@ Public Const MINATRIBUTOS = 6
 Public Const LingoteHierro = 386
 Public Const LingotePlata = 387
 Public Const LingoteOro = 388
-Public Const LeÑa = 58
+Public Const Leña = 58
 
 
 Public Const MAXNPCS = 10000
@@ -180,7 +185,7 @@ Public Const NPCTYPE_GUARDIASMALVADOS = 8
 Public Const FX_TELEPORT_INDEX = 1
 
 
-Public Const MIN_ApuñalaR = 10
+Public Const MIN_ApuÑalaR = 10
 
 '********** CONSTANTANTES ***********
 Public Const NUMSKILLS = 22 '[Efestos]
@@ -226,7 +231,7 @@ Public Const Robar = 3
 Public Const Tacticas = 4
 Public Const Armas = 5
 Public Const Meditar = 6
-Public Const Apuñalar = 7
+Public Const ApuÑalar = 7
 Public Const Ocultarse = 8
 Public Const Supervivencia = 9
 Public Const Talar = 10
@@ -264,17 +269,17 @@ Public Const AdicionalSTLeÑador = 23
 Public Const AdicionalSTPescador = 20
 Public Const AdicionalSTMinero = 25
 
-'Tamaño del mapa
+'TamaÑo del mapa
 Public Const XMaxMapSize = 100
 Public Const XMinMapSize = 1
 Public Const YMaxMapSize = 100
 Public Const YMinMapSize = 1
 
-'Tamaño del tileset
+'TamaÑo del tileset
 Public Const TileSizeX = 32
 Public Const TileSizeY = 32
 
-'Tamaño en Tiles de la pantalla de visualizacion
+'TamaÑo en Tiles de la pantalla de visualizacion
 Public Const XWindow = 17
 Public Const YWindow = 13
 
@@ -541,6 +546,7 @@ Type Char
     loops As Integer
     
     Heading As Byte
+    Account As String
 End Type
 
 'Tipos de objetos
@@ -559,7 +565,7 @@ Public Type ObjData
     'Solo contenedores
     MaxItems As Integer
     Conte As Inventario
-    Apuñala As Byte
+    ApuÑala As Byte
     
     HechizoIndex As Integer
     
@@ -790,14 +796,17 @@ Type UserFlags
     StatsChanged As Byte
     Privilegios As Byte
     
-    ValCoDe As Integer
-    
+    loops As Integer
+    Account As String
+
     LastCrimMatado As String
     LastCiudMatado As String
     
     OldBody As Integer
     OldHead As Integer
     AdminInvisible As Byte
+    
+    ValCoDe As Integer
     
 End Type
 
@@ -818,6 +827,7 @@ Type UserCounters
     Pena As Long
     SendMapCounter As WorldPos
     Pasos As Integer
+    Saliendo As Boolean
 End Type
 
 Type tFacciones
@@ -910,6 +920,8 @@ Type User
      '[Alejo]
     ComUsu As tCOmercioUsuario
     '[/Alejo]
+    Accounted As String
+    AccountedPass As String
 End Type
 
 

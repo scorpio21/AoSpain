@@ -1,6 +1,6 @@
 Attribute VB_Name = "ES"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
+'Copyright (C) 2002 MÑrquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,11 +24,44 @@ Attribute VB_Name = "ES"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nï¿½mero 983 piso 7 dto A
+'Calle 3 nÑmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Cï¿½digo Postal 1900
-'Pablo Ignacio Mï¿½rquez
+'CÑdigo Postal 1900
+'Pablo Ignacio MÑrquez
 Option Explicit
+
+Sub LoadUserAccount(ByVal PJinit As String)
+On Error Resume Next
+PJEnCuenta = GetVar(CharPath & "\" & PJinit, "INIT", "Head") & "," & GetVar(CharPath & "\" & PJinit, "INIT", "Body") & "," & _
+GetVar(CharPath & "\" & PJinit, "INIT", "Arma") & "," & GetVar(CharPath & "\" & PJinit, "INIT", "Escudo") & ","
+PJEnCuentaB = GetVar(CharPath & "\" & PJinit, "INIT", "Casco") & "," & UserAccountEsCrimi(PJinit) & "," & GetVar(CharPath & "\" & PJinit, "FLAGS", "Ban") & "," & GetVar(CharPath & "\" & PJinit, "STATS", "ELV") & "," & GetVar(CharPath & "\" & PJinit, "INIT", "Clase") & "," & GetVar(CharPath & "\" & PJinit, "FLAGS", "Muerto")
+End Sub
+Function UserAccountEsCrimi(ByVal PJinit As String) As Integer
+ 
+'On Error Resume Next
+ 
+Dim AsesinoRep As Double
+Dim BurguesRep As Double
+Dim NobleRep As Double
+Dim PlebeRep As Double
+Dim LadronRep As Double
+Dim BandidoRep As Double
+Dim l As Long
+ 
+AsesinoRep = GetVar(CharPath & "\" & PJinit, "REP", "Asesino")
+BurguesRep = GetVar(CharPath & "\" & PJinit, "REP", "Burguesia")
+NobleRep = GetVar(CharPath & "\" & PJinit, "REP", "Nobles")
+LadronRep = GetVar(CharPath & "\" & PJinit, "REP", "Ladrones")
+PlebeRep = GetVar(CharPath & "\" & PJinit, "REP", "Plebe")
+BandidoRep = GetVar(CharPath & "\" & PJinit, "REP", "Bandido")
+ 
+l = (-AsesinoRep) + (-BandidoRep) + BurguesRep + (-LadronRep) + NobleRep + PlebeRep
+l = l / 6
+ 
+If (l < 0) = False Then UserAccountEsCrimi = 0
+If (l < 0) = True Then UserAccountEsCrimi = 1
+ 
+End Function
 
 Public Sub CargarSpawnList()
 
@@ -413,10 +446,10 @@ Sub LoadOBJData()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'ï¿½ï¿½ï¿½ï¿½ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
+'ÑÑÑÑ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
 '
-'El que ose desafiar esta LEY, se las tendrï¿½ que ver
-'con migo. Para leer desde el OBJ.DAT se deberï¿½ usar
+'El que ose desafiar esta LEY, se las tendrÑ que ver
+'con migo. Para leer desde el OBJ.DAT se deberÑ usar
 'la nueva clase clsLeerInis.
 '
 'Alejo
@@ -516,7 +549,7 @@ For Object = 1 To NumObjDatas
     'Helios
     If ObjData(Object).ObjType = OBJTYPE_WEAPON Then
             ObjData(Object).WeaponAnim = val(Leer.DarValor("OBJ" & Object, "Anim"))
-            ObjData(Object).Apuñala = val(Leer.DarValor("OBJ" & Object, "Apuñala"))
+            ObjData(Object).ApuÑala = val(Leer.DarValor("OBJ" & Object, "ApuÑala"))
 '            ObjData(Object).Paraliza = val(Leer.DarValor("OBJ" & Object, "Paraliza")) 'Helios
 '            ObjData(Object).Ceguera = val(Leer.DarValor("OBJ" & Object, "Ceguera")) 'Helios
 '            ObjData(Object).Estupidez = val(Leer.DarValor("OBJ" & Object, "Estupidez")) 'Helios
@@ -836,6 +869,9 @@ UserList(UserIndex).Counters.Pena = val(GetVar(UserFile, "COUNTERS", "Pena"))
 
 UserList(UserIndex).Email = GetVar(UserFile, "CONTACTO", "Email")
 
+UserList(UserIndex).Char.Account = GetVar(UserFile, "CHAR", "Cuenta")
+UserList(UserIndex).AccountedPass = GetVar(UserFile, "INIT", "Password")
+
 UserList(UserIndex).Genero = GetVar(UserFile, "INIT", "Genero")
 UserList(UserIndex).Clase = GetVar(UserFile, "INIT", "Clase")
 UserList(UserIndex).Raza = GetVar(UserFile, "INIT", "Raza")
@@ -1083,7 +1119,7 @@ For Map = 1 To NumMaps
                     End If
                     
                     'Si el npc debe hacer respawn en la pos original la guardamos
-                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aquí
+                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aquÑ
                     If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
                         Npclist(NIndex).Orig.Map = Map
                         Npclist(NIndex).Orig.X = X
@@ -1115,7 +1151,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
     
-    'Optimización: Carga del archivo .dat en memoria una sola vez
+    'OptimizaciÑn: Carga del archivo .dat en memoria una sola vez
     Dim LeerMap As New clsLeerInis
     LeerMap.Abrir c$
     
@@ -1249,11 +1285,11 @@ For Map = 1 To NumMaps
             'Get and make NPC
             MapData(Map, X, Y).NpcIndex = buffer2(idx).npc
             If MapData(Map, X, Y).NpcIndex > 0 Then
-                Dim nIndex As Integer
-                nIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
+                Dim NIndex As Integer
+                NIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
                 
-                If nIndex <= MAXNPCS Then
-                    MapData(Map, X, Y).NpcIndex = nIndex
+                If NIndex <= MAXNPCS Then
+                    MapData(Map, X, Y).NpcIndex = NIndex
                     
                     If MapData(Map, X, Y).NpcIndex > 499 Then
                         npcfile = DatPath & "NPCs-HOSTILES.dat"
@@ -1264,25 +1300,25 @@ For Map = 1 To NumMaps
                     Dim fl As Byte
                     fl = val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig"))
                     If fl = 1 Then
-                        Npclist(nIndex).Orig.Map = Map
-                        Npclist(nIndex).Orig.X = X
-                        Npclist(nIndex).Orig.Y = Y
+                        Npclist(NIndex).Orig.Map = Map
+                        Npclist(NIndex).Orig.X = X
+                        Npclist(NIndex).Orig.Y = Y
                     Else
-                        Npclist(nIndex).Orig.Map = 0
-                        Npclist(nIndex).Orig.X = 0
-                        Npclist(nIndex).Orig.Y = 0
+                        Npclist(NIndex).Orig.Map = 0
+                        Npclist(NIndex).Orig.X = 0
+                        Npclist(NIndex).Orig.Y = 0
                     End If
     
-                    Npclist(nIndex).Pos.Map = Map
-                    Npclist(nIndex).Pos.X = X
-                    Npclist(nIndex).Pos.Y = Y
+                    Npclist(NIndex).Pos.Map = Map
+                    Npclist(NIndex).Pos.X = X
+                    Npclist(NIndex).Pos.Y = Y
                     
                     'Si existe el backup lo cargamos
-                    If Npclist(nIndex).Flags.BackUp = 1 Then
-                            Call CargarNpcBackUp(nIndex, Npclist(nIndex).Numero)
+                    If Npclist(NIndex).Flags.BackUp = 1 Then
+                            Call CargarNpcBackUp(NIndex, Npclist(NIndex).Numero)
                     End If
                     
-                    Call MakeNPCChar(ToNone, 0, 0, nIndex, Map, X, Y)
+                    Call MakeNPCChar(ToNone, 0, 0, NIndex, Map, X, Y)
                 Else
                     MapData(Map, X, Y).NpcIndex = 0
                 End If
@@ -1304,7 +1340,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
     
-    'Optimización: Carga del archivo .dat en memoria
+    'OptimizaciÑn: Carga del archivo .dat en memoria
     Dim LeerMap As New clsLeerInis
     Dim Section As String
     Section = "Mapa" & Map
@@ -1429,11 +1465,11 @@ For Map = 1 To NumMaps
             'Get and make NPC
             MapData(Map, X, Y).NpcIndex = buffer2(idx).npc
             If MapData(Map, X, Y).NpcIndex > 0 Then
-                Dim nIndex As Integer
-                nIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
+                Dim NIndex As Integer
+                NIndex = OpenNPC(MapData(Map, X, Y).NpcIndex)
                 
-                If nIndex <= MAXNPCS Then
-                    MapData(Map, X, Y).NpcIndex = nIndex
+                If NIndex <= MAXNPCS Then
+                    MapData(Map, X, Y).NpcIndex = NIndex
                     
                     If MapData(Map, X, Y).NpcIndex > 499 Then
                             npcfile = DatPath & "NPCs-HOSTILES.dat"
@@ -1443,16 +1479,16 @@ For Map = 1 To NumMaps
                     
                     'Si el npc debe hacer respawn en la pos original la guardamos
                     If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
-                        Npclist(nIndex).Orig.Map = Map
-                        Npclist(nIndex).Orig.X = X
-                        Npclist(nIndex).Orig.Y = Y
+                        Npclist(NIndex).Orig.Map = Map
+                        Npclist(NIndex).Orig.X = X
+                        Npclist(NIndex).Orig.Y = Y
                     End If
                     
-                    Npclist(nIndex).Pos.Map = Map
-                    Npclist(nIndex).Pos.X = X
-                    Npclist(nIndex).Pos.Y = Y
+                    Npclist(NIndex).Pos.Map = Map
+                    Npclist(NIndex).Pos.X = X
+                    Npclist(NIndex).Pos.Y = Y
                     
-                    Call MakeNPCChar(ToNone, 0, 0, nIndex, Map, X, Y)
+                    Call MakeNPCChar(ToNone, 0, 0, NIndex, Map, X, Y)
                 Else
                     MapData(Map, X, Y).NpcIndex = 0
                 End If
@@ -1475,7 +1511,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
 
-    'Optimización: Carga del archivo .dat del mapa en memoria
+    'OptimizaciÑn: Carga del archivo .dat del mapa en memoria
     Dim LeerMap As New clsLeerInis
     Dim Section As String
     Section = "Mapa" & Map
@@ -1517,16 +1553,6 @@ man:
 
     
 End Sub
-
-Exit Sub
-
-man:
-    MsgBox ("Error durante la carga de mapas, el mapa " & Map & " contiene errores")
-    Call LogError(Date & " " & Err.Description & " " & Err.HelpContext & " " & Err.HelpFile & " " & Err.Source)
-
-    
-End Sub
-
 
 Sub LoadSini()
 
@@ -1747,7 +1773,7 @@ Call WriteVar(UserFile, "GUILD", "ClanFundado", UserList(UserIndex).GuildInfo.Cl
 Call WriteVar(UserFile, "GUILD", "ClanesParticipo", Str(UserList(UserIndex).GuildInfo.ClanesParticipo))
 Call WriteVar(UserFile, "GUILD", "GuildPts", Str(UserList(UserIndex).GuildInfo.GuildPoints))
 
-'ï¿½Fueron modificados los atributos del usuario?
+'ÑFueron modificados los atributos del usuario?
 If Not UserList(UserIndex).Flags.TomoPocion Then
     For LoopC = 1 To UBound(UserList(UserIndex).Stats.UserAtributos)
         Call WriteVar(UserFile, "ATRIBUTOS", "AT" & LoopC, val(UserList(UserIndex).Stats.UserAtributos(LoopC)))
@@ -1770,7 +1796,7 @@ Call WriteVar(UserFile, "INIT", "Genero", UserList(UserIndex).Genero)
 Call WriteVar(UserFile, "INIT", "Raza", UserList(UserIndex).Raza)
 Call WriteVar(UserFile, "INIT", "Hogar", UserList(UserIndex).Hogar)
 Call WriteVar(UserFile, "INIT", "Clase", UserList(UserIndex).Clase)
-Call WriteVar(UserFile, "INIT", "Password", UserList(UserIndex).Password)
+Call WriteVar(UserFile, "INIT", "Password", UserList(UserIndex).AccountedPass)
 Call WriteVar(UserFile, "INIT", "Desc", UserList(UserIndex).Desc)
 
 Call WriteVar(UserFile, "INIT", "Heading", Str(UserList(UserIndex).Char.Heading))
@@ -1787,6 +1813,8 @@ Call WriteVar(UserFile, "INIT", "Casco", Str(UserList(UserIndex).Char.CascoAnim)
 
 Call WriteVar(UserFile, "INIT", "LastIP", UserList(UserIndex).ip)
 Call WriteVar(UserFile, "INIT", "Position", UserList(UserIndex).Pos.Map & "-" & UserList(UserIndex).Pos.X & "-" & UserList(UserIndex).Pos.Y)
+
+Call WriteVar(UserFile, "CHAR", "Cuenta", UserList(UserIndex).Char.Account)
 
 
 Call WriteVar(UserFile, "STATS", "GLD", Str(UserList(UserIndex).Stats.GLD))

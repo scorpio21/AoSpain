@@ -892,10 +892,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Mataas Fernando Pequeao
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -919,10 +919,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 namero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Cadigo Postal 1900
+'Pablo Ignacio Marquez
 
 Option Explicit
 
@@ -989,8 +989,8 @@ Select Case Index
         
         UserName = txtNombre.Text
         
-        If Right(UserName, 1) = " " Then
-                UserName = RTrim(UserName)
+        If Right$(UserName, 1) = " " Then
+                UserName = RTrim$(UserName)
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
         End If
         
@@ -1006,7 +1006,23 @@ Select Case Index
         
         UserHogar = lstHogar.List(lstHogar.ListIndex)
         
-        If CheckData() Then frmPasswd.Show vbModal
+        'Barrin 3/10/03
+        If CheckData() Then
+            frmMain.Socket1.HostName = CurServerIp
+            frmMain.Socket1.RemotePort = CurServerPort
+            
+            Me.MousePointer = 11
+            EstadoLogin = CrearNuevoPj
+         
+            If Not frmMain.Socket1.Connected Then
+                
+                frmMensaje.Show
+                    frmMensaje.msg.Caption = "Error: Se ha perdido la conexion con el server."
+                Unload Me
+            Else
+                Call Login
+            End If
+        End If
         
     Case 1
         If Musica = 0 Then
@@ -1104,7 +1120,7 @@ txtNombre.Text = LTrim(txtNombre.Text)
 End Sub
 
 Private Sub txtNombre_GotFocus()
-MsgBox "Sea cuidadoso al seleccionar el nombre de su personaje, Argentum es un juego de rol, un mundo magico y fantastico, si selecciona un nombre obsceno o con connotación politica los administradores borrarán su personaje y no habrá ninguna posibilidad de recuperarlo."
+MsgBox "Sea cuidadoso al seleccionar el nombre de su personaje, Argentum es un juego de rol, un mundo magico y fantastico, si selecciona un nombre obsceno o con connotacian politica los administradores borraran su personaje y no habra ninguna posibilidad de recuperarlo."
 End Sub
 
 Private Sub txtNombre_KeyPress(KeyAscii As Integer)

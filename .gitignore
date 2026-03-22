@@ -14,8 +14,13 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+*.ps1
+
 # Temp
 *.tmp
 *.bak
 Sistemadecuentas/
 clientesDx/
+
+# Accounts
+ Servidor/Accounts/*.act
