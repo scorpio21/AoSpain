@@ -1,6 +1,7 @@
 # Repaso para Mañana - AoSpain
 
 ## ✅ Estado Actual (Commit 24cf267 + Estabilidad Cuentas)
+- **Borrado de Personajes:** Reparado el bug de slots duplicados. El cliente ahora limpia `frmCuent` y el servidor reenvía la lista actualizada en tiempo real sin desconectar.
 - **Arquitectura:** Migración 32-bit (Long) consolidada en renderizado y lógica de dibujo (HDC).
 - **Sistema de Cuentas:** 100% funcional y estable. Login, creación de personajes con atributos/skills reales y vinculación de email automatizada.
 - **Red:** Reconexión limpia en `frmCuent` y corrección de errores de socket asíncronos.
@@ -21,3 +22,4 @@
 - El paquete `NLOGIN` debe ser exacto entre cliente y servidor (32 campos); cualquier desajuste corrompe los datos del personaje.
 - Las funciones `CurServerIp` y `CurServerPort` necesitan validación de carga de formularios para evitar errores de referencia nula tras un `Unload`.
 - `BitBlt` es el método más fiable para renderizado de interfaz en VB6 cuando se trabaja con el motor en 32-bit.
+- En sistemas de archivos `.act` (INI), el borrado de una entrada requiere un reordenamiento manual de las claves (PJ1, PJ2...) para que `NumPjs` y el cliente se mantengan sincronizados.

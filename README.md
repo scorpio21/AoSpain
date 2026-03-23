@@ -6,6 +6,10 @@
 
 ## 🚀 Mejoras Recientes (22-23 de Marzo, 2026)
 
+* **Sistema de Borrado de Personajes (Optimizado):**
+    * **Limpieza de Interfaz:** Implementada la función `LimpiarPJsCuentas` que resetea los slots y PictureBoxes en `frmCuent`, eliminando el error visual de personajes "fantasma" tras el borrado o cambio de cuenta.
+    * **Refresco en Tiempo Real:** El servidor ahora reenvía automáticamente la lista actualizada de personajes tras un borrado exitoso (`BORROK`), permitiendo que el cliente se actualice instantáneamente sin necesidad de desconectar.
+    * **Corrección de Índices:** Reparada la función `TienePjs` y el reordenamiento de la lista en el archivo `.act`, asegurando que los personajes ocupen siempre los slots correctos (del 1 al N) sin huecos ni duplicados.
 * **Renderizado en HDC:** Implementada la función `GrhRenderToHdc` en el motor gráfico, permitiendo el dibujo de personajes y gráficos directamente en controles de Windows (PictureBox), resolviendo el fallo visual en el panel de cuentas.
 * **Protocolo de Creación Corregido:** Reparado el paquete `NLOGIN`. Ahora se envían y procesan correctamente los atributos y habilidades elegidos, eliminando el error de campos desplazados.
 * **Integración de Cuentas Real:** El sistema ahora vincula automáticamente el email real de la cuenta (.act) a los nuevos personajes, eliminando correos genéricos hardcodeados.

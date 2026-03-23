@@ -23,6 +23,11 @@ Begin VB.Form frmCuent
    ScaleHeight     =   9015
    ScaleWidth      =   12015
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer AnimationTimer 
+      Interval        =   100
+      Left            =   120
+      Top             =   120
+   End
    Begin VB.PictureBox PJ 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
@@ -1452,6 +1457,10 @@ Loop
 
 SendData ("OOLOGI" & PJClickeado & "," & nombrecuent)
 
+End Sub
+
+Private Sub AnimationTimer_Timer()
+    Call RenderizarPJsCuentas
 End Sub
 
 Private Sub PJ_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)

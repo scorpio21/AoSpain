@@ -361,16 +361,6 @@ End Function
  
 Sub ConnectAccount(ByVal UserIndex As Integer, Name As String, Password As String)
  Call LogError("DEBUG: ConnectAccount Cuenta=" & Name & " PassLen=" & Len(Password))
-Dim i As Integer
-Dim Pjjj As String
-Dim NumPjs As Integer
-Dim ArchivodeUser As String
-Dim Pos() As String
-Dim Oro() As Long
-Dim Nivel() As String
-Dim PuntosdeCanje() As Integer
-Dim OroBanco() As Byte
-Dim cosa As Integer
  
  Call LogError("DEBUG: PassServidorLen=" & Len(GetVar(App.Path & "\Accounts\" & Name & ".act", Name, "password")))
  
@@ -384,22 +374,33 @@ End If
 UserList(UserIndex).Accounted = Name
 UserList(UserIndex).AccountedPass = Password
  
- NumPjs = val(GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "NumPjs"))  ' CORREGIDO
- Call LogError("DEBUG: NumPjs=" & NumPjs & " TienePjs=" & CStr(TienePjs(Name)))
-If TienePjs(Name) = True Then
-    Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC" & Name & "," & NumPjs + 1)
-Else
-    Call SendData(0, UserIndex, 0, "INIAC0")
-    'Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC0")
-End If
-ArchivodeUser = App.Path & "\charfile\"
-For i = 1 To NumPjs
-    Pjjj = GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "PJ" & i)
-    If Pjjj = "" Then Exit Sub
-    Call LoadUserAccount(Pjjj & ".chr")
-    Call LogError("DEBUG: Enviando ADDPJ PJ=" & Pjjj & " Slot=" & i)
-    Call SendData(SendTarget.ToIndex, UserIndex, 0, "ADDPJ" & Pjjj & "," & i & "," & PJEnCuenta & PJEnCuentaB)
-Next i
+ Call EnviarListaPJs(UserIndex, Name)
+End Sub
+
+Public Sub EnviarListaPJs(ByVal UserIndex As Integer, ByVal Name As String)
+    Dim i As Integer
+    Dim Pjjj As String
+    Dim NumPjs As Integer
+    
+    NumPjs = val(GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "NumPjs"))
+    
+    Call LogError("DEBUG: EnviarListaPJs Cuenta=" & Name & " NumPjs=" & NumPjs)
+    
+    If TienePjs(Name) = True Then
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC" & Name & "," & NumPjs + 1)
+    Else
+        ' Si no tiene PJs, enviamos INIAC0 (el segundo 0 indica 0 personajes)
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC0")
+    End If
+    
+    For i = 1 To NumPjs
+        Pjjj = GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "PJ" & i)
+        If Pjjj = "" Then Exit For
+        
+        Call LoadUserAccount(Pjjj & ".chr")
+        Call LogError("DEBUG: Enviando ADDPJ PJ=" & Pjjj & " Slot=" & i)
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "ADDPJ" & Pjjj & "," & i & "," & PJEnCuenta & PJEnCuentaB)
+    Next i
 End Sub
 Sub ChrToAccount(ByVal Accounted As String, tName As String)
  
@@ -470,19 +471,18 @@ Call LogError("NewAccount - Error = " & Err.Number & " - Descripción = " & Err.
 End Sub
  
 Public Function TienePjs(ByVal Account As String) As Boolean
- 
+
 Dim frstPj As String
- 
-frstPj = GetVar(App.Path & "\Accounts\" & Account & ".act", "PJS", "PJ0")
- 
+
+frstPj = GetVar(App.Path & "\Accounts\" & Account & ".act", "PJS", "PJ1")
+
 If frstPj <> "" Then
     TienePjs = True
 Else
     TienePjs = False
 End If
- 
-End Function
 
+End Function
 Function CuentaExiste(Cuenta As String) As Boolean
 If FileExist(App.Path & "\Accounts\" & Cuenta & ".act", vbNormal) Then
     CuentaExiste = True
@@ -1906,78 +1906,97 @@ If UserList(UserIndex).Flags.UserLogged Then UserList(UserIndex).Counters.IdleCo
     
 Select Case Left$(rdata, 4)
     Case "BORR" ' <<< borra personajes
-       On Error GoTo ExitErr1
         rdata = Right$(rdata, Len(rdata) - 4)
-        If (UserList(UserIndex).Flags.ValCoDe = 0) Or (ValidarLoginMSG(UserList(UserIndex).Flags.ValCoDe) <> CInt(val(ReadField(3, rdata, 44)))) Then
-                      Call LogHackAttemp("IP:" & frmMain.Socket2(UserIndex).PeerAddress & " intento borrar un personaje.")
-                      Call CloseSocket(UserIndex)
-                      Exit Sub
-        End If
-        Arg1 = ReadField(1, rdata, 44)
-        
-        If Not AsciiValidos(Arg1) Then Exit Sub
-        
-        '!Existe el personaje?
-        If Not FileExist(CharPath & UCase$(Arg1) & ".chr", vbNormal) Then
-            Call CloseSocket(UserIndex)
-            Exit Sub
-        End If
+        Dim CharName As String
+        Dim AccName As String
 
-        '!Es el passwd valido?
-        If UCase$(ReadField(2, rdata, 44)) <> UCase$(GetVar(CharPath & UCase$(Arg1) & ".chr", "INIT", "Password")) Then
-            Call CloseSocket(UserIndex)
-            Exit Sub
-        End If
+        CharName = UCase$(ReadField(1, rdata, Asc(",")))
+        AccName = ReadField(2, rdata, Asc(","))
 
-        'If FileExist(CharPath & ucase$(Arg1) & ".chr", vbNormal) Then
-            Dim rt$
-            rt$ = App.Path & "\ChrBackUp\" & UCase$(Arg1) & ".bak"
-            If FileExist(rt$, vbNormal) Then Kill rt$
-            Name CharPath & UCase$(Arg1) & ".chr" As rt$
-            
-            ' Borramos el personaje de la cuenta
-            
-            
-            
-            
-            ' Buscamos la cuenta del personaje
-            Dim CuentaActual As String
-            CuentaActual = GetVar(CharPath & UCase$(Arg1) & ".chr", "INIT", "Cuenta")
-            
-            ' Leemos los personajes de la cuenta
-            If FileExist(App.Path & "\Accounts\" & CuentaActual & ".act", vbNormal) Then
-                tStr = GetVar(App.Path & "\Accounts\" & CuentaActual & ".act", "INIT", "PJs")
-                n = CInt(ReadField(1, tStr, 44))
-                
-                ' Buscamos y eliminamos el personaje
-                For i = 1 To n
-                    If ReadField(i + 1, tStr, 44) = UCase$(Arg1) Then
-                        ' Eliminamos este campo
-                        tStr = ReplaceField(i + 1, "", tStr, 44)
-                        Exit For
-                    End If
-                Next i
-                
-                ' Reordenamos la lista
-                Dim NewList As String
-                NewList = n - 1 & ","
-                For i = 1 To n
-                    If ReadField(i + 1, tStr, 44) <> "" Then
-                        NewList = NewList & ReadField(i + 1, tStr, 44) & ","
-                    End If
-                Next i
-                
-                ' Guardamos los cambios
-                Call WriteVar(App.Path & "\Accounts\" & CuentaActual & ".act", "INIT", "PJs", NewList)
+        If CharName = "" Or AccName = "" Then Exit Sub
+
+        ' Verificamos que el PJ pertenezca a la cuenta (Seguridad)
+        Dim EsDeLaCuenta As Boolean
+        Dim iPJ As Integer
+        Dim TotalPJsAccount As Integer
+        Dim actPath As String
+        actPath = App.Path & "\Accounts\" & AccName & ".act"
+
+        TotalPJsAccount = val(GetVar(actPath, "PJS", "NumPjs"))
+
+        For iPJ = 1 To TotalPJsAccount
+            If UCase$(GetVar(actPath, "PJS", "PJ" & iPJ)) = CharName Then
+                EsDeLaCuenta = True
+                Exit For
             End If
-            
-            Call SendData(ToIndex, UserIndex, 0, "BORROK")
+        Next iPJ
+
+        If Not EsDeLaCuenta Then
+            Call LogError("HACK: Intento de borrado de PJ " & CharName & " desde cuenta " & AccName & " sin permiso.")
             Exit Sub
-ExitErr1:
-    Call LogError(Err.Description & " " & rdata)
-    Exit Sub
-        'End If
-End Select
+        End If
+
+        ' Procedemos al borrado físico del archivo .chr (o backup)
+        Dim bakPath As String
+        
+        CharName = UCase$(Trim$(CharName))
+        bakPath = App.Path & "\ChrBackUp\" & CharName & ".bak"
+        
+        If FileExist(CharPath & CharName & ".chr", vbNormal) Then
+            ' Si ya existe un backup previo, lo borramos para no dar error al mover
+            If FileExist(bakPath, vbNormal) Then Kill bakPath
+            
+            ' Intentamos mover el archivo
+            On Error Resume Next
+            Name CharPath & CharName & ".chr" As bakPath
+            If Err.Number <> 0 Then
+                ' Si falla el mover (ej. archivo abierto), intentamos borrarlo directamente
+                Kill CharPath & CharName & ".chr"
+                Err.Clear
+            End If
+            On Error GoTo 0
+        End If
+        ' Actualizamos el archivo de cuenta (.act)
+        ' 1. Borramos la entrada actual
+        Call WriteVar(actPath, "PJS", "PJ" & iPJ, "")
+
+        ' 2. Reordenamos los PJs restantes
+        Dim tempPJ As String
+        Dim nextPJ As Integer
+        nextPJ = 1
+
+        ' Creamos una lista temporal de los que quedan
+        Dim PjsRestantes(1 To 8) As String
+        Dim countRestantes As Integer
+        countRestantes = 0
+
+        For iPJ = 1 To 8
+            tempPJ = GetVar(actPath, "PJS", "PJ" & iPJ)
+            If tempPJ <> "" Then
+                countRestantes = countRestantes + 1
+                PjsRestantes(countRestantes) = tempPJ
+            End If
+        Next iPJ
+
+        ' 3. Limpiamos todos los slots y escribimos la nueva lista ordenada
+        For iPJ = 1 To 8
+            Call WriteVar(actPath, "PJS", "PJ" & iPJ, "")
+        Next iPJ
+
+        For iPJ = 1 To countRestantes
+            Call WriteVar(actPath, "PJS", "PJ" & iPJ, PjsRestantes(iPJ))
+        Next iPJ
+
+        ' 4. Actualizamos el número total
+        Call WriteVar(actPath, "PJS", "NumPjs", CStr(countRestantes))
+
+        ' Informamos al cliente
+        Call SendData(ToIndex, UserIndex, 0, "BORROK")
+        
+        ' Refrescamos la lista de personajes en el cliente inmediatamente
+        Call EnviarListaPJs(UserIndex, AccName)
+        Exit Sub
+    End Select
 
 '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 'Si no esta logeado y envia un comando diferente a los

@@ -236,9 +236,14 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "BORROK"
             Call MsgBox("El personaje ha sido borrado.", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Borrado de personaje")
-            frmBorrar.MousePointer = 0
-            frmMain.Socket1.Disconnect
-            Unload frmBorrar
+            
+            ' Limpiamos la lista actual. El servidor enviara INIAC y ADDPJs inmediatamente despues.
+            Call LimpiarPJsCuentas
+            
+            If frmBorrar.Visible Then
+                frmBorrar.MousePointer = 0
+                Unload frmBorrar
+            End If
             Exit Sub
         Case "SFH"
             frmHerrero.Show
@@ -407,7 +412,7 @@ Sub HandleData(ByVal Rdata As String)
             
             CharList(CharIndex).Fx = Val(ReadField(9, Rdata, 44))
             CharList(CharIndex).FxLoopTimes = Val(ReadField(10, Rdata, 44))
-            CharList(CharIndex).nombre = ReadField(12, Rdata, 44)
+            CharList(CharIndex).Nombre = ReadField(12, Rdata, 44)
             CharList(CharIndex).Criminal = Val(ReadField(13, Rdata, 44))
             
             Call MakeChar(CharIndex, ReadField(1, Rdata, 44), ReadField(2, Rdata, 44), ReadField(3, Rdata, 44), X, Y, Val(ReadField(7, Rdata, 44)), Val(ReadField(8, Rdata, 44)), Val(ReadField(11, Rdata, 44)))
@@ -579,7 +584,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.exp.Caption = "Exp:" & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp:" & UserExp & "/" & UserPasarNivel
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
             If UserMaxMAN > 0 Then
@@ -763,10 +768,10 @@ Sub HandleData(ByVal Rdata As String)
                 Else
                     frmCuent.Label3.Caption = ReadField(1, Rdata, 44)
                 End If
-                Call LogError("DEBUG: Cliente va a mostrar frmCuent")
+                'Call LogError("DEBUG: Cliente va a mostrar frmCuent")
                 Load frmCuent
                 frmCuent.Show
-                Call LogError("DEBUG: frmCuent.Show ejecutado")
+                'Call LogError("DEBUG: frmCuent.Show ejecutado")
                 Unload frmConnect
                 Exit Sub
             End If
@@ -891,6 +896,10 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
          Case "INIAC"
             Rdata = Right$(Rdata, Len(Rdata) - 5)
+            
+            ' Limpiamos los personajes mostrados actualmente antes de agregar los nuevos
+            Call LimpiarPJsCuentas
+            
             frmCuent.Label3.Caption = ReadField(1, Rdata, 44)
             frmCuent.Show
             Unload frmConnect
@@ -911,8 +920,8 @@ Sub HandleData(ByVal Rdata As String)
             rcvClase = ReadField(11, Rdata, 44)
             rcvMuerto = ReadField(12, Rdata, 44)
             
-            If rcvCrimi = True Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
-            If rcvCrimi = False Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
+            If rcvCrimi = True Then frmCuent.Nombre(rcvIndex).ForeColor = vbWhite
+            If rcvCrimi = False Then frmCuent.Nombre(rcvIndex).ForeColor = vbWhite
             
             Call DibujarTodo(rcvIndex - 1, CLng(rcvBody), CLng(rcvHead), CLng(rcvCasco), CLng(rcvShield), CLng(rcvWeapon), CLng(rcvBaned), rcvName, CLng(rcvLevel), rcvClase, CLng(rcvMuerto))
             Exit Sub
@@ -1152,7 +1161,7 @@ Sub Login()
                 & "," & UserSkills(21) & "," & nombrecuent)
         ElseIf EstadoLogin = CrearAccount Then
      With frmCrearAccount
-        SendData ("NACCNT" & .nombre & "," & .Pass & "," & .Mail & "," & .pregunta & "," & .respuesta)
+        SendData ("NACCNT" & .Nombre & "," & .Pass & "," & .Mail & "," & .pregunta & "," & .respuesta)
 End With
  
     ElseIf EstadoLogin = BorrarPj Then
