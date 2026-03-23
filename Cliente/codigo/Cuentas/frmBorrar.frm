@@ -190,6 +190,6 @@ Unload Me
 End Sub
 
 Private Sub Form_Load()
-If frmOpciones.OptTrans.value = Checked Then Call Aplicar_Transparencia(Me.hWnd, CByte(frmOpciones.Transp.value))
+'If frmOpciones.OptTrans.value = Checked Then Call Aplicar_Transparencia(Me.hwnd, CByte(frmOpciones.Transp.value))
 frmCambiarPass.Caption = "Cambio de Password cuenta " & nombrecuent
 End Sub

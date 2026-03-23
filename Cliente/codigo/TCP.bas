@@ -60,8 +60,8 @@ Sub HandleData(ByVal Rdata As String)
     On Error Resume Next
     
     Dim retVal As Variant
-    Dim x As Integer
-    Dim y As Integer
+    Dim X As Integer
+    Dim Y As Integer
     Dim CharIndex As Integer
     Dim tempint As Integer
     Dim tempstr As String
@@ -94,9 +94,9 @@ Sub HandleData(ByVal Rdata As String)
                  frmtip.Visible = True
                  PrimeraVez = False
             End If
-            bTecho = IIf(MapData(UserPos.x, UserPos.y).trigger = 1 Or _
-            MapData(UserPos.x, UserPos.y).trigger = 2 Or _
-            MapData(UserPos.x, UserPos.y).trigger = 4, True, False)
+            bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
+            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
+            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
             Call DoFogataFx
             Exit Sub
         Case "QTDL"              ' >>>>> Quitar Dialogos :: QTDL
@@ -118,6 +118,7 @@ Sub HandleData(ByVal Rdata As String)
             
             ' Si estábamos en modo de cuenta, volver al panel de cuentas
             If EstadoLogin = LoginAccount Then
+                Unload frmConnect
                 Load frmCuent
                 frmCuent.Visible = True
             Else
@@ -274,7 +275,7 @@ Sub HandleData(ByVal Rdata As String)
                 Close #1
                 If tempint = Val(ReadField(2, Rdata, 44)) Then
                     'Si es la vers correcta cambiamos el mapa
-                    Call SwitchMap(UserMap, UserPos.x, UserPos.y)
+                    Call SwitchMap(UserMap, UserPos.X, UserPos.Y)
                     If bLluvia(UserMap) = 0 Then
                         If bRain Then
                             'Call StopSound("lluviain.MP3")
@@ -303,10 +304,10 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "PU"                 ' >>>>> Actualiza Posician Usuario :: PU
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            MapData(UserPos.x, UserPos.y).CharIndex = 0
-            UserPos.x = CInt(ReadField(1, Rdata, 44))
-            UserPos.y = CInt(ReadField(2, Rdata, 44))
-            MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
+            MapData(UserPos.X, UserPos.Y).CharIndex = 0
+            UserPos.X = CInt(ReadField(1, Rdata, 44))
+            UserPos.Y = CInt(ReadField(2, Rdata, 44))
+            MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
             CharList(UserCharIndex).Pos = UserPos
             Exit Sub
         Case "N2" ' <<--- Npc nos impacto (Ahorramos ancho de banda)
@@ -401,15 +402,15 @@ Sub HandleData(ByVal Rdata As String)
         Case "CC"              ' >>>>> Crear un Personaje :: CC
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             CharIndex = ReadField(4, Rdata, 44)
-            x = ReadField(5, Rdata, 44)
-            y = ReadField(6, Rdata, 44)
+            X = ReadField(5, Rdata, 44)
+            Y = ReadField(6, Rdata, 44)
             
             CharList(CharIndex).Fx = Val(ReadField(9, Rdata, 44))
             CharList(CharIndex).FxLoopTimes = Val(ReadField(10, Rdata, 44))
             CharList(CharIndex).nombre = ReadField(12, Rdata, 44)
             CharList(CharIndex).Criminal = Val(ReadField(13, Rdata, 44))
             
-            Call MakeChar(CharIndex, ReadField(1, Rdata, 44), ReadField(2, Rdata, 44), ReadField(3, Rdata, 44), x, y, Val(ReadField(7, Rdata, 44)), Val(ReadField(8, Rdata, 44)), Val(ReadField(11, Rdata, 44)))
+            Call MakeChar(CharIndex, ReadField(1, Rdata, 44), ReadField(2, Rdata, 44), ReadField(3, Rdata, 44), X, Y, Val(ReadField(7, Rdata, 44)), Val(ReadField(8, Rdata, 44)), Val(ReadField(11, Rdata, 44)))
             
             Exit Sub
         Case "BP"             ' >>>>> Borrar un Personaje :: BP
@@ -450,17 +451,17 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "HO"            ' >>>>> Crear un Objeto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            x = Val(ReadField(2, Rdata, 44))
-            y = Val(ReadField(3, Rdata, 44))
+            X = Val(ReadField(2, Rdata, 44))
+            Y = Val(ReadField(3, Rdata, 44))
             'ID DEL OBJ EN EL CLIENTE
-            MapData(x, y).ObjGrh.GrhIndex = Val(ReadField(1, Rdata, 44))
-            InitGrh MapData(x, y).ObjGrh, MapData(x, y).ObjGrh.GrhIndex
+            MapData(X, Y).ObjGrh.GrhIndex = Val(ReadField(1, Rdata, 44))
+            InitGrh MapData(X, Y).ObjGrh, MapData(X, Y).ObjGrh.GrhIndex
             Exit Sub
         Case "BO"           ' >>>>> Borrar un Objeto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            x = Val(ReadField(1, Rdata, 44))
-            y = Val(ReadField(2, Rdata, 44))
-            MapData(x, y).ObjGrh.GrhIndex = 0
+            X = Val(ReadField(1, Rdata, 44))
+            Y = Val(ReadField(2, Rdata, 44))
+            MapData(X, Y).ObjGrh.GrhIndex = 0
             Exit Sub
         Case "BQ"           ' >>>>> Bloquear Posician
             Dim b As Byte
@@ -518,10 +519,10 @@ Sub HandleData(ByVal Rdata As String)
             pausa = Not pausa
             Exit Sub
         Case "LLU"                  ' >>>>> LLuvia!
-            If Not InMapBounds(UserPos.x, UserPos.y) Then Exit Sub
-            bTecho = IIf(MapData(UserPos.x, UserPos.y).trigger = 1 Or _
-            MapData(UserPos.x, UserPos.y).trigger = 2 Or _
-            MapData(UserPos.x, UserPos.y).trigger = 4, True, False)
+            If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
+            bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
+            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
+            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
             If Not bRain Then
                 bRain = True
             Else
@@ -778,7 +779,7 @@ Sub HandleData(ByVal Rdata As String)
             On Error GoTo 0
             
             ' Si estamos creando personaje, no desconectar - solo mostrar error
-            If Not frmCrearPersonaje.Visible Then 
+            If Not frmCrearPersonaje.Visible Then
                 frmMain.Socket1.Disconnect
             End If
             MsgBox Rdata
@@ -913,7 +914,7 @@ Sub HandleData(ByVal Rdata As String)
             If rcvCrimi = True Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
             If rcvCrimi = False Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
             
-            Call DibujarTodo(rcvIndex - 1, rcvBody, rcvHead, rcvCasco, rcvShield, rcvWeapon, rcvBaned, rcvName, rcvLevel, rcvClase, rcvMuerto)
+            Call DibujarTodo(rcvIndex - 1, CLng(rcvBody), CLng(rcvHead), CLng(rcvCasco), CLng(rcvShield), CLng(rcvWeapon), CLng(rcvBaned), rcvName, CLng(rcvLevel), rcvClase, CLng(rcvMuerto))
             Exit Sub
         Case "NOVER"             ' >>>>> Invisible :: NOVER
             Rdata = Right$(Rdata, Len(Rdata) - 5)
@@ -1124,7 +1125,20 @@ Sub Login()
     If EstadoLogin = Normal Then
         SendData ("OOLOGI" & PJClickeado & "," & nombrecuent)
     ElseIf EstadoLogin = CrearNuevoPj Then
-        Call LogError("DEBUG: Cliente enviando NLOGIN - nombrecuent=" & nombrecuent & " UserName=" & UserName & UserRaza & "," & UserSexo & "," & UserSexo & "," & UserClase & "," & UserHogar _
+       ' Call LogError("DEBUG: Cliente enviando NLOGIN - nombrecuent=" & nombrecuent & " UserName=" & UserName & UserRaza & "," & UserSexo & "," & UserSexo & "," & UserClase & "," & UserHogar _
+       '         & "," & UserSkills(1) & "," & UserSkills(2) _
+       '         & "," & UserSkills(3) & "," & UserSkills(4) _
+       '         & "," & UserSkills(5) & "," & UserSkills(6) _
+       '         & "," & UserSkills(7) & "," & UserSkills(8) _
+       '         & "," & UserSkills(9) & "," & UserSkills(10) _
+       '         & "," & UserSkills(11) & "," & UserSkills(12) _
+       '        & "," & UserSkills(13) & "," & UserSkills(14) _
+       '         & "," & UserSkills(15) & "," & UserSkills(16) _
+       '         & "," & UserSkills(17) & "," & UserSkills(18) _
+       '         & "," & UserSkills(19) & "," & UserSkills(20) _
+        '        & "," & UserSkills(21) & "," & nombrecuent)
+        SendData ("NLOGIN" & UserName & "," & UserRaza & "," & UserSexo & "," & UserClase & "," & UserHogar _
+                & "," & UserAtributos(1) & "," & UserAtributos(2) & "," & UserAtributos(3) & "," & UserAtributos(4) & "," & UserAtributos(5) _
                 & "," & UserSkills(1) & "," & UserSkills(2) _
                 & "," & UserSkills(3) & "," & UserSkills(4) _
                 & "," & UserSkills(5) & "," & UserSkills(6) _
@@ -1136,19 +1150,7 @@ Sub Login()
                 & "," & UserSkills(17) & "," & UserSkills(18) _
                 & "," & UserSkills(19) & "," & UserSkills(20) _
                 & "," & UserSkills(21) & "," & nombrecuent)
-        SendData ("NLOGIN" & UserName & "," & UserRaza & "," & UserSexo & "," & UserSexo & "," & UserClase & "," & UserHogar _
-                & "," & UserSkills(1) & "," & UserSkills(2) _
-                & "," & UserSkills(3) & "," & UserSkills(4) _
-                & "," & UserSkills(5) & "," & UserSkills(6) _
-                & "," & UserSkills(7) & "," & UserSkills(8) _
-                & "," & UserSkills(9) & "," & UserSkills(10) _
-                & "," & UserSkills(11) & "," & UserSkills(12) _
-                & "," & UserSkills(13) & "," & UserSkills(14) _
-                & "," & UserSkills(15) & "," & UserSkills(16) _
-                & "," & UserSkills(17) & "," & UserSkills(18) _
-                & "," & UserSkills(19) & "," & UserSkills(20) _
-                & "," & UserSkills(21) & "," & nombrecuent)
-     ElseIf EstadoLogin = CrearAccount Then
+        ElseIf EstadoLogin = CrearAccount Then
      With frmCrearAccount
         SendData ("NACCNT" & .nombre & "," & .Pass & "," & .Mail & "," & .pregunta & "," & .respuesta)
 End With

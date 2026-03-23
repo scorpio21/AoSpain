@@ -1248,7 +1248,7 @@ Dim i As Integer
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim asd As Integer
 For asd = 0 To 6
 nombre(asd).ForeColor = vbWhite
@@ -1269,12 +1269,46 @@ End Sub
 Private Sub Image2_Click()
 Call PlayWaveDS(SND_CLICK)
 If PJClickeado = "Nada" Or PJClickeado = "" Then
-frmMensaje.Show
-frmMensaje.msg.Caption = "Seleccione un PJ."
-Exit Sub
+    frmMensaje.Show
+    frmMensaje.msg.Caption = "Seleccione un PJ."
+    Exit Sub
 End If
 
+' Nos aseguramos de tener una conexion limpia
+If frmMain.Socket1.Connected Then
+    frmMain.Socket1.Disconnect
+    frmMain.Socket1.Cleanup
+    DoEvents
+End If
 
+' Configuramos el host y puerto (usamos fallback si frmConnect no esta)
+If CurServer <> 0 Then
+    frmMain.Socket1.HostAddress = ServersLst(CurServer).Ip
+    frmMain.Socket1.RemotePort = ServersLst(CurServer).Puerto
+Else
+    If IPdelServidor <> "" Then
+        frmMain.Socket1.HostAddress = IPdelServidor
+        frmMain.Socket1.RemotePort = PuertoDelServidor
+    Else
+        ' Fallback extremo al localhost si no hay nada configurado
+        frmMain.Socket1.HostAddress = "127.0.0.1"
+        frmMain.Socket1.RemotePort = Config_Inicio.Puerto
+    End If
+End If
+
+' Conectamos
+frmMain.Socket1.Connect
+
+' Esperamos un momento a que conecte (max 3 segundos)
+Dim lWait As Long
+lWait = GetTickCount
+Do While Not frmMain.Socket1.Connected
+    DoEvents
+    If GetTickCount - lWait > 3000 Then
+        MsgBox "No se ha podido establecer conexion con el servidor.", vbCritical
+        Exit Sub
+    End If
+Loop
  
 SendData ("OOLOGI" & PJClickeado & "," & nombrecuent)
 
@@ -1305,7 +1339,7 @@ Call PlayWaveDS(SND_CLICK)
 PJClickeado = nombre(Index)
 End Sub
 
-Private Sub Label2_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Label2_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 nombre(Index).ForeColor = vbYellow
     Label2(Index).ForeColor = vbYellow
 End Sub
@@ -1318,11 +1352,45 @@ End Sub
 Private Sub nombre_dblClick(Index As Integer)
 If PJClickeado = "Nada" Then Exit Sub
 Call PlayWaveDS(SND_CLICK)
+
+' Nos aseguramos de tener una conexion limpia
+If frmMain.Socket1.Connected Then
+    frmMain.Socket1.Disconnect
+    frmMain.Socket1.Cleanup
+    DoEvents
+End If
+
+' Configuramos el host y puerto
+If CurServer <> 0 Then
+    frmMain.Socket1.HostAddress = ServersLst(CurServer).Ip
+    frmMain.Socket1.RemotePort = ServersLst(CurServer).Puerto
+Else
+    If IPdelServidor <> "" Then
+        frmMain.Socket1.HostAddress = IPdelServidor
+        frmMain.Socket1.RemotePort = PuertoDelServidor
+    Else
+        frmMain.Socket1.HostAddress = "127.0.0.1"
+        frmMain.Socket1.RemotePort = Config_Inicio.Puerto
+    End If
+End If
+
+frmMain.Socket1.Connect
+
+Dim lWait As Long
+lWait = GetTickCount
+Do While Not frmMain.Socket1.Connected
+    DoEvents
+    If GetTickCount - lWait > 3000 Then
+        MsgBox "No se ha podido establecer conexion con el servidor.", vbCritical
+        Exit Sub
+    End If
+Loop
+
 SendData ("OOLOGI" & PJClickeado & "," & nombrecuent)
 
 End Sub
 
-Private Sub nombre_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub nombre_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 nombre(Index).ForeColor = vbYellow
     Label2(Index).ForeColor = vbYellow
 End Sub
@@ -1338,7 +1406,7 @@ End If
 
     EstadoLogin = Dados
     frmCrearPersonaje.Show vbModal
-    Audio.StopWave
+    'Audio.StopWave
     Me.MousePointer = 11
     Exit Sub
 End If
@@ -1348,11 +1416,45 @@ End Sub
 Private Sub PJ_dblClick(Index As Integer)
 If PJClickeado = "Nada" Then Exit Sub
 Call PlayWaveDS(SND_CLICK)
+
+' Nos aseguramos de tener una conexion limpia
+If frmMain.Socket1.Connected Then
+    frmMain.Socket1.Disconnect
+    frmMain.Socket1.Cleanup
+    DoEvents
+End If
+
+' Configuramos el host y puerto
+If CurServer <> 0 Then
+    frmMain.Socket1.HostAddress = ServersLst(CurServer).Ip
+    frmMain.Socket1.RemotePort = ServersLst(CurServer).Puerto
+Else
+    If IPdelServidor <> "" Then
+        frmMain.Socket1.HostAddress = IPdelServidor
+        frmMain.Socket1.RemotePort = PuertoDelServidor
+    Else
+        frmMain.Socket1.HostAddress = "127.0.0.1"
+        frmMain.Socket1.RemotePort = Config_Inicio.Puerto
+    End If
+End If
+
+frmMain.Socket1.Connect
+
+Dim lWait As Long
+lWait = GetTickCount
+Do While Not frmMain.Socket1.Connected
+    DoEvents
+    If GetTickCount - lWait > 3000 Then
+        MsgBox "No se ha podido establecer conexion con el servidor.", vbCritical
+        Exit Sub
+    End If
+Loop
+
 SendData ("OOLOGI" & PJClickeado & "," & nombrecuent)
 
 End Sub
 
-Private Sub PJ_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub PJ_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim asd As Integer
 For asd = 0 To 6
 nombre(asd).ForeColor = vbWhite

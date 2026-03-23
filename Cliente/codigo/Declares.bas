@@ -51,14 +51,14 @@ End Enum
 Public PJClickeado As String
  
 Public rcvName As String
-Public rcvHead As Integer
-Public rcvBody As Integer
-Public rcvShield As Integer
-Public rcvWeapon As Integer
-Public rcvCasco As Integer
+Public rcvHead As Long
+Public rcvBody As Long
+Public rcvShield As Long
+Public rcvWeapon As Long
+Public rcvCasco As Long
 Public rcvIndex As Integer
 Public rcvCrimi As Boolean
-Public rcvBaned As Integer
+Public rcvBaned As Long
 Public rcvLevel As Integer
 Public rcvClase As String
 Public rcvMuerto As Integer

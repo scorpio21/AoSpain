@@ -1,10 +1,10 @@
 Attribute VB_Name = "Mod_TileEngine"
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Màrquez Pablo Ignacio
+'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matàas Fernando Pequeào
+'Copyright (C) 2002 Matï¿½as Fernando Pequeï¿½o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -28,20 +28,20 @@ Attribute VB_Name = "Mod_TileEngine"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nàmero 983 piso 7 dto A
+'Calle 3 nï¿½mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Càdigo Postal 1900
-'Pablo Ignacio Màrquez
+'Cï¿½digo Postal 1900
+'Pablo Ignacio Mï¿½rquez
 
 
 
 Option Explicit
 
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 '    C       O       N       S      T
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 'Map sizes in tiles
 Public Const XMaxMapSize = 100
 Public Const XMinMapSize = 1
@@ -54,11 +54,11 @@ Public Const GrhFogata = 1521
 Public Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 
 
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 '    T       I      P      O      S
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
 'Encabezado bmp
 Type BITMAPFILEHEADER
@@ -98,7 +98,7 @@ Public Type WorldPos
 End Type
 
 'Contiene info acerca de donde se puede encontrar un grh
-'tamaào y animacion
+'tamaï¿½o y animacion
 Public Type GrhData
     sX As Integer
     sY As Integer
@@ -239,7 +239,7 @@ Public EngineRun As Boolean
 Public FramesPerSec As Integer
 Public FramesPerSecCounter As Long
 
-'Tamaào del la vista en Tiles
+'Tamaï¿½o del la vista en Tiles
 Public WindowTileWidth As Integer
 Public WindowTileHeight As Integer
 
@@ -248,18 +248,18 @@ Public MainViewTop As Integer
 Public MainViewLeft As Integer
 
 'Cuantos tiles el engine mete en el BUFFER cuando
-'dibuja el mapa. Ojo un tamaào muy grande puede
+'dibuja el mapa. Ojo un tamaï¿½o muy grande puede
 'volver el engine muy lento
 Public TileBufferSize As Integer
 
 'Handle to where all the drawing is going to take place
 Public DisplayFormhWnd As Long
 
-'Tamaào de los tiles en pixels
+'Tamaï¿½o de los tiles en pixels
 Public TilePixelHeight As Integer
 Public TilePixelWidth As Integer
 
-'?à?à?à?à?à?à?à?à?à?àTotales?à?à?à?à?à?à?à?à?à?à?
+'?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½Totales?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
 Public NumBodies As Integer
 Public Numheads As Integer
@@ -270,7 +270,7 @@ Public LastChar As Integer
 Public NumWeaponAnims As Integer
 Public NumShieldAnims As Integer
 
-'à?à?à?à?à?à?à?à?à?àGraficosà?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½Graficosï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
 Public LastTime As Long 'Para controlar la velocidad
 
@@ -287,7 +287,7 @@ Public MainViewHeight As Integer
 
 
 
-'à?à?à?à?à?à?à?à?à?àGraficosà?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½Graficosï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 Public GrhData() As GrhData 'Guarda todos los grh
 Public BodyData() As BodyData
 Public HeadData() As HeadData
@@ -296,30 +296,30 @@ Public WeaponAnimData() As WeaponAnimData
 Public ShieldAnimData() As ShieldAnimData
 Public CascoAnimData() As HeadData
 Public Grh() As Grh 'Animaciones publicas
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
-'à?à?à?à?à?à?à?à?à?àMapa?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½Mapa?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 Public MapData() As MapBlock ' Mapa
 Public MapInfo As MapInfo ' Info acerca del mapa en uso
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
-'à?à?à?à?à?à?à?à?à?àUsuarios?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½Usuarios?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 Public CharList(1 To 10000) As Char
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
-'à?à?à?à?à?à?à?à?à?à?àAPI?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½API?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 'Blt
 Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 'Sonido
 Declare Function mciSendString Lib "winmm.dll" Alias "mciSendStringA" (ByVal lpstrCommand As String, ByVal lpstrReturnString As String, ByVal uRetrunLength As Long, ByVal hwndCallback As Long) As Long
 Declare Function sndPlaySound Lib "winmm.dll" Alias "sndPlaySoundA" (ByVal lpszSoundName As String, ByVal uFlags As Long) As Long
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
 
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 '       [CODE 000]: MatuX
 '
-Public bRain        As Boolean 'està raineando?
+Public bRain        As Boolean 'estï¿½ raineando?
 Public bRainST      As Boolean
 Public bTecho       As Boolean 'hay techo?
 Public brstTick     As Long
@@ -346,7 +346,7 @@ End Enum
 '[END]'
 '
 '       [END]
-'à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?à?
+'ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?ï¿½?
 
 Sub CargarCabezas()
 On Error Resume Next
@@ -675,7 +675,7 @@ End If
 Grh.FrameCounter = 1
 '[CODE 000]:MatuX
 '
-'  La linea generaba un error en la IDE, (no ocurràa debido al
+'  La linea generaba un error en la IDE, (no ocurrï¿½a debido al
 ' on error)
 '
 '   Grh.SpeedCounter = GrhData(Grh.GrhIndex).Speed
@@ -1046,13 +1046,13 @@ End If
         Exit Function
     End If
     
-    'àHay un personaje?
+    'ï¿½Hay un personaje?
     If MapData(X, Y).CharIndex > 0 Then
         LegalPos = False
         Exit Function
     End If
     
-    'àHay un personaje?
+    'ï¿½Hay un personaje?
     If MapData(X, Y).CharIndex > 0 Then
         '[Alejo-21-5]
         If CharList(MapData(X, Y).CharIndex).invisible = False Then
@@ -1132,7 +1132,7 @@ Dim SurfaceDesc As DDSURFACEDESC2
 '[CODE 000]:MatuX'
 '
 '   Comentado.. El hecho de que entrara
-' y saliera al toque de la funciàn producàa
+' y saliera al toque de la funciï¿½n producï¿½a
 ' mucho overhead, es preferible asegurarse
 ' de que es valido desde afuera
 '
@@ -1217,7 +1217,7 @@ Dim SurfaceDesc As DDSURFACEDESC2
 '[CODE 000]:MatuX'
 '
 '   Comentado.. El hecho de que entrara
-' y saliera al toque de la funciàn producàa
+' y saliera al toque de la funciï¿½n producï¿½a
 ' mucho overhead, es preferible asegurarse
 ' de que es valido desde afuera
 '
@@ -1341,10 +1341,10 @@ Sub DrawBackBufferSurface()
 
 '[CODE 000]:MatuX
 '
-'   Seguà intentando usar el BltFast en el PrimarySurface
-' hasta que descubrà que no se podàa porque el BltFast no
+'   Seguï¿½ intentando usar el BltFast en el PrimarySurface
+' hasta que descubrï¿½ que no se podï¿½a porque el BltFast no
 ' anda con surfaces que tienen un Clipper attacheado.
-' Ahora el càdigo es el mismo de antes.
+' Ahora el cï¿½digo es el mismo de antes.
 '
 '[END]'
 
@@ -1373,7 +1373,7 @@ End Function
 
 
 
-Sub DrawGrhtoHdc(hwnd As Long, Hdc As Long, Grh As Integer, SourceRect As RECT, destRect As RECT)
+Sub DrawGrhtoHdc(hwnd As Long, Hdc As Long, Grh As Long, SourceRect As RECT, destRect As RECT)
 If Grh <= 0 Then Exit Sub
 
 SecundaryClipper.SetHWnd hwnd
@@ -1850,7 +1850,7 @@ End Function
                 If FileExist(DirGraficos & loopc & ".bmp", vbNormal) Then
                 '
                 '  descomprimimos el .XU a un .BMP usando el .DAT
-                ' para la informaciàn que necesitamos
+                ' para la informaciï¿½n que necesitamos
                 'If FileExist(DirGraficos & loopc & ".xu", vbNormal) Then
                 '    Open DirGraficos & loopc & ".dat" For Binary As #51
                 '        Dim isize As Long
@@ -2015,11 +2015,11 @@ Call CargarFxs
 'AddtoRichTextBox frmCargando.Status, "Cargando mapas.", 2, 51, 223, 1, 1
 'AddtoRichTextBox frmCargando.Status, "Cargando graficos.", 2, 51, 223, 1, 1
 'Call LoadGraphics
-'AddtoRichTextBox frmCargando.Status, "àààIniciando Argentum Online!!!.", 2, 51, 223, 1, 1
+'AddtoRichTextBox frmCargando.Status, "ï¿½ï¿½ï¿½Iniciando Argentum Online!!!.", 2, 51, 223, 1, 1
 
 '[CODE 000]:MatuX'
 '   Iniciamos la LookUp Table de la lluvia
-' con esto nos salvamos de hacer la ecuaciàn
+' con esto nos salvamos de hacer la ecuaciï¿½n
 ' (X * 128) + 224
     LTLluvia(0) = 224
     LTLluvia(1) = 352
@@ -2028,7 +2028,7 @@ Call CargarFxs
     LTLluvia(4) = 736
 '[END]'
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gràficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.Status, "Cargando Grï¿½ficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True
@@ -2063,8 +2063,8 @@ Sub ShowNextFrame(DisplayFormTop As Integer, DisplayFormLeft As Integer)
 Exit Sub
 '[CODE]:MatuX'
 '
-'  ESTA FUNCIàN FUE MOVIDA AL LOOP PRINCIPAL EN Mod_General
-'  PARA QUE SEA INLINE. EN OTRAS PALABRAS, LO QUE ESTà ACà
+'  ESTA FUNCIï¿½N FUE MOVIDA AL LOOP PRINCIPAL EN Mod_General
+'  PARA QUE SEA INLINE. EN OTRAS PALABRAS, LO QUE ESTï¿½ ACï¿½
 '  YA NO ES LLAMADO POR NINGUNA RUTINA.
 '
 '[END]'
@@ -2135,3 +2135,39 @@ End Sub
 Function ControlVelocidad(ByVal LastTime As Long) As Boolean
 ControlVelocidad = (GetTickCount - LastTime > 20)
 End Function
+
+' [CODE] - Implementacion de GrhRenderToHdc para frmCuent
+Public Sub GrhRenderToHdc(ByVal GrhIndex As Long, ByVal DesthDC As Long, ByVal X As Integer, ByVal Y As Integer, ByVal Transparent As Boolean)
+    On Error Resume Next
+    
+    Dim FileNum As Integer
+    Dim sX As Integer, sY As Integer
+    Dim pixelWidth As Integer, pixelHeight As Integer
+    Dim SrcDC As Long
+    
+    If GrhIndex <= 0 Then Exit Sub
+    
+    ' Obtener datos del Grh
+    With GrhData(GrhIndex)
+        sX = .sX
+        sY = .sY
+        pixelWidth = .pixelWidth
+        pixelHeight = .pixelHeight
+        FileNum = .FileNum
+    End With
+    
+    ' Validaciones de seguridad
+    If FileNum <= 0 Then Exit Sub
+    If FileNum > UBound(SurfaceDB) Then Exit Sub
+    If SurfaceDB(FileNum) Is Nothing Then Exit Sub
+    
+    ' Obtener DC de la superficie origen (DirectDraw)
+    SrcDC = SurfaceDB(FileNum).GetDC
+    
+    ' Copiar al destino (Asumimos fondo negro/SRCCOPY por compatibilidad con PictureBox negro)
+    ' Nota: BitBlt es rapido y seguro para esta operacion en menus
+    Call BitBlt(DesthDC, X, Y, pixelWidth, pixelHeight, SrcDC, sX, sY, SRCCOPY)
+    
+    ' Liberar DC inmediatamente
+    SurfaceDB(FileNum).ReleaseDC SrcDC
+End Sub

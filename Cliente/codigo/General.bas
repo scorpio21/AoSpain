@@ -149,7 +149,7 @@ Sub CargarAnimArmas()
 
 On Error Resume Next
 
-Dim LoopC As Integer
+Dim loopc As Integer
 Dim arch As String
 arch = App.Path & "\init\" & "armas.dat"
 DoEvents
@@ -158,12 +158,12 @@ NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
 
 ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
 
-For LoopC = 1 To NumWeaponAnims
-    InitGrh WeaponAnimData(LoopC).WeaponWalk(1), Val(GetVar(arch, "ARMA" & LoopC, "Dir1")), 0
-    InitGrh WeaponAnimData(LoopC).WeaponWalk(2), Val(GetVar(arch, "ARMA" & LoopC, "Dir2")), 0
-    InitGrh WeaponAnimData(LoopC).WeaponWalk(3), Val(GetVar(arch, "ARMA" & LoopC, "Dir3")), 0
-    InitGrh WeaponAnimData(LoopC).WeaponWalk(4), Val(GetVar(arch, "ARMA" & LoopC, "Dir4")), 0
-Next LoopC
+For loopc = 1 To NumWeaponAnims
+    InitGrh WeaponAnimData(loopc).WeaponWalk(1), Val(GetVar(arch, "ARMA" & loopc, "Dir1")), 0
+    InitGrh WeaponAnimData(loopc).WeaponWalk(2), Val(GetVar(arch, "ARMA" & loopc, "Dir2")), 0
+    InitGrh WeaponAnimData(loopc).WeaponWalk(3), Val(GetVar(arch, "ARMA" & loopc, "Dir3")), 0
+    InitGrh WeaponAnimData(loopc).WeaponWalk(4), Val(GetVar(arch, "ARMA" & loopc, "Dir4")), 0
+Next loopc
 
 End Sub
 
@@ -171,7 +171,7 @@ Sub CargarAnimEscudos()
 
 On Error Resume Next
 
-Dim LoopC As Integer
+Dim loopc As Integer
 Dim arch As String
 arch = App.Path & "\init\" & "escudos.dat"
 DoEvents
@@ -180,12 +180,12 @@ NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
 
 ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
 
-For LoopC = 1 To NumEscudosAnims
-    InitGrh ShieldAnimData(LoopC).ShieldWalk(1), Val(GetVar(arch, "ESC" & LoopC, "Dir1")), 0
-    InitGrh ShieldAnimData(LoopC).ShieldWalk(2), Val(GetVar(arch, "ESC" & LoopC, "Dir2")), 0
-    InitGrh ShieldAnimData(LoopC).ShieldWalk(3), Val(GetVar(arch, "ESC" & LoopC, "Dir3")), 0
-    InitGrh ShieldAnimData(LoopC).ShieldWalk(4), Val(GetVar(arch, "ESC" & LoopC, "Dir4")), 0
-Next LoopC
+For loopc = 1 To NumEscudosAnims
+    InitGrh ShieldAnimData(loopc).ShieldWalk(1), Val(GetVar(arch, "ESC" & loopc, "Dir1")), 0
+    InitGrh ShieldAnimData(loopc).ShieldWalk(2), Val(GetVar(arch, "ESC" & loopc, "Dir2")), 0
+    InitGrh ShieldAnimData(loopc).ShieldWalk(3), Val(GetVar(arch, "ESC" & loopc, "Dir3")), 0
+    InitGrh ShieldAnimData(loopc).ShieldWalk(4), Val(GetVar(arch, "ESC" & loopc, "Dir4")), 0
+Next loopc
 
 End Sub
 
@@ -255,13 +255,13 @@ Sub RefreshAllChars()
 'Used to make sure everyone is visible
 '*****************************************************************
 
-Dim LoopC As Integer
+Dim loopc As Integer
 
-For LoopC = 1 To LastChar
-    If CharList(LoopC).Active = 1 Then
-        MapData(CharList(LoopC).Pos.x, CharList(LoopC).Pos.Y).CharIndex = LoopC
+For loopc = 1 To LastChar
+    If CharList(loopc).Active = 1 Then
+        MapData(CharList(loopc).Pos.X, CharList(loopc).Pos.Y).CharIndex = loopc
     End If
-Next LoopC
+Next loopc
 
 End Sub
 
@@ -300,7 +300,7 @@ End Function
 
 Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     'Validamos los datos del user
-    Dim LoopC As Long
+    Dim loopc As Long
     Dim CharAscii As Integer
     
     If checkemail And UserEmail = "" Then
@@ -309,13 +309,13 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
         Exit Function
     End If
     
-    For LoopC = 1 To Len(UserPassword)
-        CharAscii = Asc(Mid$(UserPassword, LoopC, 1))
+    For loopc = 1 To Len(UserPassword)
+        CharAscii = Asc(Mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no estaï¿½ permitido.")
             Exit Function
         End If
-    Next LoopC
+    Next loopc
     
     If nombrecuent = "" Then
         Call MsgBox("Ingrese un nombre de cuenta.")
@@ -331,13 +331,13 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
         Exit Function
     End If
     
-    For LoopC = 1 To Len(nombrecuent)
-        CharAscii = Asc(Mid$(nombrecuent, LoopC, 1))
+    For loopc = 1 To Len(nombrecuent)
+        CharAscii = Asc(Mid$(nombrecuent, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
-            Call MsgBox("Cuenta invalida. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            Call MsgBox("Cuenta invalida. El caracter " & Chr$(CharAscii) & " no estaï¿½ permitido.")
             Exit Function
         End If
-    Next LoopC
+    Next loopc
     
     CheckUserData = True
 End Function
@@ -415,7 +415,7 @@ End Sub
 Sub MoveNorth()
 If Cartel Then Cartel = False
 
-If LegalPos(UserPos.x, UserPos.Y - 1) Then
+If LegalPos(UserPos.X, UserPos.Y - 1) Then
     Call SendData("M" & NORTH)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
         Call MoveCharbyHead(UserCharIndex, NORTH)
@@ -431,7 +431,7 @@ End Sub
 
 Sub MoveEast()
 If Cartel Then Cartel = False
-If LegalPos(UserPos.x + 1, UserPos.Y) Then
+If LegalPos(UserPos.X + 1, UserPos.Y) Then
     Call SendData("M" & EAST)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
         Call MoveCharbyHead(UserCharIndex, EAST)
@@ -448,7 +448,7 @@ End Sub
 Sub MoveSouth()
 If Cartel Then Cartel = False
 
-If LegalPos(UserPos.x, UserPos.Y + 1) Then
+If LegalPos(UserPos.X, UserPos.Y + 1) Then
     Call SendData("M" & SOUTH)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
         MoveCharbyHead UserCharIndex, SOUTH
@@ -464,7 +464,7 @@ End Sub
 
 Sub MoveWest()
 If Cartel Then Cartel = False
-If LegalPos(UserPos.x - 1, UserPos.Y) Then
+If LegalPos(UserPos.X - 1, UserPos.Y) Then
     Call SendData("M" & WEST)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
             MoveCharbyHead UserCharIndex, WEST
@@ -558,7 +558,7 @@ Sub MoveScreen(Heading As Byte)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
-Dim x As Integer
+Dim X As Integer
 Dim Y As Integer
 Dim tX As Integer
 Dim tY As Integer
@@ -570,30 +570,30 @@ Select Case Heading
         Y = -1
 
     Case EAST
-        x = 1
+        X = 1
 
     Case SOUTH
         Y = 1
     
     Case WEST
-        x = -1
+        X = -1
         
 End Select
 
 'Fill temp pos
-tX = UserPos.x + x
+tX = UserPos.X + X
 tY = UserPos.Y + Y
 
 If Not (tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder) Then
-    AddtoUserPos.x = x
-    UserPos.x = tX
+    AddtoUserPos.X = X
+    UserPos.X = tX
     AddtoUserPos.Y = Y
     UserPos.Y = tY
     UserMoving = 1
 
-    bTecho = IIf(MapData(UserPos.x, UserPos.Y).trigger = 1 Or _
-            MapData(UserPos.x, UserPos.Y).trigger = 2 Or _
-            MapData(UserPos.x, UserPos.Y).trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
+            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
+            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
 Exit Sub
 Stop
     '[CODE 001]:MatuX'
@@ -643,14 +643,14 @@ Function NextOpenChar()
 'Finds next open Char
 '******************************************
 
-Dim LoopC As Integer
+Dim loopc As Integer
 
-LoopC = 1
-Do While CharList(LoopC).Active
-    LoopC = LoopC + 1
+loopc = 1
+Do While CharList(loopc).Active
+    loopc = loopc + 1
 Loop
 
-NextOpenChar = LoopC
+NextOpenChar = loopc
 
 End Function
 
@@ -660,9 +660,9 @@ End Function
 
 Sub SwitchMap(Map As Integer, X_Pos As Integer, Y_Pos As Integer)
 
-Dim LoopC As Integer
+Dim loopc As Integer
 Dim Y As Integer
-Dim x As Integer
+Dim X As Integer
 Dim tempint As Integer
 Dim mapName As String
 
@@ -681,13 +681,13 @@ frmMain.RecTxt.Refresh
 
 'En lugar de limpiar 10.000, solo limpiamos hasta el ultimo personaje conocido
 If LastChar > 0 Then
-    For LoopC = 1 To LastChar
-        If CharList(LoopC).Active Then
+    For loopc = 1 To LastChar
+        If CharList(loopc).Active Then
             'Limpieza directa de memoria sin llamadas a subrutinas pesadas
-            CharList(LoopC).Active = 0
-            CharList(LoopC).nombre = ""
+            CharList(loopc).Active = 0
+            CharList(loopc).nombre = ""
         End If
-    Next LoopC
+    Next loopc
 End If
 
 LastChar = 0
@@ -714,21 +714,21 @@ Close #1
 
 idx = 1
 For Y = YMinMapSize To YMaxMapSize
-    For x = XMinMapSize To XMaxMapSize
-        MapData(x, Y).Blocked = Buffer(idx).bloqueado
-        For LoopC = 1 To 4
-            MapData(x, Y).Graphic(LoopC).GrhIndex = Buffer(idx).grafs(LoopC)
-            MapData(x, Y).Graphic(LoopC).Started = 0
-            MapData(x, Y).Graphic(LoopC).FrameCounter = 1
-        Next LoopC
-        MapData(x, Y).trigger = Buffer(idx).trigger
+    For X = XMinMapSize To XMaxMapSize
+        MapData(X, Y).Blocked = Buffer(idx).bloqueado
+        For loopc = 1 To 4
+            MapData(X, Y).Graphic(loopc).GrhIndex = Buffer(idx).grafs(loopc)
+            MapData(X, Y).Graphic(loopc).Started = 0
+            MapData(X, Y).Graphic(loopc).FrameCounter = 1
+        Next loopc
+        MapData(X, Y).Trigger = Buffer(idx).Trigger
         
         'Reset de referencias
-        MapData(x, Y).CharIndex = 0
-        MapData(x, Y).ObjGrh.GrhIndex = 0
+        MapData(X, Y).CharIndex = 0
+        MapData(X, Y).ObjGrh.GrhIndex = 0
         
         idx = idx + 1
-    Next x
+    Next X
 Next Y
 
 CurMap = Map
@@ -853,23 +853,54 @@ End Function
 
 
 Public Function CurServerIp() As String
-
-If CurServer <> 0 Then
-    CurServerIp = ServersLst(CurServer).Ip
-Else
-    CurServerIp = frmConnect.IPTxt
-End If
-
+    On Error Resume Next
+    If CurServer <> 0 Then
+        CurServerIp = ServersLst(CurServer).Ip
+    Else
+        ' Si el formulario esta cargado, usamos su valor
+        Dim f As Form
+        Dim isLoaded As Boolean
+        For Each f In Forms
+            If f.Name = "frmConnect" Then
+                isLoaded = True
+                Exit For
+            End If
+        Next f
+        
+        If isLoaded Then
+            CurServerIp = frmConnect.IPTxt
+        Else
+            CurServerIp = IPdelServidor
+        End If
+        
+        ' Si sigue vacio, fallback a localhost
+        If CurServerIp = "" Then CurServerIp = "127.0.0.1"
+    End If
 End Function
 
 Public Function CurServerPort() As Integer
-
-If CurServer <> 0 Then
-    CurServerPort = ServersLst(CurServer).Puerto
-Else
-    CurServerPort = CInt(frmConnect.PortTxt)
-End If
-
+    On Error Resume Next
+    If CurServer <> 0 Then
+        CurServerPort = ServersLst(CurServer).Puerto
+    Else
+        Dim f As Form
+        Dim isLoaded As Boolean
+        For Each f In Forms
+            If f.Name = "frmConnect" Then
+                isLoaded = True
+                Exit For
+            End If
+        Next f
+        
+        If isLoaded Then
+            CurServerPort = CInt(frmConnect.PortTxt)
+        Else
+            CurServerPort = CInt(PuertoDelServidor)
+        End If
+        
+        ' Fallback al puerto por defecto
+        If CurServerPort <= 0 Then CurServerPort = 7666
+    End If
 End Function
 
 
@@ -1042,7 +1073,7 @@ IniciarObjetosDirectX
 AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
 AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
-Dim LoopC As Integer
+Dim loopc As Integer
 
 LastTime = GetTickCount
 
@@ -1069,7 +1100,7 @@ Call CargarAnimArmas
 Call CargarAnimEscudos
 
 
-AddtoRichTextBox frmCargando.status, "                    aBienvenido a Argentum Online!", , , , 1
+AddtoRichTextBox frmCargando.status, "                    !Bienvenido a Argentum Online!", , , , 1
 
 
 Unload frmCargando
@@ -1077,8 +1108,8 @@ Unload frmCargando
 LoopMidi = True
 
 If Musica = 0 Then
-    Call CargarMIDI(DirMidi & MIdi_Inicio & ".mid")
-    Play_Midi
+'    Call CargarMIDI(DirMidi & MIdi_Inicio & ".mid")
+'    Play_Midi
 End If
 
 'frmPres.Top = 0
@@ -1151,11 +1182,11 @@ Do While prgRun
                 End If
             'Call ShowNextFrame(frmMain.Top, frmMain.Left)
             '****** Move screen Left, Right, Up and Down if needed ******
-            If AddtoUserPos.x <> 0 Then
-                OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.x)))
-                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.x) Then
+            If AddtoUserPos.X <> 0 Then
+                OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.X)))
+                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
                     OffsetCounterX = 0
-                    AddtoUserPos.x = 0
+                    AddtoUserPos.X = 0
                     UserMoving = 0
                 End If
             ElseIf AddtoUserPos.Y <> 0 Then
@@ -1168,7 +1199,7 @@ Do While prgRun
             End If
     
             '****** Update screen ******
-            Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+            Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
             'Call DoNightFX
             'Call DoLightFogata(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
             '[CODE 000]:MatuX
@@ -1345,11 +1376,11 @@ CMSValidateChar_ = IIf( _
 End Function
 
 
-Function HayAgua(x As Integer, Y As Integer) As Boolean
+Function HayAgua(X As Integer, Y As Integer) As Boolean
 
-If MapData(x, Y).Graphic(1).GrhIndex >= 1505 And _
-   MapData(x, Y).Graphic(1).GrhIndex <= 1520 And _
-   MapData(x, Y).Graphic(2).GrhIndex = 0 Then
+If MapData(X, Y).Graphic(1).GrhIndex >= 1505 And _
+   MapData(X, Y).Graphic(1).GrhIndex <= 1520 And _
+   MapData(X, Y).Graphic(2).GrhIndex = 0 Then
             HayAgua = True
 Else
             HayAgua = False

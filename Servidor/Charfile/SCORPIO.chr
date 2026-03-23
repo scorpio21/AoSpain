@@ -71,7 +71,7 @@ Genero=Hombre
 Raza=Humano
 Hogar=Arcadia
 Clase=Mago
-Password=0cc175b9c0f1b6a831c399e269772661
+Password=1234567
 Desc=
 Heading= 3
 Head= 2
@@ -80,7 +80,7 @@ Arma= 11
 Escudo= 2
 Casco= 2
 LastIP=127.0.0.1
-Position=34-73-11
+Position=34-73-9
 [STATS]
 GLD= 0
 BANCO= 0

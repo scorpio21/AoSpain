@@ -1823,13 +1823,32 @@ If UserList(UserIndex).Flags.UserLogged Then UserList(UserIndex).Counters.IdleCo
                 UserSexo = ReadField(3, rdata, Asc(","))
                 UserClase = ReadField(4, rdata, Asc(","))
                 UserHogar = ReadField(5, rdata, Asc(","))
-                UserAccount = ReadField(28, rdata, Asc(","))
+                
+                ' [NUEVO] Leemos Atributos y Skills
+                Dim Atribs(1 To 5) As String
+                Dim Skills(1 To 21) As String
+                Dim iLoop As Integer
+                
+                For iLoop = 1 To 5
+                    Atribs(iLoop) = ReadField(5 + iLoop, rdata, Asc(","))
+                Next iLoop
+                
+                For iLoop = 1 To 21
+                    Skills(iLoop) = ReadField(10 + iLoop, rdata, Asc(","))
+                Next iLoop
+                
+                UserAccount = ReadField(32, rdata, Asc(","))
+                
+                ' [NUEVO] Obtenemos el mail real de la cuenta
+                Dim UserMail As String
+                UserMail = GetVar(App.Path & "\Accounts\" & UserAccount & ".act", UserAccount, "mail")
+                If UserMail = "" Then UserMail = "mail@cuenta.com" ' Fallback
                 
                 'Creamos el personaje vinculado a la cuenta
                 Call ConnectNewUser(UserIndex, UserName, UserList(UserIndex).AccountedPass, 0, 0, UserRaza, UserSexo, UserClase, _
-                    "15", "15", "15", "15", "15", _
-                    "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", _
-                    "mail@cuenta.com", UserHogar, UserAccount)
+                    Atribs(1), Atribs(2), Atribs(3), Atribs(4), Atribs(5), _
+                    Skills(1), Skills(2), Skills(3), Skills(4), Skills(5), Skills(6), Skills(7), Skills(8), Skills(9), Skills(10), Skills(11), Skills(12), Skills(13), Skills(14), Skills(15), Skills(16), Skills(17), Skills(18), Skills(19), Skills(20), Skills(21), "0", _
+                    UserMail, UserHogar, UserAccount)
                     
                 'Vinculamos el PJ a la cuenta física (.act)
                 Call ChrToAccount(UserAccount, UserName)

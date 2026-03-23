@@ -655,7 +655,7 @@ NumChars = NumChars - 1
 
 End Sub
 
-Sub InitGrh(ByRef Grh As Grh, ByVal GrhIndex As Integer, Optional Started As Byte = 2)
+Sub InitGrh(ByRef Grh As Grh, ByVal GrhIndex As Long, Optional Started As Byte = 2)
 '*****************************************************************
 'Sets up a grh. MUST be done before rendering
 '*****************************************************************
@@ -1256,7 +1256,7 @@ End Sub
 '[END]
 
 'Dim CurrentGrh As Grh
-Dim iGrhIndex As Integer
+Dim iGrhIndex As Long
 'Dim destRect As RECT
 Dim SourceRect As RECT
 'Dim SurfaceDesc As DDSURFACEDESC2
@@ -1364,7 +1364,7 @@ End Function
 
 
 
-Sub DrawGrhtoHdc(hWnd As Long, Hdc As Long, Grh As Integer, SourceRect As RECT, destRect As RECT)
+Sub DrawGrhtoHdc(hWnd As Long, Hdc As Long, Grh As Long, SourceRect As RECT, destRect As RECT)
 If Grh <= 0 Then Exit Sub
 
 SecundaryClipper.SetHWnd hWnd
@@ -1752,7 +1752,7 @@ Public Function RenderSounds()
 End Function
 
 
-Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As Integer) As Boolean
+Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As Long) As Boolean
 
 If GrhIndex > 0 Then
         
