@@ -6,7 +6,10 @@ Este documento detalla los cambios realizados para migrar el motor de AoSpain de
 
 ### 1. Cliente (`Cliente\codigo`)
 *   **`Declares.bas`**: Las estructuras fundamentales (`Grh`, `Obj`) ahora utilizan `Long` para sus índices principales (`GrhIndex`, `ObjIndex`).
-*   **`TileEngine.bas`**: El motor de renderizado procesa los `GrhIndex` como `Long`, permitiendo visualizar gráficos con IDs superiores a 32k.
+*   **`TileEngine.bas`**: 
+    *   El motor de renderizado procesa los `GrhIndex` como `Long`, permitiendo visualizar gráficos con IDs superiores a 32k.
+    *   **`GrhRenderToHdc`**: Implementada nueva función pública para volcar gráficos directamente sobre un `HDC` de Windows (GDI). Esencial para el renderizado de personajes en formularios de interfaz (`frmCuent`).
+    *   **`DrawGrhtoHdc`**: Actualizada la firma del método para aceptar `GrhIndex` como `Long`, corrigiendo errores de desajuste de tipo (`ByRef`) tras la migración.
 *   **`Mod_TCP (HandleData)`**: 
     *   **Variables de Datos**: Los valores de Grh e ItemIndex se procesan como `Long`.
     *   **Variables de Control**: Coordenadas (`X`, `Y`), índices de personajes (`CharIndex`) e índices de bucles (`i`, `k`) se mantienen como `Integer` para garantizar compatibilidad `ByRef` con las funciones del motor y optimizar el uso de memoria.

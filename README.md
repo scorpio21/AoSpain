@@ -4,13 +4,14 @@
 
 **AoSpain** es un proyecto basado en el motor clásico de **Argentum Online**, profundamente optimizado y modernizado para soportar arquitecturas de **32 bits (Long)**. Esta mejora rompe los límites históricos de 16 bits (32k), permitiendo bases de datos de objetos, gráficos y mapas virtualmente ilimitadas.
 
-## 🚀 Mejoras Recientes (22 de Marzo, 2026)
+## 🚀 Mejoras Recientes (22-23 de Marzo, 2026)
 
-* **Sistema de Login Corregido:** Se han solucionado errores críticos en el sistema de autenticación de cuentas.
-* **Paquetes de Red Optimizados:** Corregida la ubicación y procesamiento de paquetes `INIAC0`, `INIAC` y `ADDPJ` para correcto flujo de login.
-* **Estabilidad del Cliente:** Eliminados cuelgues al recibir errores del servidor mediante manejo seguro de formularios.
-* **Compatibilidad de Variables:** Corregidos errores de tipo en `GetVar()` y `Val()` para conversión adecuada de datos.
-* **Conexión Estable:** Mejorada la gestión de carga/descarga de formularios `frmConnect` para evitar errores de referencia.
+* **Renderizado en HDC:** Implementada la función `GrhRenderToHdc` en el motor gráfico, permitiendo el dibujo de personajes y gráficos directamente en controles de Windows (PictureBox), resolviendo el fallo visual en el panel de cuentas.
+* **Protocolo de Creación Corregido:** Reparado el paquete `NLOGIN`. Ahora se envían y procesan correctamente los atributos y habilidades elegidos, eliminando el error de campos desplazados.
+* **Integración de Cuentas Real:** El sistema ahora vincula automáticamente el email real de la cuenta (.act) a los nuevos personajes, eliminando correos genéricos hardcodeados.
+* **Estabilidad de Conexión:** Mejorada la lógica de reconexión en `frmCuent`. El cliente ahora asegura una conexión limpia y espera síncronamente al servidor antes de enviar datos, eliminando errores de socket (24038, 24057).
+* **Compatibilidad 32-bit:** Actualizadas funciones de dibujo heredadas (`DrawGrhtoHdc`) para soportar índices `Long`, garantizando la estabilidad tras la migración del motor.
+* **Comando /salir:** Corregido el flujo de descarga de formularios para evitar solapamientos y asegurar el retorno correcto al panel de selección de personajes.
 
 ## 👥 Sistema de Cuentas (Completado y Estable)
 

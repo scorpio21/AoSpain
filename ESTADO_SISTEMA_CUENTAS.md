@@ -29,8 +29,10 @@ Este documento detalla el progreso de la migración del sistema de personajes in
     - [x] Implementado `Case "NACCNT"` (Creación de cuenta).
     - [x] **REEMPLAZADO COMPLETAMENTE** `Case "BORR"` para eliminar PJ de la cuenta (.act) y reordenar lista.
     - [x] Implementado `Case "NLOGIN"` (Creación de personaje vinculado a cuenta + vinculación en `.act`).
+    - [x] **CORREGIDO**: Desajuste de campos por género duplicado y falta de atributos/skills en el servidor.
+    - [x] **CORREGIDO**: Herencia automática del email real de la cuenta vinculada (eliminado email genérico).
 
-      Evidencia: `Servidor/Codigo/Modulos/TCP.bas` (`Case "NLOGIN"` llama `ConnectNewUser` y luego `ChrToAccount`).
+      Evidencia: `Servidor/Codigo/Modulos/TCP.bas` (`Case "NLOGIN"` lee 32 campos incluyendo atributos y skills, recupera mail con `GetVar` del `.act`).
 
 ### 4. Recuperación y cambio de contraseña (paquetes)
 
