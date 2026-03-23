@@ -46,6 +46,7 @@ Public Enum E_MODO
     CrearAccount = 4
     LoginAccount = 5
     BorrarPj = 6
+    RecuperarPass = 7
 End Enum
 
 Public PJClickeado As String
@@ -68,7 +69,7 @@ Public PJSAmount As Integer
 Public Type TileMap
     bloqueado As Byte
     grafs(1 To 4) As Long
-    trigger As Integer
+    Trigger As Integer
     t1 As Integer 'espacio al pedo
 End Type
 
@@ -331,7 +332,7 @@ Public ENDL As String 'Holds the Endline character for textboxes
 
 'Control
 Public prgRun As Boolean 'When true the program ends
-Public finpres As Boolean
+'Public finpres As Boolean
 
 Public IPdelServidor As String
 Public PuertoDelServidor As String

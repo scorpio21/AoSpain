@@ -220,12 +220,12 @@ Picture1.SetFocus
 
 End Sub
 
-Private Sub List1_Click()
+Private Sub list1_Click()
 DibujaGrh UserInventory(List1.ListIndex + 1).GrhIndex
 
 End Sub
 
-Public Sub DibujaGrh(Grh As Integer)
+Public Sub DibujaGrh(Grh As Long)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -238,7 +238,7 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Grh, SR, DR)
+Call DrawGrhtoHdc(Picture1.hwnd, Picture1.Hdc, Grh, SR, DR)
 
 End Sub
 

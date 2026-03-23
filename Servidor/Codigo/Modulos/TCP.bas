@@ -1039,6 +1039,7 @@ UserList(UserIndex).Flags.TargetUser = 0
 UserList(UserIndex).Char.FX = 0
 
 UserList(UserIndex).Char.Account = Cuenta
+UserList(UserIndex).Accounted = Cuenta
 UserList(UserIndex).AccountedPass = Password
 
 '¿Existe el personaje?
@@ -2189,7 +2190,20 @@ Select Case UCase$(rdata)
             Call SendData(ToIndex, UserIndex, 0, "||No puedes salir porque estas afectado por un hechizo que te lo impide." & FONTTYPE_INFO)
             Exit Sub
         Else
+            ' Si el usuario pertenece a una cuenta, volvemos a la selección de personaje
+            Dim AccountName As String
+            AccountName = UserList(UserIndex).Accounted
+            
             Call SendData(ToIndex, UserIndex, 0, "FINOK")
+            Call CloseUser(UserIndex)
+            
+            If AccountName <> "" Then
+                ' Enviamos de nuevo la lista de personajes sin desconectar el socket
+                Call EnviarListaPJs(UserIndex, AccountName)
+            Else
+                ' Si no tiene cuenta (sistema viejo), desconectamos el socket
+                Call CloseSocket(UserIndex)
+            End If
         End If
         Exit Sub
     Case "/FUNDARCLAN"

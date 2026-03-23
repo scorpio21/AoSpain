@@ -50,6 +50,7 @@ Public Const SND_PASOS2 = "24.Wav"
 Public Const SND_NAVEGANDO = "50.wav"
 Public Const SND_OVER = "click2.Wav"
 Public Const SND_DICE = "cupdice.Wav"
+Public Const SNDCHANNEL_CLICK = 0
 
 Function LoadWavetoDSBuffer(DS As DirectSound, DSB As DirectSoundBuffer, sFile As String) As Boolean
     Dim bufferDesc As DSBUFFERDESC

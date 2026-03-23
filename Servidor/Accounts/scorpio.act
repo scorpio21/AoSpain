@@ -5,10 +5,10 @@ Pregunta=lola
 Respuesta=lalo
 ban=0
 [PJS]
-NumPjs=3
-PJ1=SCORPIO
-PJ2=PERERU
-PJ3=HTYU
+NumPjs=1
+PJ1=PERERU
+PJ2=
+PJ3=
 PJ4=
 PJ5=
 PJ6=

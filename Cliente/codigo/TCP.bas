@@ -39,6 +39,7 @@ Public Warping As Boolean
 Public LlegaronSkills As Boolean
 Public LlegaronAtrib As Boolean
 Public LlegoFama As Boolean
+Public EstadoConexion As Integer
 
 Public Function PuedoQuitarFoco() As Boolean
 PuedoQuitarFoco = True
@@ -81,12 +82,15 @@ Sub HandleData(ByVal Rdata As String)
             IScombate = False
             UserDescansar = False
             Nombres = True
-            If frmCrearPersonaje.Visible Then
-                   Unload frmPasswd
-                   Unload frmCrearPersonaje
-                   Unload frmConnect
-                   frmMain.Show
-            End If
+            
+            ' Siempre nos aseguramos de que el juego se muestre y los forms de login se cierren
+            Unload frmPasswd
+            Unload frmCrearPersonaje
+            Unload frmConnect
+            Unload frmCuent
+            
+            If Not frmMain.Visible Then frmMain.Show
+            
             Call SetConnected
             'Mostramos el Tip
             If tipf = "1" And PrimeraVez Then
@@ -106,7 +110,11 @@ Sub HandleData(ByVal Rdata As String)
             UserNavegando = Not UserNavegando
             Exit Sub
         Case "FINOK" ' Graceful exit ;))
-            frmMain.Socket1.Disconnect
+            ' Solo desconectamos si no estamos en modo cuenta
+            If EstadoLogin <> LoginAccount Then
+                frmMain.Socket1.Disconnect
+            End If
+            
             frmMain.Visible = False
             logged = False
             UserParalizado = False
@@ -119,8 +127,8 @@ Sub HandleData(ByVal Rdata As String)
             ' Si estábamos en modo de cuenta, volver al panel de cuentas
             If EstadoLogin = LoginAccount Then
                 Unload frmConnect
-                Load frmCuent
-                frmCuent.Visible = True
+                ' No necesitamos cargar frmCuent aquí, porque el servidor enviará INIAC
+                ' y el Case "INIAC" se encargará de mostrarlo.
             Else
                 Load frmConnect
                 frmConnect.Visible = True
@@ -412,7 +420,7 @@ Sub HandleData(ByVal Rdata As String)
             
             CharList(CharIndex).Fx = Val(ReadField(9, Rdata, 44))
             CharList(CharIndex).FxLoopTimes = Val(ReadField(10, Rdata, 44))
-            CharList(CharIndex).Nombre = ReadField(12, Rdata, 44)
+            CharList(CharIndex).nombre = ReadField(12, Rdata, 44)
             CharList(CharIndex).Criminal = Val(ReadField(13, Rdata, 44))
             
             Call MakeChar(CharIndex, ReadField(1, Rdata, 44), ReadField(2, Rdata, 44), ReadField(3, Rdata, 44), X, Y, Val(ReadField(7, Rdata, 44)), Val(ReadField(8, Rdata, 44)), Val(ReadField(11, Rdata, 44)))
@@ -584,7 +592,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.Exp.Caption = "Exp:" & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp:" & UserExp & "/" & UserPasarNivel
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
             If UserMaxMAN > 0 Then
@@ -920,8 +928,8 @@ Sub HandleData(ByVal Rdata As String)
             rcvClase = ReadField(11, Rdata, 44)
             rcvMuerto = ReadField(12, Rdata, 44)
             
-            If rcvCrimi = True Then frmCuent.Nombre(rcvIndex).ForeColor = vbWhite
-            If rcvCrimi = False Then frmCuent.Nombre(rcvIndex).ForeColor = vbWhite
+            If rcvCrimi = True Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
+            If rcvCrimi = False Then frmCuent.nombre(rcvIndex).ForeColor = vbWhite
             
             Call DibujarTodo(rcvIndex - 1, CLng(rcvBody), CLng(rcvHead), CLng(rcvCasco), CLng(rcvShield), CLng(rcvWeapon), CLng(rcvBaned), rcvName, CLng(rcvLevel), rcvClase, CLng(rcvMuerto))
             Exit Sub
@@ -1161,7 +1169,7 @@ Sub Login()
                 & "," & UserSkills(21) & "," & nombrecuent)
         ElseIf EstadoLogin = CrearAccount Then
      With frmCrearAccount
-        SendData ("NACCNT" & .Nombre & "," & .Pass & "," & .Mail & "," & .pregunta & "," & .respuesta)
+        SendData ("NACCNT" & .nombre & "," & .Pass & "," & .Mail & "," & .pregunta & "," & .respuesta)
 End With
  
     ElseIf EstadoLogin = BorrarPj Then
@@ -1170,4 +1178,5 @@ End With
         'MsgBox "Enviando paquete ALOGIN para cuenta: " & nombrecuent
         SendData ("ALOGIN" & nombrecuent & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & MD5HushYo)
     End If
+    
 End Sub

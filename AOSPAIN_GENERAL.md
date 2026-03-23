@@ -25,6 +25,16 @@ Se ha implementado un sistema multicharacter completo (1 cuenta -> N personajes)
 - `ADDPJ`: Agrega los datos de un personaje al slot correspondiente.
 - `BORROK`: Confirmación de borrado exitoso.
 
+### Hallazgos y Soluciones (Marzo 2026):
+- **Problema de Persistencia de `frmCuent`:**
+    - *Hallazgo:* El formulario de cuentas se quedaba en segundo plano al loguear porque `Case "LOGGED"` en el cliente no lo descargaba.
+    - *Solución:* Añadido `Unload frmCuent` en `TCP.bas` (`LOGGED`) y en el timer de FPS de `frmMain.frm`.
+- **Comando `/salir` (Vuelta a Selección de PJ):**
+    - *Hallazgo:* El comando desconectaba el socket del cliente, impidiendo volver a la selección de personaje sin re-loguear la cuenta.
+    - *Solución (Servidor):* Modificado `/SALIR` para llamar a `CloseUser` y reenviar la lista de personajes (`EnviarListaPJs`) si el usuario pertenece a una cuenta.
+    - *Solución (Cliente):* Modificado `Case "FINOK"` para evitar la desconexión del socket si `EstadoLogin = LoginAccount`.
+    - *Solución (Servidor):* Asegurada la asignación de `Accounted` en `ConnectUser` para mantener el vínculo con la cuenta durante la sesión.
+
 ---
 
 ## 🏗️ Arquitectura Técnica (Motor de 32 bits)

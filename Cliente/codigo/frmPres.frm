@@ -68,7 +68,7 @@ Option Explicit
 
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
-If KeyAscii = 27 Then finpres = True
+If KeyAscii = 27 Then 'finpres = True
 End Sub
 
 Private Sub Timer1_Timer()

@@ -1107,24 +1107,24 @@ Unload frmCargando
 
 LoopMidi = True
 
-If Musica = 0 Then
+'If Musica = 0 Then
 '    Call CargarMIDI(DirMidi & MIdi_Inicio & ".mid")
 '    Play_Midi
-End If
+'End If
 
 'frmPres.Top = 0
 'frmPres.Left = 0
 'frmPres.Width = Screen.Width
 'frmPres.Height = Screen.Height
-frmPres.Picture = LoadPicture(App.Path & "\Graficos\noland.jpg")
+'frmPres.Picture = LoadPicture(App.Path & "\Graficos\noland.jpg")
 'frmPres.WindowState = vbMaximized
-frmPres.Show
+'frmPres.Show
 
-Do While Not finpres
-    DoEvents
-Loop
+'Do While Not finpres
+'    DoEvents
+'Loop
 
-Unload frmPres
+'Unload frmPres
 
 frmConnect.Visible = True
 

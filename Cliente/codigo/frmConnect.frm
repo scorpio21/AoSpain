@@ -1,13 +1,13 @@
 VERSION 5.00
 Begin VB.Form frmConnect 
    AutoRedraw      =   -1  'True
-   BackColor       =   &H00E0E0E0&
+   BackColor       =   &H00FFFFFF&
    BorderStyle     =   0  'None
    Caption         =   "Argentum Online"
    ClientHeight    =   9000
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   12000
+   ClientWidth     =   11985
    ClipControls    =   0   'False
    FillColor       =   &H00000040&
    Icon            =   "frmConnect.frx":0000
@@ -15,11 +15,11 @@ Begin VB.Form frmConnect
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   MousePointer    =   99  'Custom
    Moveable        =   0   'False
-   ScaleHeight     =   600
-   ScaleMode       =   3  'Pixel
-   ScaleWidth      =   800
-   ShowInTaskbar   =   0   'False
+   ScaleHeight     =   471.094
+   ScaleMode       =   0  'User
+   ScaleWidth      =   799
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin VB.TextBox Text2 
@@ -38,11 +38,37 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   225
-      Left            =   3840
+      Left            =   840
       Locked          =   -1  'True
-      TabIndex        =   7
-      Top             =   8640
+      TabIndex        =   8
+      Top             =   2520
       Width           =   2895
+   End
+   Begin VB.ListBox lst_servers 
+      BackColor       =   &H00000000&
+      ForeColor       =   &H0000FF00&
+      Height          =   450
+      ItemData        =   "frmConnect.frx":000C
+      Left            =   720
+      List            =   "frmConnect.frx":0013
+      TabIndex        =   7
+      Top             =   2040
+      Visible         =   0   'False
+      Width           =   3135
+   End
+   Begin VB.TextBox Text1 
+      BackColor       =   &H00000000&
+      ForeColor       =   &H0000FF00&
+      Height          =   555
+      Left            =   120
+      Locked          =   -1  'True
+      MultiLine       =   -1  'True
+      ScrollBars      =   2  'Vertical
+      TabIndex        =   6
+      TabStop         =   0   'False
+      Top             =   1080
+      Visible         =   0   'False
+      Width           =   6015
    End
    Begin VB.TextBox DescTxt 
       Alignment       =   2  'Center
@@ -60,69 +86,12 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   225
-      Left            =   3720
+      Left            =   4440
       Locked          =   -1  'True
-      TabIndex        =   6
-      Text            =   "AOSpain Primario"
-      Top             =   1980
-      Width           =   2895
-   End
-   Begin VB.TextBox Text1 
-      BackColor       =   &H00000000&
-      ForeColor       =   &H0000FF00&
-      Height          =   5715
-      Left            =   1350
-      Locked          =   -1  'True
-      MultiLine       =   -1  'True
-      ScrollBars      =   2  'Vertical
-      TabIndex        =   5
-      TabStop         =   0   'False
-      Top             =   2700
-      Width           =   7575
-   End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Este Server ->"
-      Height          =   375
-      Left            =   600
-      TabIndex        =   4
-      Top             =   1860
-      Visible         =   0   'False
-      Width           =   1185
-   End
-   Begin VB.ListBox lst_servers 
-      BackColor       =   &H00000000&
-      ForeColor       =   &H0000FF00&
-      Height          =   5715
-      ItemData        =   "frmConnect.frx":000C
-      Left            =   1350
-      List            =   "frmConnect.frx":0013
       TabIndex        =   3
-      Top             =   2700
-      Visible         =   0   'False
-      Width           =   7575
-   End
-   Begin VB.TextBox PortTxt 
-      Alignment       =   2  'Center
-      Appearance      =   0  'Flat
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H0000FF00&
-      Height          =   225
-      Left            =   1695
-      TabIndex        =   0
-      Text            =   "7666"
-      Top             =   1950
-      Visible         =   0   'False
-      Width           =   1875
+      Text            =   "AOSpain Primario"
+      Top             =   840
+      Width           =   2895
    End
    Begin VB.TextBox IPTxt 
       Alignment       =   2  'Center
@@ -140,14 +109,15 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   225
-      Left            =   3720
-      TabIndex        =   2
+      Left            =   2160
+      TabIndex        =   5
       Text            =   "localhost"
-      Top             =   2010
+      Top             =   720
       Visible         =   0   'False
       Width           =   2895
    End
-   Begin VB.TextBox PasswordTxt 
+   Begin VB.TextBox PortTxt 
+      Alignment       =   2  'Center
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
@@ -162,19 +132,20 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   225
-      IMEMode         =   3  'DISABLE
-      Left            =   1695
-      PasswordChar    =   "*"
-      TabIndex        =   9
-      Top             =   2500
+      Left            =   120
+      TabIndex        =   4
+      Text            =   "7666"
+      Top             =   720
+      Visible         =   0   'False
       Width           =   1875
    End
-   Begin VB.TextBox NameTxt 
+   Begin VB.TextBox PasswordTxt 
+      Alignment       =   2  'Center
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       BeginProperty Font 
-         Name            =   "Tahoma"
+         Name            =   "Georgia"
          Size            =   8.25
          Charset         =   0
          Weight          =   700
@@ -182,72 +153,59 @@ Begin VB.Form frmConnect
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H0000FF00&
-      Height          =   225
-      Left            =   3720
-      TabIndex        =   8
-      Top             =   2500
-      Width           =   2895
+      ForeColor       =   &H00FFFFFF&
+      Height          =   284
+      IMEMode         =   3  'DISABLE
+      Left            =   4920
+      PasswordChar    =   "*"
+      TabIndex        =   2
+      Top             =   5970
+      Width           =   2325
    End
-   Begin VB.Image Image2 
-      Height          =   615
-      Left            =   9435
+   Begin VB.TextBox NameTxt 
+      Alignment       =   2  'Center
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Georgia"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   249
+      Left            =   4080
+      TabIndex        =   1
+      Top             =   5254
+      Width           =   3735
+   End
+   Begin VB.Image RecupPersonaje 
+      Height          =   373
+      Left            =   7800
       MousePointer    =   99  'Custom
-      Top             =   8500
+      Top             =   7164
+      Visible         =   0   'False
       Width           =   2205
    End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   6
-      Left            =   9435
-      MousePointer    =   99  'Custom
-      Top             =   2010
-      Width           =   2205
-   End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   5
-      Left            =   9435
-      MousePointer    =   99  'Custom
-      Top             =   2850
-      Width           =   2205
-   End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   4
-      Left            =   9420
-      MousePointer    =   99  'Custom
-      Top             =   3720
-      Width           =   2205
-   End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   3
-      Left            =   9435
-      MousePointer    =   99  'Custom
-      Top             =   4485
-      Width           =   2205
-   End
-   Begin VB.Image imgServEspana 
-      Height          =   435
+   Begin VB.Image Conectar 
+      BorderStyle     =   1  'Fixed Single
+      Height          =   405
+      Index           =   1
       Left            =   4560
       MousePointer    =   99  'Custom
-      Top             =   5220
-      Width           =   2475
+      Top             =   7080
+      Width           =   2925
    End
-   Begin VB.Image imgServArgentina 
-      Height          =   795
-      Left            =   4500
+   Begin VB.Image CrearPersonaje 
+      Height          =   316
+      Left            =   2040
       MousePointer    =   99  'Custom
-      Top             =   3720
-      Width           =   2595
-   End
-   Begin VB.Image imgGetPass 
-      Height          =   480
-      Left            =   9390
-      MousePointer    =   99  'Custom
-      Top             =   7935
-      Width           =   2370
+      Top             =   7164
+      Width           =   2205
    End
    Begin VB.Label version 
       AutoSize        =   -1  'True
@@ -265,33 +223,9 @@ Begin VB.Form frmConnect
       ForeColor       =   &H000000FF&
       Height          =   195
       Left            =   120
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   120
       Width           =   555
-   End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   0
-      Left            =   9420
-      MousePointer    =   99  'Custom
-      Top             =   6225
-      Width           =   2205
-   End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   1
-      Left            =   9435
-      MousePointer    =   99  'Custom
-      Top             =   5400
-      Width           =   2205
-   End
-   Begin VB.Image Image1 
-      Height          =   615
-      Index           =   2
-      Left            =   9420
-      MousePointer    =   99  'Custom
-      Top             =   7065
-      Width           =   2205
    End
 End
 Attribute VB_Name = "frmConnect"
@@ -349,7 +283,7 @@ Dim i As Integer
 lst_servers.Clear
 
 For i = 1 To UBound(ServersLst)
-    lst_servers.AddItem ServersLst(i).Desc
+    lst_servers.AddItem ServersLst(i).desc
 Next i
 
 End Sub
@@ -372,7 +306,7 @@ Else
 End If
 
 Call CargarLst
-DescTxt.Text = ServersLst(CurServer).Desc
+DescTxt.Text = ServersLst(CurServer).desc
 nDirectorio = Dir(App.Path & "\Web", vbDirectory)
 If nDirectorio <> "Web" Then MkDir (App.Path & "\Web")
 
@@ -383,18 +317,18 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.Status, "aaGracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "aaGracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -426,12 +360,12 @@ Private Sub Form_Load()
     '[END]
 Dim d As Integer
 Dim j
-For Each j In Image1()
+For Each j In Conectar()
    j.Tag = "0"
 Next
 PortTxt.Text = Config_Inicio.Puerto
  
-frmConnect.Picture = LoadPicture(App.Path & "\Graficos\Conectar.jpg")
+'frmConnect.Picture = LoadPicture(App.Path & "\Graficos\Conectar.jpg")
 '[Efestos]
 Do While d <> 5
 DescargarTxt(d) = True
@@ -448,10 +382,12 @@ Loop
 
 End Sub
 
+Private Sub CrearPersonaje_Click()
+    frmCrearAccount.Visible = True
+End Sub
 
 
-Private Sub Image1_Click(Index As Integer)
-
+Private Sub Conectar_Click(Index As Integer)
 Dim Archivo As String
 Dim cadena As String
 Dim nArchivo As String
@@ -599,33 +535,18 @@ Call PlayWaveDS(SND_CLICK)
         Text1.SetFocus
     Case 7
         'abre la pagina de AOSpain.com
-        ShellExecute frmMain.hwnd, vbNullString, "http://www.caratula2000.net", vbNullString, vbNullString, vbNormalFocus
+        'ShellExecute frmMain.hwnd, vbNullString, "http://www.caratula2000.net", vbNullString, vbNullString, vbNormalFocus
 End Select
 End Sub
 
-Private Sub imgGetPass_Click()
+Private Sub RecupPersonaje_Click()
     Call PlayWaveDS(SND_CLICK)
     Call frmRecuperarpj.Show(vbModal, frmConnect)
+
 End Sub
-
-'Private Sub imgServArgentina_Click()
-'    Call PlayWaveDS(SND_CLICK)
-'    IPTxt.Text = IPdelServidor
-'    PortTxt.Text = PuertoDelServidor
-'End Sub
-
-'Private Sub imgServEspana_Click()
-'    Call PlayWaveDS(SND_CLICK)
-'    IPTxt.Text = "62.42.193.233"
-'    PortTxt.Text = "7666"
-'End Sub
-
-
-
 Private Sub lst_servers_Click()
 CurServer = lst_servers.ListIndex + 1
-DescTxt = ServersLst(CurServer).Desc
+DescTxt = ServersLst(CurServer).desc
 IPTxt = ServersLst(CurServer).Ip
 PortTxt = ServersLst(CurServer).Puerto
 End Sub
-

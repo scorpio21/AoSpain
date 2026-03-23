@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmMain 
@@ -507,6 +507,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmMain.frx":2CF54
@@ -674,9 +675,9 @@ Private Sub FPS_Timer()
 
 If logged And Not frmMain.Visible Then
     Unload frmConnect
+    Unload frmCuent
     frmMain.Show
-End If
-    
+End If    
 End Sub
 
 Private Sub SpoofCheck_Timer()
@@ -897,8 +898,8 @@ Private Sub Form_Load()
    
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
-    MouseX = x
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    MouseX = X
     MouseY = Y
 End Sub
 
@@ -999,25 +1000,25 @@ Private Sub picInv_DblClick()
     If ItemElegido <> 0 Then SendData "USA" & ItemElegido
 End Sub
 
-Private Sub picInv_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub picInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim mx As Integer
     Dim my As Integer
     Dim aux As Integer
-    mx = x \ 32 + 1
+    mx = X \ 32 + 1
     my = Y \ 32 + 1
     aux = (mx + (my - 1) * 5) + OffsetDelInv
     If aux > 0 And aux < MAX_INVENTORY_SLOTS Then _
         picInv.ToolTipText = UserInventory(aux).Name
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call PlayWaveDS(SND_CLICK)
 
-    If (Button = vbRightButton) And (ClicEnItemElegido(CInt(x), CInt(Y))) Then
+    If (Button = vbRightButton) And (ClicEnItemElegido(CInt(X), CInt(Y))) Then
         PopupMenu mnuObj
     End If
 
-    Call ItemClick(CInt(x), CInt(Y))
+    Call ItemClick(CInt(X), CInt(Y))
 End Sub
 
 Private Sub RecTxt_Change()
@@ -1131,7 +1132,9 @@ Private Sub Socket1_Connect()
    
    ElseIf EstadoLogin = E_MODO.BorrarPj Then
    Call Login
- 
+   
+   ElseIf EstadoLogin = E_MODO.RecuperarPass Then
+   
     End If
 End Sub
  
@@ -1147,7 +1150,7 @@ Private Sub Socket1_Disconnect()
     
     frmConnect.MousePointer = vbNormal
     
-    If frmCrearPersonaje.Visible = True Then 
+    If frmCrearPersonaje.Visible = True Then
     Load frmConnect
     frmConnect.Visible = True
 End If
@@ -1224,7 +1227,7 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
 End Sub
 
 Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
-    Dim LoopC As Integer
+    Dim loopc As Integer
 
     Dim RD As String
     Dim rBuffer(1 To 500) As String
@@ -1247,18 +1250,18 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
 
     'Check for more than one line
     sChar = 1
-    For LoopC = 1 To Len(RD)
+    For loopc = 1 To Len(RD)
 
-        tChar = Mid$(RD, LoopC, 1)
+        tChar = Mid$(RD, loopc, 1)
 
         If tChar = ENDC Then
             CR = CR + 1
-            Echar = LoopC - sChar
+            Echar = loopc - sChar
             rBuffer(CR) = Mid$(RD, sChar, Echar)
-            sChar = LoopC + 1
+            sChar = loopc + 1
         End If
 
-    Next LoopC
+    Next loopc
 
     'Check for broken line and save for next time
     If Len(RD) - (sChar - 1) <> 0 Then
@@ -1266,9 +1269,9 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
     End If
 
     'Send buffer to Handle data
-    For LoopC = 1 To CR
-        Call HandleData(rBuffer(LoopC))
-    Next LoopC
+    For loopc = 1 To CR
+        Call HandleData(rBuffer(loopc))
+    Next loopc
 End Sub
 
 
