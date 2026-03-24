@@ -1,7 +1,10 @@
 # AoSpain - Proyecto Argentum Online (32-bit Engine)
 
-![AoSpain Logo](Servidor/Logo.jpg)
-![Captura del Juego](captura.png)
+<p align="center">
+  <img src="Servidor/Logo.jpg" alt="AoSpain Logo" width="500">
+  <br>
+  <img src="captura.png" alt="Captura del Juego" width="600">
+</p>
 
 **AoSpain** es un proyecto basado en el motor clásico de **Argentum Online**, profundamente optimizado y modernizado para soportar arquitecturas de **32 bits (Long)**. Esta mejora rompe los límites históricos de 16 bits (32k), permitiendo bases de datos de objetos, gráficos y mapas virtualmente ilimitadas.
 
