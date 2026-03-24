@@ -1,6 +1,6 @@
 Attribute VB_Name = "Declaraciones"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 MÑrquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "Declaraciones"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nÑmero 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'CÑdigo Postal 1900
-'Pablo Ignacio MÑrquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 Option Explicit
 
@@ -123,7 +123,7 @@ Public Const MAXUSERHECHIZOS = 35
 
 
 Public Const EsfuerzoTalarGeneral = 4
-Public Const EsfuerzoTalarLeÑador = 2
+Public Const EsfuerzoTalarLeñador = 2
 
 Public Const EsfuerzoPescarPescador = 1
 Public Const EsfuerzoPescarGeneral = 3
@@ -185,7 +185,7 @@ Public Const NPCTYPE_GUARDIASMALVADOS = 8
 Public Const FX_TELEPORT_INDEX = 1
 
 
-Public Const MIN_ApuÑalaR = 10
+Public Const MIN_ApuñalaR = 10
 
 '********** CONSTANTANTES ***********
 Public Const NUMSKILLS = 22 '[Efestos]
@@ -231,7 +231,7 @@ Public Const Robar = 3
 Public Const Tacticas = 4
 Public Const Armas = 5
 Public Const Meditar = 6
-Public Const ApuÑalar = 7
+Public Const Apuñalar = 7
 Public Const Ocultarse = 8
 Public Const Supervivencia = 9
 Public Const Talar = 10
@@ -265,21 +265,21 @@ Public Const Constitucion = 5
 Public Const AdicionalHPGuerrero = 2 'HP adicionales cuando sube de nivel
 Public Const AdicionalSTLadron = 3
 
-Public Const AdicionalSTLeÑador = 23
+Public Const AdicionalSTLeñador = 23
 Public Const AdicionalSTPescador = 20
 Public Const AdicionalSTMinero = 25
 
-'TamaÑo del mapa
+'Tamaño del mapa
 Public Const XMaxMapSize = 100
 Public Const XMinMapSize = 1
 Public Const YMaxMapSize = 100
 Public Const YMinMapSize = 1
 
-'TamaÑo del tileset
+'Tamaño del tileset
 Public Const TileSizeX = 32
 Public Const TileSizeY = 32
 
-'TamaÑo en Tiles de la pantalla de visualizacion
+'Tamaño en Tiles de la pantalla de visualizacion
 Public Const XWindow = 17
 Public Const YWindow = 13
 
@@ -565,7 +565,7 @@ Public Type ObjData
     'Solo contenedores
     MaxItems As Integer
     Conte As Inventario
-    ApuÑala As Byte
+    Apuñala As Byte
     
     HechizoIndex As Integer
     
@@ -735,10 +735,10 @@ End Type
 
 'Flags
 Type UserFlags
-    Muerto As Byte 'ÑEsta muerto?
-    Escondido As Byte 'ÑEsta escondido?
-    Comerciando As Boolean 'ÑEsta comerciando?
-    UserLogged As Boolean 'ÑEsta online?
+    Muerto As Byte '¿Esta muerto?
+    Escondido As Byte '¿Esta escondido?
+    Comerciando As Boolean '¿Esta comerciando?
+    UserLogged As Boolean '¿Esta online?
     Meditando As Boolean
     ModoCombate As Boolean
     Descuento As String
@@ -769,16 +769,16 @@ Type UserFlags
     Seguro As Boolean
     
     DuracionEfecto As Long
-    TargetNpc As Integer ' Npc seÑalado por el usuario
-    TargetNpcTipo As Integer ' Tipo del npc seÑalado
+    TargetNpc As Integer ' Npc señalado por el usuario
+    TargetNpcTipo As Integer ' Tipo del npc señalado
     NpcInv As Integer
     
     Ban As Byte
     AdministrativeBan As Byte
     
-    TargetUser As Integer ' Usuario seÑalado
+    TargetUser As Integer ' Usuario señalado
     
-    TargetObj As Integer ' Obj seÑalado
+    TargetObj As Integer ' Obj señalado
     TargetObjMap As Integer
     TargetObjX As Integer
     TargetObjY As Integer
@@ -959,7 +959,7 @@ Type NPCFlags
     GolpeExacto As Byte
     Domable As Integer
     Respawn As Byte
-    NPCActive As Boolean 'ÑEsta vivo?
+    NPCActive As Boolean '¿Esta vivo?
     Follow As Boolean
     Faccion As Byte
     LanzaSpells As Byte

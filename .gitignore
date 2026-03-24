@@ -20,6 +20,8 @@ Desktop.ini
 *.tmp
 *.bak
 clientesDx/
+ao-cliente/
+ao-server/
 
 # Accounts
  Servidor/Accounts/*.act

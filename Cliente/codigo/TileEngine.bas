@@ -154,7 +154,7 @@ End Type
 Public Type Char
     Active As Byte
     Heading As Byte
-    POS As Position
+    Pos As Position
 
     Body As BodyData
     Head As HeadData
@@ -173,7 +173,7 @@ Public Type Char
     ServerIndex As Integer
     
     pie As Boolean
-    muerto As Boolean
+    Muerto As Boolean
     invisible As Boolean
     
 End Type
@@ -349,34 +349,48 @@ End Enum
 '�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?�?
 
 Sub CargarCabezas()
-On Error Resume Next
-Dim n As Integer, i As Integer, Numheads As Integer, Index As Integer
+    On Error GoTo ErrorHandler
+    Dim n As Integer, i As Integer, Numheads As Integer, Index As Integer
 
-Dim Miscabezas() As tIndiceCabeza
+    n = FreeFile
+    Dim Path As String
+    Path = App.Path & "\init\Cabezas.ind"
+    
+    If Not FileExist(Path, vbNormal) Then
+        'MsgBox "No se pudo encontrar el archivo " & Path & ". El juego no podrá mostrar las cabezas correctamente.", vbCritical
+        Exit Sub
+    End If
 
-n = FreeFile
-Open App.Path & "\init\Cabezas.ind" For Binary Access Read As #n
+    Open Path For Binary Access Read As #n
 
-'cabecera
-Get #n, , MiCabecera
+    'cabecera
+    Get #n, , MiCabecera
 
-'num de cabezas
-Get #n, , Numheads
+    'num de cabezas
+    Get #n, , Numheads
+    
+    If Numheads <= 0 Or Numheads > 20000 Then
+        Close #n
+        Exit Sub
+    End If
 
-'Resize array
-ReDim HeadData(0 To Numheads + 1) As HeadData
-ReDim Miscabezas(0 To Numheads + 1) As tIndiceCabeza
+    'Resize array
+    ReDim HeadData(0 To Numheads + 1) As HeadData
+    ReDim Miscabezas(0 To Numheads + 1) As tIndiceCabeza
 
-For i = 1 To Numheads
-    Get #n, , Miscabezas(i)
-    InitGrh HeadData(i).Head(1), Miscabezas(i).Head(1), 0
-    InitGrh HeadData(i).Head(2), Miscabezas(i).Head(2), 0
-    InitGrh HeadData(i).Head(3), Miscabezas(i).Head(3), 0
-    InitGrh HeadData(i).Head(4), Miscabezas(i).Head(4), 0
-Next i
+    For i = 1 To Numheads
+        Get #n, , Miscabezas(i)
+        InitGrh HeadData(i).Head(1), Miscabezas(i).Head(1), 0
+        InitGrh HeadData(i).Head(2), Miscabezas(i).Head(2), 0
+        InitGrh HeadData(i).Head(3), Miscabezas(i).Head(3), 0
+        InitGrh HeadData(i).Head(4), Miscabezas(i).Head(4), 0
+    Next i
 
-Close #n
+    Close #n
+    Exit Sub
 
+ErrorHandler:
+    If n > 0 Then Close #n
 End Sub
 
 Sub CargarCascos()
@@ -599,8 +613,8 @@ CharList(CharIndex).MoveOffset.X = 0
 CharList(CharIndex).MoveOffset.Y = 0
 
 'Update position
-CharList(CharIndex).POS.X = X
-CharList(CharIndex).POS.Y = Y
+CharList(CharIndex).Pos.X = X
+CharList(CharIndex).Pos.Y = Y
 
 'Make active
 CharList(CharIndex).Active = 1
@@ -618,11 +632,11 @@ CharList(CharIndex).Fx = 0
 CharList(CharIndex).FxLoopTimes = 0
 CharList(CharIndex).invisible = False
 CharList(CharIndex).Moving = 0
-CharList(CharIndex).muerto = False
+CharList(CharIndex).Muerto = False
 CharList(CharIndex).Nombre = ""
 CharList(CharIndex).pie = False
-CharList(CharIndex).POS.X = 0
-CharList(CharIndex).POS.Y = 0
+CharList(CharIndex).Pos.X = 0
+CharList(CharIndex).Pos.Y = 0
 CharList(CharIndex).UsandoArma = False
 
 End Sub
@@ -646,7 +660,7 @@ If CharIndex = LastChar Then
 End If
 
 
-MapData(CharList(CharIndex).POS.X, CharList(CharIndex).POS.Y).CharIndex = 0
+MapData(CharList(CharIndex).Pos.X, CharList(CharIndex).Pos.Y).CharIndex = 0
 
 Call ResetCharInfo(CharIndex)
 
@@ -697,8 +711,8 @@ Dim Y As Integer
 Dim nX As Integer
 Dim nY As Integer
 
-X = CharList(CharIndex).POS.X
-Y = CharList(CharIndex).POS.Y
+X = CharList(CharIndex).Pos.X
+Y = CharList(CharIndex).Pos.Y
 
 'Figure out which way to move
 Select Case nHeading
@@ -721,8 +735,8 @@ nX = X + addX
 nY = Y + addY
 
 MapData(nX, nY).CharIndex = CharIndex
-CharList(CharIndex).POS.X = nX
-CharList(CharIndex).POS.Y = nY
+CharList(CharIndex).Pos.X = nX
+CharList(CharIndex).Pos.Y = nY
 MapData(X, Y).CharIndex = 0
 
 CharList(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addX)
@@ -773,7 +787,7 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 Static pie As Boolean
 
 If Not UserNavegando Then
-        If Not CharList(CharIndex).muerto And EstaPCarea(CharIndex) Then
+        If Not CharList(CharIndex).Muerto And EstaPCarea(CharIndex) Then
             CharList(CharIndex).pie = Not CharList(CharIndex).pie
             If CharList(CharIndex).pie Then
                 Call PlayWaveDS(SND_PASOS1)
@@ -800,8 +814,8 @@ Dim nHeading As Byte
 
 
 
-X = CharList(CharIndex).POS.X
-Y = CharList(CharIndex).POS.Y
+X = CharList(CharIndex).Pos.X
+Y = CharList(CharIndex).Pos.Y
 
 MapData(X, Y).CharIndex = 0
 
@@ -827,8 +841,8 @@ End If
 MapData(nX, nY).CharIndex = CharIndex
 
 
-CharList(CharIndex).POS.X = nX
-CharList(CharIndex).POS.Y = nY
+CharList(CharIndex).Pos.X = nX
+CharList(CharIndex).Pos.Y = nY
 
 CharList(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addX)
 CharList(CharIndex).MoveOffset.Y = -1 * (TilePixelHeight * addY)
@@ -1766,10 +1780,10 @@ Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As 
 If GrhIndex > 0 Then
         
         HayUserAbajo = _
-            CharList(UserCharIndex).POS.X >= X - (GrhData(GrhIndex).TileWidth \ 2) _
-        And CharList(UserCharIndex).POS.X <= X + (GrhData(GrhIndex).TileWidth \ 2) _
-        And CharList(UserCharIndex).POS.Y >= Y - (GrhData(GrhIndex).TileHeight - 1) _
-        And CharList(UserCharIndex).POS.Y <= Y
+            CharList(UserCharIndex).Pos.X >= X - (GrhData(GrhIndex).TileWidth \ 2) _
+        And CharList(UserCharIndex).Pos.X <= X + (GrhData(GrhIndex).TileWidth \ 2) _
+        And CharList(UserCharIndex).Pos.Y >= Y - (GrhData(GrhIndex).TileHeight - 1) _
+        And CharList(UserCharIndex).Pos.Y <= Y
         
 End If
 
@@ -2028,7 +2042,7 @@ Call CargarFxs
     LTLluvia(4) = 736
 '[END]'
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gr�ficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.Status, "Cargando Graficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True

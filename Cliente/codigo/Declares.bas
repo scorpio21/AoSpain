@@ -353,6 +353,9 @@ Public Type tIndiceCabeza
     Head(1 To 4) As Long
 End Type
 
+Public Miscabezas() As tIndiceCabeza
+Public MisCascos() As tIndiceCabeza
+
 Public Type tIndiceCuerpo
     Body(1 To 4) As Long
     HeadOffsetX As Integer

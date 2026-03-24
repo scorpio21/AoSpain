@@ -1,6 +1,6 @@
 Attribute VB_Name = "General"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 M—rquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "General"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n—mero 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'C—digo Postal 1900
-'Pablo Ignacio M—rquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 Option Explicit
@@ -285,7 +285,7 @@ ListaClases(9) = "Paladin"
 ListaClases(10) = "Cazador"
 ListaClases(11) = "Pescador"
 ListaClases(12) = "Herrero"
-ListaClases(13) = "Le—ador"
+ListaClases(13) = "LeÒador"
 ListaClases(14) = "Minero"
 ListaClases(15) = "Carpintero"
 ListaClases(16) = "Pirata"
@@ -363,7 +363,7 @@ Call LoadGuildsDB
 
 Call CargarSpawnList
 Call CargarForbidenWords
-'—?—?—?—?—?—?—?— CARGAMOS DATOS DESDE ARCHIVOS —??—?—?—?—?—?—?—
+'%%%%%%%%% CARGAMOS DATOS DESDE ARCHIVOS %%%%%%%%%
 frmCargando.Label1(2).Caption = "Cargando Server.ini"
 
 Call LoadSini
@@ -391,7 +391,7 @@ Else
     Call LoadMapData
 End If
 
-'—?—?—?—?—?—?—?—?—?—?—?—?—?—?——?—?—?—?—?—?—?—?—?—?—?—?—?—?—
+'%%%%%%%%%?—?—?—?—?—?—?—%%%%%%%%%?—?—?—?—?—?—?—
 
 Dim LoopC As Integer
 
@@ -405,7 +405,7 @@ frmMain.AutoSave.Enabled = True
 
 
 
-'—?—?—?—?—?—?—?—?—?—?—?—?—?—?——?—?—?—?—?—?—?—?—?—?—?—?—?—?—
+'%%%%%%%%%?—?—?—?—?—?—?—%%%%%%%%%?—?—?—?—?—?—?—
 'Configuracion de los sockets
 frmCargando.Label1(2).Caption = "Configurando Sockets"
 
@@ -422,7 +422,7 @@ Call ConfigListeningSocket(frmMain.Socket1, puerto)
 
 
 If frmMain.Visible Then frmMain.txStatus.Caption = "Escuchando conexiones entrantes ..."
-'—?—?—?—?—?—?—?—?—?—?—?—?—?—?——?—?—?—?—?—?—?—?—?—?—?—?—?—?—
+'%%%%%%%%%?—?—?—?—?—?—?—%%%%%%%%%?—?—?—?—?—?—?—
 
 
 
@@ -796,7 +796,7 @@ If UserList(UserIndex).Flags.UserLogged Then
                 Dim modifi As Long
                 modifi = Porcentaje(UserList(UserIndex).Stats.MaxSta, 3)
                 Call QuitarSta(UserIndex, modifi)
-                Call SendData(ToIndex, UserIndex, 0, "||—LLUEVE!!." & FONTTYPE_INFO)
+                Call SendData(ToIndex, UserIndex, 0, "||°°LLUEVE!!." & FONTTYPE_INFO)
                 Call SendUserStatsBox(UserIndex)
     End If
 End If
@@ -828,18 +828,18 @@ If UserList(UserIndex).Counters.Frio < IntervaloFrio Then
   UserList(UserIndex).Counters.Frio = UserList(UserIndex).Counters.Frio + 1
 Else
   If MapInfo(UserList(UserIndex).Pos.Map).Terreno = Nieve Then
-    Call SendData(ToIndex, UserIndex, 0, "||——Tienes mucho FRIO!!." & FONTTYPE_INFO)
+    Call SendData(ToIndex, UserIndex, 0, "||°°Tienes mucho FRIO!!." & FONTTYPE_INFO)
     modifi = Porcentaje(UserList(UserIndex).Stats.MaxHP, 5)
     UserList(UserIndex).Stats.MinHP = UserList(UserIndex).Stats.MinHP - modifi
     If UserList(UserIndex).Stats.MinHP < 1 Then
-            Call SendData(ToIndex, UserIndex, 0, "||——Has muerto de frio!!." & FONTTYPE_INFO)
+            Call SendData(ToIndex, UserIndex, 0, "||°°Has muerto de frio!!." & FONTTYPE_INFO)
             UserList(UserIndex).Stats.MinHP = 0
             Call UserDie(UserIndex)
     End If
   Else
     modifi = Porcentaje(UserList(UserIndex).Stats.MaxSta, 5)
     Call QuitarSta(UserIndex, modifi)
-    Call SendData(ToIndex, UserIndex, 0, "||—Pierdes Energia!." & FONTTYPE_INFO)
+    Call SendData(ToIndex, UserIndex, 0, "||°Pierdes Energia!." & FONTTYPE_INFO)
   End If
   
   UserList(UserIndex).Counters.Frio = 0

@@ -1,6 +1,6 @@
 Attribute VB_Name = "ES"
 'Argentum Online 0.9.0.2
-'Copyright (C) 2002 M—rquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ Attribute VB_Name = "ES"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n—mero 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'C—digo Postal 1900
-'Pablo Ignacio M—rquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 Option Explicit
 
 Sub LoadUserAccount(ByVal PJinit As String)
@@ -446,7 +446,7 @@ Sub LoadOBJData()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'———— NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
+'!!!! NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
 '
 'El que ose desafiar esta LEY, se las tendr— que ver
 'con migo. Para leer desde el OBJ.DAT se deber— usar
@@ -549,7 +549,7 @@ For Object = 1 To NumObjDatas
     'Helios
     If ObjData(Object).ObjType = OBJTYPE_WEAPON Then
             ObjData(Object).WeaponAnim = val(Leer.DarValor("OBJ" & Object, "Anim"))
-            ObjData(Object).Apu—ala = val(Leer.DarValor("OBJ" & Object, "Apu—ala"))
+            ObjData(Object).ApuÒala = val(Leer.DarValor("OBJ" & Object, "ApuÒala"))
 '            ObjData(Object).Paraliza = val(Leer.DarValor("OBJ" & Object, "Paraliza")) 'Helios
 '            ObjData(Object).Ceguera = val(Leer.DarValor("OBJ" & Object, "Ceguera")) 'Helios
 '            ObjData(Object).Estupidez = val(Leer.DarValor("OBJ" & Object, "Estupidez")) 'Helios
@@ -1119,7 +1119,7 @@ For Map = 1 To NumMaps
                     End If
                     
                     'Si el npc debe hacer respawn en la pos original la guardamos
-                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aqu—
+                    'Optimizamos: Leer directamente desde NpcData si es posible, o usar GetVar aqui
                     If val(GetVar(npcfile, "NPC" & buffer2(idx).npc, "PosOrig")) = 1 Then
                         Npclist(NIndex).Orig.Map = Map
                         Npclist(NIndex).Orig.X = X
@@ -1151,7 +1151,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
     
-    'Optimizaci—n: Carga del archivo .dat en memoria una sola vez
+    'Optimizacion: Carga del archivo .dat en memoria una sola vez
     Dim LeerMap As New clsLeerInis
     LeerMap.Abrir c$
     
@@ -1340,7 +1340,7 @@ For Map = 1 To NumMaps
     Close #1
     Close #2
     
-    'Optimizaci—n: Carga del archivo .dat en memoria
+    'Optimizacion: Carga del archivo .dat en memoria
     Dim LeerMap As New clsLeerInis
     Dim Section As String
     Section = "Mapa" & Map

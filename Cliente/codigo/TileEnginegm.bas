@@ -352,8 +352,6 @@ Sub CargarCabezas()
 On Error Resume Next
 Dim n As Integer, i As Integer, Numheads As Integer, Index As Integer
 
-Dim Miscabezas() As tIndiceCabeza
-
 n = FreeFile
 Open App.Path & "\init\Cabezas.ind" For Binary Access Read As #n
 

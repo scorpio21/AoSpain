@@ -342,17 +342,17 @@ End Function
 Public Function IsYourChr(ByVal Account As String, ByVal PJ As String)
  
 Dim i As Integer
-Dim NumPjs As Integer
+Dim numPjs As Integer
 Dim ChrToView As String
  
  
  
-' CORRECCIÓN: Agregar los parámetros faltantes a GetVar
-NumPjs = val(GetVar(App.Path & "\Accounts\" & Account & ".act", "PJS", "NumPjs"))
+' CORRECCION: Agregar los parametros faltantes a GetVar
+numPjs = val(GetVar(App.Path & "\Accounts\" & Account & ".act", "PJS", "NumPjs"))
  
 IsYourChr = False
  
-For i = 1 To NumPjs
+For i = 1 To numPjs
     ChrToView = GetVar(App.Path & "\Accounts\" & Account & ".act", "PJS", "PJ" & i)
     If ChrToView = PJ Then IsYourChr = True
 Next i
@@ -380,20 +380,20 @@ End Sub
 Public Sub EnviarListaPJs(ByVal UserIndex As Integer, ByVal Name As String)
     Dim i As Integer
     Dim Pjjj As String
-    Dim NumPjs As Integer
+    Dim numPjs As Integer
     
-    NumPjs = val(GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "NumPjs"))
+    numPjs = val(GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "NumPjs"))
     
-    Call LogError("DEBUG: EnviarListaPJs Cuenta=" & Name & " NumPjs=" & NumPjs)
+    Call LogError("DEBUG: EnviarListaPJs Cuenta=" & Name & " NumPjs=" & numPjs)
     
     If TienePjs(Name) = True Then
-        Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC" & Name & "," & NumPjs + 1)
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC" & Name & "," & numPjs + 1)
     Else
         ' Si no tiene PJs, enviamos INIAC0 (el segundo 0 indica 0 personajes)
         Call SendData(SendTarget.ToIndex, UserIndex, 0, "INIAC0")
     End If
     
-    For i = 1 To NumPjs
+    For i = 1 To numPjs
         Pjjj = GetVar(App.Path & "\Accounts\" & Name & ".act", "PJS", "PJ" & i)
         If Pjjj = "" Then Exit For
         
@@ -404,21 +404,21 @@ Public Sub EnviarListaPJs(ByVal UserIndex As Integer, ByVal Name As String)
 End Sub
 Sub ChrToAccount(ByVal Accounted As String, tName As String)
  
-Dim NumPjs As Integer
+Dim numPjs As Integer
 Dim n As Integer
  
-NumPjs = val(GetVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "NumPjs"))  ' CORREGIDO
+numPjs = val(GetVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "NumPjs"))  ' CORREGIDO
 
-If NumPjs = 1 And (GetVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "PJ" & NumPjs) = "") Then
-    Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "NumPjs", CStr(NumPjs))
-    Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "PJ" & NumPjs, tName)
+If numPjs = 1 And (GetVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "PJ" & numPjs) = "") Then
+    Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "NumPjs", CStr(numPjs))
+    Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "PJ" & numPjs, tName)
     Exit Sub
 End If
  
-NumPjs = NumPjs + 1
+numPjs = numPjs + 1
  
-Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "NumPjs", CStr(NumPjs))
-Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "PJ" & NumPjs, tName)
+Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "NumPjs", CStr(numPjs))
+Call WriteVar(App.Path & "\Accounts\" & Accounted & ".act", "PJS", "PJ" & numPjs, tName)
  
  
 End Sub
@@ -427,7 +427,7 @@ Sub CreateAccount(ByVal Account As String, Password As String, Mail As String, p
 On Error GoTo errhandler
  
 If FileExist(App.Path & "\Accounts\" & Account & ".act", vbNormal) = True Then
-Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERREl nombre de la cuenta ya está siendo utilizado por otro usuario.")
+Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERREl nombre de la cuenta ya esta siendo utilizado por otro usuario.")
     Exit Sub
 End If
  
@@ -657,11 +657,20 @@ If totalskpts > 10 Then
 End If
 '%%%%%%%%%%%%% PREVENIR HACKEO DE LOS SKILLS %%%%%%%%%%%%%
 
+Call Randomize(Timer)
+
+If Not ValidarCabeza(UserRaza, UserSexo, Head) Then
+    Call SendData(ToIndex, UserIndex, 0, "ERRCabeza invalida para tu raza/sexo.")
+    Exit Sub
+End If
+
 UserList(UserIndex).Password = Password
 UserList(UserIndex).Char.Heading = SOUTH
 
-Call Randomize(Timer)
 Call DarCuerpoYCabeza(UserList(UserIndex).Char.Body, UserList(UserIndex).Char.Head, UserList(UserIndex).Raza, UserList(UserIndex).Genero)
+
+' Sobrescribimos la cabeza con la seleccionada por el usuario (ya validada)
+UserList(UserIndex).Char.Head = Head
 UserList(UserIndex).OrigChar = UserList(UserIndex).Char
    
  
@@ -1059,9 +1068,9 @@ End If
 '¿Ya esta conectado el personaje?
 If CheckForSameName(UserIndex, Name) Then
     If UserList(NameIndex(Name)).Counters.Saliendo Then
-        Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERREl usuario está saliendo.")
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERREl usuario esta saliendo.")
     Else
-        Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERRPerdon, un usuario con el mismo nombre se há logeado.")
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERRPerdon, un usuario con el mismo nombre se ha logeado.")
     End If
     Call CloseSocket(UserIndex)
     Exit Sub
@@ -1811,46 +1820,47 @@ If UserList(UserIndex).Flags.UserLogged Then UserList(UserIndex).Counters.IdleCo
                 
             Case "NLOGIN"
                 rdata = Right$(rdata, Len(rdata) - 6)
-                
+
                 Dim UserName As String
                 Dim UserRaza As String
                 Dim UserSexo As String
                 Dim UserClase As String
                 Dim UserHogar As String
                 Dim UserAccount As String
-                
+                Dim UserHead As Integer
+
                 UserName = ReadField(1, rdata, Asc(","))
                 UserRaza = ReadField(2, rdata, Asc(","))
                 UserSexo = ReadField(3, rdata, Asc(","))
                 UserClase = ReadField(4, rdata, Asc(","))
                 UserHogar = ReadField(5, rdata, Asc(","))
-                
-                ' [NUEVO] Leemos Atributos y Skills
+                UserHead = val(ReadField(6, rdata, Asc(",")))
+
+                ' [NUEVO] Leemos Atributos y Skills (ahora empiezan en el campo 7)
                 Dim Atribs(1 To 5) As String
                 Dim Skills(1 To 21) As String
                 Dim iLoop As Integer
-                
+
                 For iLoop = 1 To 5
-                    Atribs(iLoop) = ReadField(5 + iLoop, rdata, Asc(","))
+                    Atribs(iLoop) = ReadField(6 + iLoop, rdata, Asc(","))
                 Next iLoop
-                
+
                 For iLoop = 1 To 21
-                    Skills(iLoop) = ReadField(10 + iLoop, rdata, Asc(","))
+                    Skills(iLoop) = ReadField(11 + iLoop, rdata, Asc(","))
                 Next iLoop
-                
-                UserAccount = ReadField(32, rdata, Asc(","))
-                
+
+                UserAccount = ReadField(33, rdata, Asc(","))
+
                 ' [NUEVO] Obtenemos el mail real de la cuenta
                 Dim UserMail As String
                 UserMail = GetVar(App.Path & "\Accounts\" & UserAccount & ".act", UserAccount, "mail")
                 If UserMail = "" Then UserMail = "mail@cuenta.com" ' Fallback
-                
+
                 'Creamos el personaje vinculado a la cuenta
-                Call ConnectNewUser(UserIndex, UserName, UserList(UserIndex).AccountedPass, 0, 0, UserRaza, UserSexo, UserClase, _
+                Call ConnectNewUser(UserIndex, UserName, UserList(UserIndex).AccountedPass, 0, UserHead, UserRaza, UserSexo, UserClase, _
                     Atribs(1), Atribs(2), Atribs(3), Atribs(4), Atribs(5), _
                     Skills(1), Skills(2), Skills(3), Skills(4), Skills(5), Skills(6), Skills(7), Skills(8), Skills(9), Skills(10), Skills(11), Skills(12), Skills(13), Skills(14), Skills(15), Skills(16), Skills(17), Skills(18), Skills(19), Skills(20), Skills(21), "0", _
                     UserMail, UserHogar, UserAccount)
-                    
                 'Vinculamos el PJ a la cuenta física (.act)
                 Call ChrToAccount(UserAccount, UserName)
                 Exit Sub
@@ -1862,7 +1872,7 @@ If UserList(UserIndex).Flags.UserLogged Then UserList(UserIndex).Counters.IdleCo
     Call LogError("DEBUG: ALOGIN Cuenta=" & ReadField(1, rdata, 44) & " PassLen=" & Len(ReadField(2, rdata, 44)))
     
     If Not AsciiValidos(ReadField(1, rdata, 44)) Then
-        Call LogError("DEBUG: ASCII inv!lido")
+        Call LogError("DEBUG: ASCII invalido")
         Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERRNombre invalido.")
         Call CloseSocket(UserIndex)
         Exit Sub
@@ -1997,6 +2007,62 @@ Select Case Left$(rdata, 4)
         ' Refrescamos la lista de personajes en el cliente inmediatamente
         Call EnviarListaPJs(UserIndex, AccName)
         Exit Sub
+
+    Case "BRCU" ' <<< BORRAR CUENTA COMPLETA (AoSpain)
+        rdata = Right$(rdata, Len(rdata) - 4)
+        Dim bAccName As String
+        Dim bValidationData As String
+        Dim bPass As String, bMail As String, bRespuesta As String
+        Dim bPath As String
+        
+        bAccName = ReadField(1, rdata, Asc(","))
+        bValidationData = ReadField(2, rdata, Asc(","))
+        
+        ' Extraemos datos del input (Pass, Mail, Respuesta)
+        bPass = ReadField(1, bValidationData, Asc(","))
+        bMail = ReadField(2, bValidationData, Asc(","))
+        bRespuesta = ReadField(3, bValidationData, Asc(","))
+        
+        bPath = App.Path & "\Accounts\" & bAccName & ".act"
+        
+        If Not FileExist(bPath, vbNormal) Then Exit Sub
+        
+        ' VALIDACION DE SEGURIDAD
+        Dim realPass As String, realMail As String, realRespuesta As String
+        realPass = GetVar(bPath, bAccName, "Password")
+        realMail = GetVar(bPath, bAccName, "Mail")
+        realRespuesta = GetVar(bPath, bAccName, "Respuesta")
+        
+        If UCase$(bPass) <> UCase$(realPass) Or UCase$(bMail) <> UCase$(realMail) Or UCase$(bRespuesta) <> UCase$(realRespuesta) Then
+            Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERRDatos de validación incorrectos. No se puede borrar la cuenta.")
+            Call LogError("FALLO BORRADO CUENTA: " & bAccName & " (Validacion incorrecta)")
+            Exit Sub
+        End If
+        
+        ' Si paso la validacion, procedemos al borrado masivo
+        ' 1. Borrar todos los PJs de la cuenta (archivos .chr)
+        Dim numPjs As Integer, pIdx As Integer, pName As String
+        numPjs = val(GetVar(bPath, "PJS", "NumPjs"))
+        
+        For pIdx = 1 To numPjs
+            pName = GetVar(bPath, "PJS", "PJ" & pIdx)
+            If pName <> "" Then
+                If FileExist(CharPath & pName & ".chr", vbNormal) Then
+                    Kill (CharPath & pName & ".chr")
+                    Call LogError("BRCU: Borrado PJ " & pName & " (Archivo .chr)")
+                End If
+            End If
+        Next pIdx
+        
+        ' 2. Borrar el archivo de cuenta (.act)
+        Kill bPath
+        Call LogError("BRCU: Cuenta " & bAccName & " ELIMINADA permanentemente.")
+        
+        ' 3. Avisar al cliente y desconectar
+        Call SendData(SendTarget.ToIndex, UserIndex, 0, "ERRLa cuenta y todos sus personajes han sido borrados con éxito.")
+        Call CloseSocket(UserIndex)
+        Exit Sub
+
     End Select
 
 '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -3274,7 +3340,7 @@ Select Case UCase$(Left$(rdata, 4))
         Dim incremento As Integer
         rdata = Right$(rdata, Len(rdata) - 4)
         
-        'Codigo para prevenir el hackeo de los skills
+        'Marquez para prevenir el hackeo de los skills
         '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         For i = 1 To NUMSKILLS
             incremento = val(ReadField(i, rdata, 44))
@@ -3924,7 +3990,7 @@ If UCase$(Left$(rdata, 7)) = "/ECHAR " Then
     Exit Sub
 End If
 
-'codigo para mensajes entre gms by efestos
+'Marquez para mensajes entre gms by efestos
 If UCase$(Left$(rdata, 7)) = "/TOGMS " Then
     rdata = Right$(rdata, Len(rdata) - 7)
     Call LogGM(UserList(UserIndex).Name, "Mensaje Broadcast:" & rdata)
@@ -4423,14 +4489,13 @@ End If
 
 Exit Sub
 
-
 'ErrorHandler:
 ' Call LogError("HandleData. CadOri:" & CadenaOriginal & " Nom:" & UserList(UserIndex).Name & "UI:" & UserIndex & " N: " & Err.Number & " D: " & Err.Description)
-' Call CloseSocket(UserIndex)
- 
- 
-
+' Call CloseSocket(UserIndex
 End Sub
+
+
+
 
 Sub ReloadSokcet()
 
@@ -4445,5 +4510,32 @@ errhandler:
     Call LogError("Error en CheckSocketState," & Err.Description)
 
 End Sub
+
+
+'==========================================================
+' SISTEMA DE VALIDACION DE CABEZAS DINAMICO
+'==========================================================
+Private Function ValidarCabeza(ByVal Raza As String, ByVal Sexo As String, ByVal Head As Integer) As Boolean
+    Dim Section As String
+    Dim PrimerCabeza As Integer
+    Dim UltimaCabeza As Integer
+    
+    ' Traducimos Raza/Sexo a la seccion del INI (coherente con el Cliente)
+    Section = UCase$(Replace$(Raza, " ", "")) & "-" & UCase$(Sexo)
+    
+    ' Leemos los rangos dinamicamente
+    ' Se asume que GetVar esta disponible en FileIO o General.bas
+    PrimerCabeza = val(GetVar(App.Path & "\Dat\Cabezas.ini", Section, "PrimerCabeza"))
+    UltimaCabeza = val(GetVar(App.Path & "\Dat\Cabezas.ini", Section, "UltimaCabeza"))
+    
+    ' Si no existe la seccion o los valores son 0, denegamos por seguridad
+    If PrimerCabeza = 0 Or UltimaCabeza = 0 Then
+        ValidarCabeza = False
+        Exit Function
+    End If
+    
+    ' Validamos el rango
+    ValidarCabeza = (Head >= PrimerCabeza And Head <= UltimaCabeza)
+End Function
 
 

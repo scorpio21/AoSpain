@@ -1157,7 +1157,7 @@ End If
     
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmCuent.Name Then
             Unload Forms(i)
         End If
     Next i

@@ -51,8 +51,8 @@ Attribute VB_Name = "MD5"
 ' The aamd532.dll DLL MUST be somewhere in your search path
 '   for this to work
 
-Private Declare Sub MDFile Lib "aamd532.dll" (ByVal f As String, ByVal r As String)
-Private Declare Sub MDStringFix Lib "aamd532.dll" (ByVal f As String, ByVal t As Long, ByVal r As String)
+Private Declare Sub MDFile Lib "¡¡md532.dll" (ByVal f As String, ByVal r As String)
+Private Declare Sub MDStringFix Lib "¡¡md532.dll" (ByVal f As String, ByVal t As Long, ByVal r As String)
 
 Public Function MD5String(p As String) As String
 ' compute MD5 digest on a given string, returning the result

@@ -37,30 +37,50 @@ frmCuent.PJ(Index).Refresh
 End Sub
 
 Sub RenderizarPJsCuentas()
+    ' [CODE] - Renderizado centralizado para AoSpain
     On Error Resume Next
     Dim i As Integer
-    
+    Dim rColor As Long
+
+    ' Color de resaltado (Dorado para seleccion)
+    rColor = RGB(255, 215, 0)
+
+    ' Recorremos los 10 slots oficiales (Estandarizado Fase 2)
     For i = 0 To 9
+        ' Limpiamos siempre el fondo para evitar rastro
+        frmCuent.PJ(i).Cls
+
         If PJs(i).Active Then
-            ' Limpiamos el PictureBox (Fondo Negro)
-            frmCuent.PJ(i).Cls
-            
             ' Incrementamos animacion
             PJs(i).FrameIndex = PJs(i).FrameIndex + 1
-            
-            ' Dibujamos con el estado actual
-            ActualizarDibujoPJ i
+
+            ' Dibujamos el personaje (Cuerpo + Cabeza + Equipo)
+            Call ActualizarDibujoPJ(i)
+
+            ' Si este personaje es el seleccionado, dibujamos un borde resaltado
+            If frmCuent.nombre(i).Caption = PJClickeado And PJClickeado <> "" Then
+                ' Dibujamos un rectangulo dorado alrededor del PictureBox
+                frmCuent.PJ(i).Line (0, 0)-(frmCuent.PJ(i).ScaleWidth - 1, frmCuent.PJ(i).ScaleHeight - 1), rColor, B
+                ' Dibujamos un segundo borde interno para que sea mas notorio
+                frmCuent.PJ(i).Line (1, 1)-(frmCuent.PJ(i).ScaleWidth - 2, frmCuent.PJ(i).ScaleHeight - 2), rColor, B
+            End If
+        Else
+            ' Si el slot esta vacio, aseguramos que se vea el Label "Crear Personaje"
+            frmCuent.CP(i).Visible = True
         End If
     Next i
 End Sub
 
 Public Sub LimpiarPJsCuentas()
+    ' [CODE] - Limpieza centralizada de slots (Fase 2: 10 slots)
     Dim i As Integer
     For i = 0 To 9
         PJs(i).Active = False
         PJs(i).nombre = ""
         PJs(i).LVL = 0
-        
+        PJs(i).Body = 0
+        PJs(i).Head = 0
+
         ' Limpiamos labels y pictures del formulario
         frmCuent.nombre(i).Caption = "Nada"
         frmCuent.nombre(i).Visible = False
@@ -70,7 +90,7 @@ Public Sub LimpiarPJsCuentas()
         frmCuent.GM(i).Visible = False
         frmCuent.PJ(i).Cls
     Next i
-    
+
     ' Reseteamos el PJ clickeado
     PJClickeado = ""
 End Sub

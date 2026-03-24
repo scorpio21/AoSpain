@@ -957,7 +957,7 @@ frmCargando.Refresh
 
 UserParalizado = False
 
-frmConnect.version = "v" & App.Major & "." & App.Minor & " Beta: 1"
+frmConnect.version = "v" & App.Major & ".0" '& App.Minor & " Beta: 1"
 AddtoRichTextBox frmCargando.status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
 
 'frmMain.Inet1.URL = "http://www.caratula2000.net/power/poweraoiplist3.txt"
