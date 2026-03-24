@@ -955,6 +955,10 @@ tipf = Config_Inicio.tip
 frmCargando.Show
 frmCargando.Refresh
 
+' [CODE] - Inicializacion Motor DirectX 8 AoSpain
+engine.Engine_Init
+engine.setup_ambient
+
 UserParalizado = False
 
 frmConnect.version = "v" & App.Major & ".0" '& App.Minor & " Beta: 1"
