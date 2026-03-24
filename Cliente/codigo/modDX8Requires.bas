@@ -48,10 +48,11 @@ Type luzxhora
     g As Long
     b As Long
 End Type
-Public luz_dia(0 To 24) As luzxhora '¬¬ la hora 24 dura 1 minuto entre las 24 y las 0
+Public luz_dia(0 To 24) As luzxhora 'ï¿½ï¿½ la hora 24 dura 1 minuto entre las 24 y las 0
 
 'JOJOJO
 Public engine As New clsDX8Engine
+Public SurfaceDB As clsSurfaceManager
 'JOJOJO
 
 'To get free bytes in drive
