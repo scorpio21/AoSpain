@@ -3,7 +3,11 @@
 ## ✅ Estado Actual (Consolidado 24 de Marzo 2026)
 - **Fase 1 (Cuerpos y Cabezas):** Completada. Implementada la vista previa completa en `frmCrearPersonaje.frm` con mapeo de IDs y visibilidad dinámica.
 - **Fase 2 (Refactorización frmCuent):** Completada. Soporte para 10 slots (0-9), feedback visual dorado de selección, y centralización de conexión en `EntrarAlMundo()`.
-- **Estabilidad:** Sistema de cuentas 100% operativo y sin bugs visuales en la selección.
+- **Estabilidad y Pulido:** 
+    - Corregido el bug de visibilidad/foco de `frmCuent` tras usar `/salir`.
+    - Reasignado el botón "X" de `frmCuent` para que funcione como salida segura en lugar de borrado de cuenta.
+    - Actualizado `README.md` con logo centrado y captura de pantalla del nuevo sistema.
+- **Resultado:** Sistema de cuentas 100% operativo, estable y con interfaz depurada.
 
 ## 🚀 Próximo Objetivo: Fase 3 (Evolución Técnica)
 
