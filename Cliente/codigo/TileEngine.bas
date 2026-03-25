@@ -1126,7 +1126,7 @@ End Function
 
 '[CODE 000]:MatuX'
     'Sub DDrawGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, X As Integer, Y As Integer, Center As Byte, Animate As Byte)
-    Sub DDrawGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
+    ' Sub DDrawGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
 '[END]'
 '*****************************************************************
 'Draws a Grh at the X and Y positions

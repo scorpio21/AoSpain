@@ -590,46 +590,44 @@ Public tY As Integer
 Public MouseX As Long
 Public MouseY As Long
 
-Dim gDSB As DirectSoundBuffer
-Dim gD As DSBUFFERDESC
-Dim gW As WAVEFORMATEX
+' Dim gDSB As DirectSoundBuffer
+' Dim gD As DSBUFFERDESC
+' Dim gW As WAVEFORMATEX
 Dim gFileName As String
-Dim dsE As DirectSoundEnum
-Dim Pos(0) As DSBPOSITIONNOTIFY
+' Dim dsE As DirectSoundEnum
+' Dim Pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
 Dim endEvent As Long
-Implements DirectXEvent
+' Implements DirectXEvent
 
-Private Sub DirectXEvent_DXCallback(ByVal eventid As Long)
+' Private Sub DirectXEvent_DXCallback(ByVal eventid As Long)
+'
+' End Sub
 
-End Sub
-
-Private Sub CreateEvent()
-     endEvent = DirectX.CreateEvent(Me)
-End Sub
+' Private Sub CreateEvent()
+'      endEvent = DirectX.CreateEvent(Me)
+' End Sub
 
 
 Private Function LoadSoundBufferFromFile(sFile As String) As Integer
-    On Error GoTo err_out
-        With gD
-            .lFlags = DSBCAPS_CTRLVOLUME Or DSBCAPS_CTRLPAN Or DSBCAPS_CTRLFREQUENCY Or DSBCAPS_CTRLPOSITIONNOTIFY
-            .lReserved = 0
-        End With
-        Set gDSB = DirectSound.CreateSoundBufferFromFile(DirSound & sFile, gD, gW)
-        With Pos(0)
-            .hEventNotify = endEvent
-            .lOffset = -1
-        End With
-        DirectX.SetEvent endEvent
-        'gDSB.SetNotificationPositions 1, POS()
-    Exit Function
+'    On Error GoTo err_out
+'        With gD
+'            .lFlags = DSBCAPS_CTRLVOLUME Or DSBCAPS_CTRLPAN Or DSBCAPS_CTRLFREQUENCY Or DSBCAPS_CTRLPOSITIONNOTIFY
+'            .lReserved = 0
+'        End With
+'        Set gDSB = DirectSound.CreateSoundBufferFromFile(DirSound & sFile, gD, gW)
+'        With Pos(0)
+'            .hEventNotify = endEvent
+'            .lOffset = -1
+'        End With
+'        DirectX.SetEvent endEvent
+'        'gDSB.SetNotificationPositions 1, POS()
+'    Exit Function
 
-err_out:
-    MsgBox "Error creating sound buffer", vbApplicationModal
-    LoadSoundBufferFromFile = 1
-
-
+' err_out:
+'    MsgBox "Error creating sound buffer", vbApplicationModal
+'    LoadSoundBufferFromFile = 1
 End Function
 
 

@@ -50,9 +50,10 @@ Public ItemElegido As Long
 Public mx As Long
 Public my As Long
 
-Private AuxSurface   As DirectDrawSurface7
-Private BoxSurface   As DirectDrawSurface7
-Private SelSurface   As DirectDrawSurface7
+' [CODE] - AoSpain DX8 Inventory Rendering
+' Private AuxSurface   As DirectDrawSurface7
+' Private BoxSurface   As DirectDrawSurface7
+' Private SelSurface   As DirectDrawSurface7
 Private bStaticInit  As Boolean   'Se inicializaron las Statics?
 Private r1           As RECT, r2 As RECT, auxr As RECT
 Private rBox         As RECT  'Pos del cuadradito rojo

@@ -1896,21 +1896,24 @@ If UserList(UserIndex).Flags.UserLogged Then UserList(UserIndex).Counters.IdleCo
         
             Case "NACCNT"
                 rdata = Right$(rdata, Len(rdata) - 6)
-                
+
                 Dim NCuenta As String
                 Dim Passw As String
                 Dim Mail As String
-            
-                'cuentas
+                Dim tPregunta As String
+                Dim tRespuesta As String
+
+                ' Cuentas simplificadas AoSpain
                 NCuenta = ReadField(1, rdata, Asc(","))
                 Passw = ReadField(2, rdata, Asc(","))
                 Mail = ReadField(3, rdata, Asc(","))
-                pregunta = ReadField(4, rdata, Asc(","))
-                Respuesta = ReadField(5, rdata, Asc(","))
- 
-                Call CreateAccount(NCuenta, Passw, Mail, pregunta, Respuesta, UserIndex)
-                Exit Sub
-            Case "TIRDAD"
+
+                ' Valores por defecto para compatibilidad con la estructura de archivos .act
+                tPregunta = "Sin definir"
+                tRespuesta = "Sin definir"
+
+                Call CreateAccount(NCuenta, Passw, Mail, tPregunta, tRespuesta, UserIndex)
+                Exit Sub            Case "TIRDAD"
                 'Case TIRDAD handled elsewhere if needed, but keeping it empty here as requested by context
         End Select
     End If
@@ -3111,7 +3114,7 @@ Select Case UCase$(Left$(rdata, 3))
                   
             If UserList(UserIndex).Invent.HerramientaEqpObjIndex = 0 Then Exit Sub
             
-            If UserList(UserIndex).Invent.HerramientaEqpObjIndex <> OBJTYPE_CAÑA Then
+            If UserList(UserIndex).Invent.HerramientaEqpObjIndex <> OBJTYPE_CAï¿½A Then
                     Call CloseSocket(UserIndex)
                     Exit Sub
             End If
@@ -3164,7 +3167,7 @@ Select Case UCase$(Left$(rdata, 3))
                 Exit Sub
             End If
             
-            If UserList(UserIndex).Invent.HerramientaEqpObjIndex <> HACHA_LEÑADOR Then
+            If UserList(UserIndex).Invent.HerramientaEqpObjIndex <> HACHA_LEï¿½ADOR Then
                     Call CloseSocket(UserIndex)
                     Exit Sub
             End If

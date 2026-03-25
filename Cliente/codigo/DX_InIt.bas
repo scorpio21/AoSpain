@@ -1,10 +1,10 @@
 Attribute VB_Name = "Mod_DX"
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matï¿½as Fernando Pequeï¿½o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -28,42 +28,43 @@ Attribute VB_Name = "Mod_DX"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nï¿½mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Cï¿½digo Postal 1900
+'Pablo Ignacio Mï¿½rquez
 
 
 Option Explicit
 
 Public Const NumSoundBuffers = 20
 
-Public DirectX As New DirectX7
-Public DirectDraw As DirectDraw7
-Public DirectSound As DirectSound
-
-Public PrimarySurface As DirectDrawSurface7
-Public PrimaryClipper As DirectDrawClipper
-Public SecundaryClipper As DirectDrawClipper
-Public BackBufferSurface As DirectDrawSurface7
-Public SurfaceDB() As DirectDrawSurface7
-
-Public Perf As DirectMusicPerformance
-Public Seg As DirectMusicSegment
-Public SegState As DirectMusicSegmentState
-Public Loader As DirectMusicLoader
+' [CODE] - MigraciÃ³n a DirectX 8 AoSpain
+' Public DirectX As New DirectX7
+' Public DirectDraw As DirectDraw7
+' Public DirectSound As DirectSound
+'
+' Public PrimarySurface As DirectDrawSurface7
+' Public PrimaryClipper As DirectDrawClipper
+' Public SecundaryClipper As DirectDrawClipper
+' Public BackBufferSurface As DirectDrawSurface7
+' Public SurfaceDB() As DirectDrawSurface7
+'
+' Public Perf As DirectMusicPerformance
+' Public Seg As DirectMusicSegment
+' Public SegState As DirectMusicSegmentState
+' Public Loader As DirectMusicLoader
 
 Public oldResHeight As Long, oldResWidth As Long
 Public bNoResChange As Boolean
 
 Public LastSoundBufferUsed As Integer
-Public DSBuffers(1 To NumSoundBuffers) As DirectSoundBuffer
+' Public DSBuffers(1 To NumSoundBuffers) As DirectSoundBuffer
 
 Public ddsd2 As DDSURFACEDESC2
 Public ddsd4 As DDSURFACEDESC2
 Public ddsd5 As DDSURFACEDESC2
-Public ddsAlphaPicture As DirectDrawSurface7
-Public ddsSpotLight As DirectDrawSurface7
+' Public ddsAlphaPicture As DirectDrawSurface7
+' Public ddsSpotLight As DirectDrawSurface7
 
 
 Private Sub IniciarDirectSound()
@@ -162,7 +163,7 @@ Public Sub IniciarObjetosDirectX()
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
 
     If oldResWidth <> 800 Or oldResHeight <> 600 Then
-        If MsgBox("Se ha detectado que su resolucion es diferente a 800x600, ¿desea ajustar la ventana?", vbYesNo) = vbYes Then
+        If MsgBox("Se ha detectado que su resolucion es diferente a 800x600, ï¿½desea ajustar la ventana?", vbYesNo) = vbYes Then
             bNoResChange = True
 
             '        frmMain.Height = 9400
@@ -183,7 +184,7 @@ Public Sub IniciarObjetosDirectX()
 
     End If
 
-    Call AddtoRichTextBox(frmCargando.status, "¡DirectX OK!", 0, 251, 0, 1, 0)
+    Call AddtoRichTextBox(frmCargando.status, "ï¿½DirectX OK!", 0, 251, 0, 1, 0)
 
     Exit Sub
 
