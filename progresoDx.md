@@ -48,7 +48,7 @@ Se ha verificado que las funciones de renderizado (`Device_Box_Textured_Render`,
 - [ ] Eliminar dependencias de `DirectDraw7` (Limpieza de `DrawBackBufferSurface`).
 
 ### Fase 3: Renderizado de Interfaz (GUI)
-- [ ] Migrar el renderizado del inventario a DX8 (`Modulo_DibujarInventario.bas`).
+- [x] Migrar el renderizado del inventario a DX8 (`Modulo_DibujarInventario.bas` usando `engine.Draw_Grh` y `engine.Text_Render`).
 - [ ] Migrar el renderizado de hechizos.
 - [ ] Implementar sistema de luces dinámicas (antorchas, hechizos).
 

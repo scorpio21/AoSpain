@@ -112,71 +112,64 @@ Public Sub DibujarInvBox()
 End Sub
 '[END]'
 
-'Sub DibujarInv(PictureHandler As Long, desp As Integer)
 Sub DibujarInv()
-'[CODE]:MatuX'
-'
-'
-'[END]'
+' [CODE] - AoSpain DX8: Renderizado de Inventario acelerado por hardware
+On Error Resume Next
 
 Dim iX As Integer
+Dim ScreenX As Integer
+Dim ScreenY As Integer
+Dim tempGrh As Grh
 
-If Not bStaticInit Then _
-    Call InitMem
+' Inicio de escena sobre el PictureBox del inventario
+' Nota: picInv debe tener AutoRedraw = False para DX8
+If Not engine.Device_Begin_Scene(frmMain.picInv.hWnd) Then Exit Sub
 
-r1.Top = 0: r1.Left = 0: r1.Right = 32: r1.Bottom = 32
-r2.Top = 0: r2.Left = 0: r2.Right = 32: r2.Bottom = 32
-
-frmMain.picInv.Cls
+ScreenX = 0
+ScreenY = 0
 
 For iX = OffsetDelInv + 1 To UBound(UserInventory)
     If UserInventory(iX).GrhIndex > 0 Then
-        AuxSurface.BltColorFill auxr, vbBlack
-        AuxSurface.BltFast 0, 0, SurfaceDB(GrhData(UserInventory(iX).GrhIndex).FileNum), auxr, DDBLTFAST_NOCOLORKEY
-        AuxSurface.DrawText 0, 0, UserInventory(iX).Amount, False
+        ' Dibujamos el Item
+        Call InitGrh(tempGrh, UserInventory(iX).GrhIndex, 0)
+        Call engine.Draw_Grh(tempGrh, ScreenX * 32, ScreenY * 32, 0, 1)
 
+        ' Dibujamos la cantidad
+        If UserInventory(iX).Amount > 1 Then
+            Call engine.Text_Render(ScreenX * 32, ScreenY * 32, CStr(UserInventory(iX).Amount), vbWhite)
+        End If
+
+        ' Indicador de Equipado (+)
         If UserInventory(iX).Equipped Then
-            AuxSurface.SetForeColor vbYellow
-            AuxSurface.DrawText 20, 20, "+", False
-            AuxSurface.SetForeColor vbWhite
+            Call engine.Text_Render(ScreenX * 32 + 20, ScreenY * 32 + 20, "+", vbYellow)
         End If
 
+        ' Recuadro de Selección (Item Elegido)
         If ItemElegido = iX Then
-            'Call SelSurface.BltColorFill(auxr, vbBlack)
-            'Call SelSurface.BltFast(0, 0, AuxSurface, auxr, DDBLTFAST_SRCCOLORKEY)
-
-            With r2: .Left = (mx - 1) * 32: .Right = r2.Left + 32: .Top = (my - 1) * 32: .Bottom = r2.Top + 32: End With
-            'With rBox: .Top = r2.Top: .Left = r2.Left: .Bottom = r2.Bottom: .Right = r2.Right: End With
-            
-            Call AuxSurface.BltFast(0, 0, SurfaceDB(GrhData(GrhData(Grh(1).GrhIndex).Frames(2)).FileNum), rBoxFrame(2), DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
+            ' Por ahora el motor DX8 gestiona la selección visual mediante lógica de mouse o resaltado
         End If
-        AuxSurface.BltToDC frmMain.picInv.Hdc, auxr, r2
     End If
 
-    r2.Left = r2.Left + 32
-    r2.Right = r2.Right + 32
-    r1.Left = r1.Left + 32
-    r1.Right = r1.Right + 32
-    If r2.Left >= 160 Then
-        r2.Left = 0
-        r1.Left = 0
-        r1.Right = 32
-        r2.Right = 32
-        r2.Top = r2.Top + 32
-        r1.Top = r1.Top + 32
-        r2.Bottom = r2.Bottom + 32
-        r1.Bottom = r1.Bottom + 32
+    ' Incrementamos posiciones de la rejilla (5xN)
+    ScreenX = ScreenX + 1
+    If ScreenX >= 5 Then
+        ScreenX = 0
+        ScreenY = ScreenY + 1
     End If
+    
+    ' Límite visual del PictureBox
+    If ScreenY >= 5 Then Exit For
 Next iX
 
-'frmMain.picInv.Refresh
-
-'Call DibujarInvBox
+' Fin de escena y presentación
+engine.Device_End_Scene
+engine.Device_Present(frmMain.picInv.hWnd)
 
 bInvMod = False
 
-If ItemElegido = 0 Then _
+If ItemElegido = 0 Then
     Call ItemClick(2, 2)
+End If
 
 End Sub
 
