@@ -1213,7 +1213,8 @@ Do While prgRun
                 If Cartel Then Call DibujarCartel
                 If bInvMod Then DibujarInv
     
-                Call DrawBackBufferSurface
+                ' [CODE] - AoSpain DX8: Presentación automática vía engine.Device_Present
+                ' Call DrawBackBufferSurface
                 
                 Call RenderSounds
                 
