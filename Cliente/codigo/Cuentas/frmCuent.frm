@@ -1206,9 +1206,9 @@ Begin VB.Form frmCuent
       EndProperty
       ForeColor       =   &H80000007&
       Height          =   495
-      Left            =   3360
+      Left            =   4920
       TabIndex        =   0
-      Top             =   1320
+      Top             =   2280
       Visible         =   0   'False
       Width           =   2895
    End
@@ -1220,9 +1220,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Option Explicit
-Private Sub CP_Click(Index As Integer)
+Private Sub CP_Click(index As Integer)
 Call PlayWaveDS(SND_CLICK)
-If CP(Index).Visible = True Then
+If CP(index).Visible = True Then
     Call PlayWaveDS(SND_CLICK)
 
 ' Estandarizado a 10 slots (Revision Fase 2)
@@ -1245,11 +1245,11 @@ Dim cca As Integer
 Me.Picture = LoadPicture(App.Path & "\Graficos\Principal\cuentas-copia.jpg")
 
 Dim i As Integer
-'Label3.Caption = nombrecuent
+Label3.Caption = nombrecuent
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim asd As Integer
     ' Estandarizado a 10 slots (Fase 2 - Revision)
     For asd = 0 To 9
@@ -1351,41 +1351,41 @@ End Sub
 
 
 
-Private Sub Label2_Click(Index As Integer)
-    If Index > 9 Then Exit Sub ' Límite de 10 slots
+Private Sub Label2_Click(index As Integer)
+    If index > 9 Then Exit Sub ' Límite de 10 slots
     Call PlayWaveDS(SND_CLICK)
-    PJClickeado = nombre(Index)
+    PJClickeado = nombre(index)
 End Sub
 
-Private Sub Label2_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If Index > 9 Then Exit Sub
-    nombre(Index).ForeColor = vbYellow
-    Label2(Index).ForeColor = vbYellow
+Private Sub Label2_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+    If index > 9 Then Exit Sub
+    nombre(index).ForeColor = vbYellow
+    Label2(index).ForeColor = vbYellow
 End Sub
 
-Private Sub nombre_Click(Index As Integer)
-    If Index > 9 Then Exit Sub
+Private Sub nombre_Click(index As Integer)
+    If index > 9 Then Exit Sub
     Call PlayWaveDS(SND_CLICK)
-    PJClickeado = nombre(Index)
+    PJClickeado = nombre(index)
 End Sub
 
-Private Sub nombre_dblClick(Index As Integer)
-    If Index > 9 Then Exit Sub
+Private Sub nombre_dblClick(index As Integer)
+    If index > 9 Then Exit Sub
     If PJClickeado = "Nada" Then Exit Sub
     Call PlayWaveDS(SND_CLICK)
     Call EntrarAlMundo
 End Sub
 
-Private Sub nombre_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If Index > 9 Then Exit Sub
-    nombre(Index).ForeColor = vbYellow
-    Label2(Index).ForeColor = vbYellow
+Private Sub nombre_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+    If index > 9 Then Exit Sub
+    nombre(index).ForeColor = vbYellow
+    Label2(index).ForeColor = vbYellow
 End Sub
 
-Private Sub PJ_Click(Index As Integer)
-    If Index > 9 Then Exit Sub
+Private Sub PJ_Click(index As Integer)
+    If index > 9 Then Exit Sub
     
-    If CP(Index).Visible = True Then
+    If CP(index).Visible = True Then
         Call PlayWaveDS(SND_CLICK)
         
         ' Verificar si ya tenemos el máximo de personajes (10)
@@ -1400,11 +1400,11 @@ Private Sub PJ_Click(Index As Integer)
         Exit Sub
     End If
     
-    PJClickeado = nombre(Index)
+    PJClickeado = nombre(index)
 End Sub
 
-Private Sub PJ_dblClick(Index As Integer)
-    If Index > 9 Then Exit Sub
+Private Sub PJ_dblClick(index As Integer)
+    If index > 9 Then Exit Sub
     If PJClickeado = "Nada" Then Exit Sub
     Call PlayWaveDS(SND_CLICK)
     Call EntrarAlMundo
@@ -1414,8 +1414,8 @@ Private Sub AnimationTimer_Timer()
     Call RenderizarPJsCuentas
 End Sub
 
-Private Sub PJ_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If Index > 9 Then Exit Sub
+Private Sub PJ_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+    If index > 9 Then Exit Sub
     Dim asd As Integer
     For asd = 0 To 9
         nombre(asd).ForeColor = vbWhite

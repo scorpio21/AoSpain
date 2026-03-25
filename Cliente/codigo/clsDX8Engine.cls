@@ -424,25 +424,26 @@ Public Sub Engine_Init()
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     Dim ColorKeyVal As Long
     
-    Set SurfaceDB = New clsSurfaceManager
-    
+    Set SurfaceDB = New clsSurfaceManDynDX8
+
     Set dX = New DirectX8
     Set D3D = dX.Direct3DCreate()
+
     Set D3DX = New D3DX8
-    
+
     D3D.GetAdapterDisplayMode D3DADAPTER_DEFAULT, DispMode
     D3D.GetAdapterDisplayMode D3DADAPTER_DEFAULT, DispModeBK
-    
-    
+
+
     With D3DWindow
         .Windowed = True
         .SwapEffect = D3DSWAPEFFECT_COPY
         .BackBufferFormat = DispMode.format
-        .BackBufferWidth = frmMain.ScaleWidth
-        .BackBufferHeight = frmMain.ScaleHeight
+        .BackBufferWidth = frmMain.renderer.ScaleWidth
+        .BackBufferHeight = frmMain.renderer.ScaleHeight
         .EnableAutoDepthStencil = 1
         .AutoDepthStencilFormat = D3DFMT_D16
-        .hDeviceWindow = frmMain.hWnd
+        .hDeviceWindow = frmMain.renderer.hWnd
     End With
     DispMode.format = D3DFMT_X8R8G8B8
     If D3D.CheckDeviceFormat(0, D3DDEVTYPE_HAL, DispMode.format, 0, D3DRTYPE_TEXTURE, D3DFMT_A8R8G8B8) = D3D_OK Then
@@ -458,12 +459,12 @@ Public Sub Engine_Init()
         bump_map_supported = False
         DispMode.format = DispModeBK.format
     End If
-    Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
+    Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.renderer.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
                                                             D3DWindow)
-                                                            
-                                                            
-    HalfWindowTileHeight = (frmMain.ScaleHeight / 32) \ 2
-    HalfWindowTileWidth = (frmMain.ScaleWidth / 32) \ 2
+
+
+    HalfWindowTileHeight = (frmMain.renderer.ScaleHeight / 32) \ 2
+    HalfWindowTileWidth = (frmMain.renderer.ScaleWidth / 32) \ 2
     
     TileBufferSize = 9
     TileBufferPixelOffsetX = (TileBufferSize - 1) * 32

@@ -1,60 +1,51 @@
 # Progreso Migración DirectX 8 (Rama: `aospainDX`)
 
-Este documento registra el avance en la integración del motor gráfico DirectX 8 en AoSpain, sustituyendo al antiguo motor basado en DirectDraw 7 (GDI).
+Este documento registra el avance en la integración del motor gráfico DirectX 8 en AoSpain, sustituyendo al antiguo motor basado en DirectDraw 7 (GDI/HDC).
 
-## 📅 Hitos Alcanzados (24 de Marzo 2026)
+## 📅 Hitos Alcanzados (25 de Marzo 2026)
 
-### 1. Infraestructura Base Integrada
-Se han incorporado los módulos y clases esenciales para el funcionamiento de DX8, adaptados de la versión 0.11.5 Dx8 pero manteniendo la compatibilidad con nuestra arquitectura de 32 bits (Long).
+### 1. Sustitución del Motor Gráfico (DX7 -> DX8)
+Se ha realizado el cambio estructural del motor de renderizado, pasando de un sistema basado en `BitBlt` (HDC) a uno de vértices y texturas real de DirectX 8.
 
-*   **`Cliente/codigo/clsDX8Engine.cls`**: Motor principal. Gestiona el dispositivo Direct3D, renderizado de texturas, luces y partículas.
-    *   *Adaptación:* Se modificó para inicializar sobre `frmMain.hWnd` en lugar de un `renderer` inexistente.
-    *   *Adaptación:* Se sustituyó la referencia a `clsSurfaceManDynDX8` por `clsSurfaceManager`.
-*   **`Cliente/codigo/clsSurfaceManager.cls`**: Gestor de texturas. Se encarga de cargar y mantener las imágenes en memoria de video.
-*   **`Cliente/codigo/modDX8Requires.bas`**: Declaraciones globales, tipos de datos (vértices, vectores) y variables públicas del motor.
-*   **`Cliente/codigo/modDX8Fifo.bas`**: Cola de procesamiento para optimizar la carga.
+*   **`TileEngine.bas`**: Sustituido por la versión de DX8 adaptada para 32 bits.
+    *   *Soporte 32-bit:* Se modificaron las estructuras `Grh`, `MapBlock`, `Char`, `Obj` y `GrhData` para usar `Long` en todos los índices gráficos y de objetos.
+    *   *Referencia:* El antiguo motor se conserva como `TileEngine_DX7.bas`.
+*   **`clsDX8Engine.cls`**: Actualizado para vincular el dispositivo Direct3D al nuevo control `renderer`.
+    *   Se corrigió `Engine_Init` para usar `frmMain.renderer.hWnd` y `ScaleWidth/Height`.
+*   **`clsSurfaceManDynDX8.cls`**: Integrado como el nuevo gestor de texturas dinámico para DX8.
 
-### 2. Configuración del Proyecto (`Client.vbp`)
-*   **Referencia Añadida:** `DirectX 8 for Visual Basic Type Library` (`dx8vb.dll`).
-*   **Archivos Registrados:** Se incluyeron las nuevas clases y módulos en el archivo de proyecto para su compilación.
+### 2. Modernización de la Interfaz (`frmMain.frm`)
+*   **Control `renderer`**: Se insertó un `VB.PictureBox` dedicado con el nombre `renderer` (544x416 px) para servir como superficie de dibujo de DirectX 8, eliminando el renderizado directo sobre el formulario.
 
-### 3. Inicialización del Motor (`Sub Main`)
-Se modificó `Cliente/codigo/General.bas` para arrancar el motor DX8 justo antes de mostrar la interfaz de conexión.
+### 3. Carga de Gráficos y Compatibilidad PNG
+*   **`modDX8Fifo.bas`**: Se implementó una nueva función `LoadGrhData` y `CargarDatos` optimizada para 32 bits.
+    *   *Formato AO:* Se corrigió el bucle de lectura para que sea compatible con el formato binario de `Graficos.ind`.
+    *   *Dimensiones:* Se añadió una segunda pasada para calcular las dimensiones de las animaciones basándose en sus frames.
+*   **`clsSurfaceManDynDX8.cls`**: Se actualizó el cargador de texturas para buscar archivos **`.png`** en lugar de `.bmp`.
+    *   Se adaptaron los índices de archivos a `Long` para evitar desbordamientos.
+*   **`General.bas`**: Se integró la llamada a `Call CargarDatos` en el `Sub Main` tras la inicialización del motor.
 
-```vb
-' [CODE] - Inicializacion Motor DirectX 8 AoSpain
-engine.Engine_Init
-engine.setup_ambient
-```
-
-Esto asegura que el dispositivo 3D esté listo desde el primer momento, permitiendo cargar texturas en el login si fuera necesario.
-
-### 4. Adaptación a Arquitectura 32-bit (Long)
-Se ha verificado que las funciones de renderizado (`Device_Box_Textured_Render`, `Draw_Grh`) respeten el uso de `Long` para los índices de gráficos (`GrhIndex`), manteniendo la coherencia con la migración previa del servidor y cliente.
+### 4. Sincronización de Declaraciones (`Declares.bas`)
+*   Se añadieron las instancias globales necesarias para el nuevo ecosistema DX8: `SurfaceDB`, `Audio` y `engine`.
 
 ---
 
 ## 🚀 Próximos Pasos (Hoja de Ruta DX8)
 
-### Fase 1: Renderizado Híbrido (Actual)
-- [x] Inicialización del Engine.
-- [x] Cargar texturas `.png` usando `clsSurfaceManager`.
-- [x] Migración de `RenderScreen` en `TileEngine.bas` a DX8 (Suelos, Objetos y Personajes).
-- [ ] Lograr estabilidad visual total en el mapa.
+### Fase 3: Estabilidad y Renderizado (Actual)
+- [x] Inicialización del Engine en el control `renderer`.
+- [x] Carga robusta de gráficos de 32 bits (`.ind`).
+- [x] Compatibilidad total con texturas `.png`.
+- [ ] **Bucle de Renderizado:** Implementar la transición limpia al bucle `engine.Start` tras la selección de personaje en `frmCuent`.
+- [ ] **Primer Mapa DX8:** Renderizar el mapa inicial y validar que los tiles, personajes y objetos se dibujen correctamente.
 
-### Fase 2: Sustitución de TileEngine
-- [x] Reemplazar las llamadas a `BackBufferSurface.BltFast` en `TileEngine.bas` por llamadas a `engine.Draw_Grh`.
-- [x] Migrar el renderizado de diálogos y nombres a DX8 (`cDialogos.cls` usando `engine.Text_Render`).
-- [ ] Eliminar dependencias de `DirectDraw7` (Limpieza de `DrawBackBufferSurface`).
+### Fase 4: Renderizado de Entidades
+- [ ] Validar el renderizado de personajes (Cuerpo + Cabeza) en el nuevo `TileEngine`.
+- [ ] Migrar el sistema de diálogos y nombres flotantes al nuevo `engine.Text_Render`.
 
-### Fase 3: Renderizado de Interfaz (GUI)
-- [x] Migrar el renderizado del inventario a DX8 (`Modulo_DibujarInventario.bas` usando `engine.Draw_Grh` y `engine.Text_Render`).
-- [ ] Migrar el renderizado de hechizos.
-- [ ] Implementar sistema de luces dinámicas (antorchas, hechizos).
-
-### Fase 4: Limpieza
-- [ ] Eliminar código muerto de DX7 (`DX_InIt.bas`, funciones GDI antiguas).
-- [ ] Optimizar gestión de memoria de texturas.
+### Fase 5: Optimización y Limpieza
+- [ ] Eliminar definitivamente `TileEngine_DX7.bas` y `DX_InIt.bas`.
+- [ ] Implementar luces dinámicas y partículas DX8.
 
 ---
 *Documento mantenido automáticamente por Gemini CLI.*

@@ -91,6 +91,32 @@ Begin VB.Form frmMain
       Left            =   6285
       Top             =   2040
    End
+   Begin VB.PictureBox renderer 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   0   'False
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      CausesValidation=   0   'False
+      ClipControls    =   0   'False
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   6240
+      Left            =   45
+      ScaleHeight     =   416
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   544
+      TabIndex        =   1
+      Top             =   45
+      Width           =   8160
+   End
    Begin VB.PictureBox PanelDer 
       AutoSize        =   -1  'True
       BackColor       =   &H00000000&

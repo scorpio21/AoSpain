@@ -127,6 +127,8 @@ Public Const UltimoBodyBarco = 87
 
 
 Public Dialogos As New cDialogos
+Public SurfaceDB As New clsSurfaceManDynDX8
+Public Audio As New clsAudio
 Public NumEscudosAnims As Integer
 
 Public ArmasHerrero(0 To 100) As Integer

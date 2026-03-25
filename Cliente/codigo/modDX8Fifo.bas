@@ -178,95 +178,123 @@ Sub CargarArrayLluvia()
     Close #N
 End Sub
 
+Public Sub CargarDatos()
+    '**************************************************************
+    ' Centraliza la carga de todos los datos del juego
+    '**************************************************************
+    On Error Resume Next
+    Call LoadGrhData
+    Call CargarCabezas
+    Call CargarCascos
+    Call CargarCuerpos
+    Call CargarFxs
+    Call CargarTips
+    Call CargarArrayLluvia
+End Sub
+
 Public Function LoadGrhData() As Boolean
+'**************************************************************
+' Author: Gemini CLI (Adaptado para AoSpain 32-bit)
+' Last Modify Date: 25/03/2026
+'**************************************************************
 On Error GoTo ErrorHandler
     Dim Grh As Long
     Dim Frame As Long
-    Dim grhCount As Long
     Dim handle As Integer
-    Dim fileVersion As Long
+    Dim tempint As Integer
     
-    'Open files
+    ' Resize arrays al limite maximo (Config_Inicio.NumeroDeBMPs o 32000)
+    ' Usamos 32000 como base o lo que diga el .ini
+    ReDim GrhData(1 To 32000) As GrhData
+    
+    ' Open files
     handle = FreeFile()
-    Open App.path & "\INIT\Graficos.ind" For Binary Access Read As handle
-    Seek #1, 1
+    Open App.path & "\init\Graficos.ind" For Binary Access Read As #handle
+    Seek #handle, 1
     
-    'Get file version
-    Get handle, , fileVersion
+    ' Leer Cabecera (MiCabecera es global en Declares.bas)
+    Get #handle, , MiCabecera
     
-    'Get number of grhs
-    Get handle, , grhCount
+    ' Saltamos los 5 integers de relleno del formato original
+    Get #handle, , tempint: Get #handle, , tempint: Get #handle, , tempint
+    Get #handle, , tempint: Get #handle, , tempint
     
-    'Resize arrays
-    ReDim GrhData(1 To grhCount) As GrhData
+    ' Leer primer numero de Grh
+    Get #handle, , Grh
     
-    While Not EOF(handle)
-        Get handle, , Grh
-        
+    Do Until Grh <= 0
         With GrhData(Grh)
-            'Get number of frames
-            Get handle, , .NumFrames
+            ' Get number of frames
+            Get #handle, , .NumFrames
             If .NumFrames <= 0 Then GoTo ErrorHandler
             
-            ReDim .Frames(1 To GrhData(Grh).NumFrames)
+            ' Redimensionar matriz de frames
+            ReDim .Frames(1 To .NumFrames)
             
             If .NumFrames > 1 Then
-                'Read a animation GRH set
+                ' Es una animacion
                 For Frame = 1 To .NumFrames
-                    Get handle, , .Frames(Frame)
-                    If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
+                    Get #handle, , .Frames(Frame)
+                    If .Frames(Frame) <= 0 Or .Frames(Frame) > 32000 Then
                         GoTo ErrorHandler
                     End If
                 Next Frame
                 
-                Get handle, , .Speed
-                
+                Get #handle, , .Speed
                 If .Speed <= 0 Then GoTo ErrorHandler
                 
-                'Compute width and height
-                .pixelHeight = GrhData(.Frames(1)).pixelHeight
-                If .pixelHeight <= 0 Then GoTo ErrorHandler
-                
-                .pixelWidth = GrhData(.Frames(1)).pixelWidth
-                If .pixelWidth <= 0 Then GoTo ErrorHandler
-                
-                .TileWidth = GrhData(.Frames(1)).TileWidth
-                If .TileWidth <= 0 Then GoTo ErrorHandler
-                
-                .TileHeight = GrhData(.Frames(1)).TileHeight
-                If .TileHeight <= 0 Then GoTo ErrorHandler
+                ' Las dimensiones se calculan en la segunda pasada
             Else
-                'Read in normal GRH data
-                Get handle, , .FileNum
+                ' Es un GRH simple
+                Get #handle, , .FileNum
                 If .FileNum <= 0 Then GoTo ErrorHandler
                 
-                Get handle, , GrhData(Grh).sX
+                Get #handle, , .sX
                 If .sX < 0 Then GoTo ErrorHandler
                 
-                Get handle, , .sY
+                Get #handle, , .sY
                 If .sY < 0 Then GoTo ErrorHandler
                 
-                Get handle, , .pixelWidth
+                Get #handle, , .pixelWidth
                 If .pixelWidth <= 0 Then GoTo ErrorHandler
                 
-                Get handle, , .pixelHeight
+                Get #handle, , .pixelHeight
                 If .pixelHeight <= 0 Then GoTo ErrorHandler
                 
-                'Compute width and height
+                ' Calcular tiles (32x32 px)
                 .TileWidth = .pixelWidth / 32
                 .TileHeight = .pixelHeight / 32
                 
+                ' El frame 1 es el propio Grh
                 .Frames(1) = Grh
             End If
         End With
-    Wend
+        
+        ' Leer siguiente numero de Grh
+        Get #handle, , Grh
+    Loop
     
-    Close handle
+    Close #handle
+    
+    ' Segunda pasada: Calcular dimensiones para animaciones
+    For Grh = 1 To 32000
+        If GrhData(Grh).NumFrames > 1 Then
+            Dim firstFrame As Long
+            firstFrame = GrhData(Grh).Frames(1)
+            If firstFrame > 0 And firstFrame <= 32000 Then
+                GrhData(Grh).pixelWidth = GrhData(firstFrame).pixelWidth
+                GrhData(Grh).pixelHeight = GrhData(firstFrame).pixelHeight
+                GrhData(Grh).TileWidth = GrhData(firstFrame).TileWidth
+                GrhData(Grh).TileHeight = GrhData(firstFrame).TileHeight
+            End If
+        End If
+    Next Grh
     
     LoadGrhData = True
 Exit Function
 
 ErrorHandler:
+    Close #handle
     LoadGrhData = False
 End Function
 

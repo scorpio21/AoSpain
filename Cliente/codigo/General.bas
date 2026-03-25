@@ -68,12 +68,12 @@ End Function
 Public Function DirMidi() As String
 DirMidi = App.Path & "\" & Config_Inicio.DirMusica & "\"
 End Function
-Public Function SD(ByVal n As Integer) As Integer
+Public Function SD(ByVal N As Integer) As Integer
 'Suma digitos
 Dim auxint As Integer
 Dim digit As Byte
 Dim suma As Integer
-auxint = n
+auxint = N
 
 Do
     digit = (auxint Mod 10)
@@ -86,12 +86,12 @@ SD = suma
 
 End Function
 
-Public Function SDM(ByVal n As Integer) As Integer
+Public Function SDM(ByVal N As Integer) As Integer
 'Suma digitos cada digito menos dos
 Dim auxint As Integer
 Dim digit As Integer
 Dim suma As Integer
-auxint = n
+auxint = N
 
 Do
     digit = (auxint Mod 10)
@@ -108,21 +108,21 @@ SDM = suma
 
 End Function
 
-Public Function Complex(ByVal n As Integer) As Integer
+Public Function Complex(ByVal N As Integer) As Integer
 
-If n Mod 2 <> 0 Then
-    Complex = n * SD(n)
+If N Mod 2 <> 0 Then
+    Complex = N * SD(N)
 Else
-    Complex = n * SDM(n)
+    Complex = N * SDM(N)
 End If
 
 End Function
 
-Public Function ValidarLoginMSG(ByVal n As Integer) As Integer
+Public Function ValidarLoginMSG(ByVal N As Integer) As Integer
 Dim AuxInteger As Integer
 Dim AuxInteger2 As Integer
-AuxInteger = SD(n)
-AuxInteger2 = SDM(n)
+AuxInteger = SD(N)
+AuxInteger2 = SDM(N)
 ValidarLoginMSG = Complex(AuxInteger + AuxInteger2)
 End Function
 
@@ -189,7 +189,7 @@ Next loopc
 
 End Sub
 
-Sub Addtostatus(RichTextBox As RichTextBox, Text As String, RED As Byte, GREEN As Byte, BLUE As Byte, Bold As Byte, Italic As Byte)
+Sub Addtostatus(RichTextBox As RichTextBox, Text As String, RED As Byte, GREEN As Byte, BLUE As Byte, bold As Byte, italic As Byte)
 '******************************************
 'Adds text to a Richtext box at the bottom.
 'Automatically scrolls to new text.
@@ -197,34 +197,34 @@ Sub Addtostatus(RichTextBox As RichTextBox, Text As String, RED As Byte, GREEN A
 'apperance!
 '******************************************
 
-frmCargando.status.SelStart = Len(RichTextBox.Text)
-frmCargando.status.SelLength = 0
-frmCargando.status.SelColor = RGB(RED, GREEN, BLUE)
+frmCargando.Status.SelStart = Len(RichTextBox.Text)
+frmCargando.Status.SelLength = 0
+frmCargando.Status.SelColor = RGB(RED, GREEN, BLUE)
 
-If Bold Then
-    frmCargando.status.SelBold = True
+If bold Then
+    frmCargando.Status.SelBold = True
 Else
-    frmCargando.status.SelBold = False
+    frmCargando.Status.SelBold = False
 End If
 
-If Italic Then
-    frmCargando.status.SelItalic = True
+If italic Then
+    frmCargando.Status.SelItalic = True
 Else
-    frmCargando.status.SelItalic = False
+    frmCargando.Status.SelItalic = False
 End If
 
-frmCargando.status.SelText = Chr(13) & Chr(10) & Text
+frmCargando.Status.SelText = Chr(13) & Chr(10) & Text
 
 End Sub
 
-    Sub AddtoRichTextBox(RichTextBox As RichTextBox, Text As String, Optional RED As Integer = -1, Optional GREEN As Integer, Optional BLUE As Integer, Optional Bold As Boolean, Optional Italic As Boolean, Optional bCrLf As Boolean)
+    Sub AddtoRichTextBox(RichTextBox As RichTextBox, Text As String, Optional RED As Integer = -1, Optional GREEN As Integer, Optional BLUE As Integer, Optional bold As Boolean, Optional italic As Boolean, Optional bCrLf As Boolean)
         With RichTextBox
             If (Len(.Text)) > 2000 Then .Text = ""
             .SelStart = Len(RichTextBox.Text)
             .SelLength = 0
         
-            .SelBold = IIf(Bold, True, False)
-            .SelItalic = IIf(Italic, True, False)
+            .SelBold = IIf(bold, True, False)
+            .SelItalic = IIf(italic, True, False)
             
             If Not RED = -1 Then .SelColor = RGB(RED, GREEN, BLUE)
     
@@ -258,8 +258,8 @@ Sub RefreshAllChars()
 Dim loopc As Integer
 
 For loopc = 1 To LastChar
-    If CharList(loopc).Active = 1 Then
-        MapData(CharList(loopc).Pos.X, CharList(loopc).Pos.Y).CharIndex = loopc
+    If CharList(loopc).active = 1 Then
+        MapData(CharList(loopc).Pos.x, CharList(loopc).Pos.y).CharIndex = loopc
     End If
 Next loopc
 
@@ -283,7 +283,7 @@ Dim i As Integer
 cad = LCase$(cad)
 
 For i = 1 To Len(cad)
-    car = Asc(Mid$(cad, i, 1))
+    car = Asc(mid$(cad, i, 1))
     
     If ((car < 97 Or car > 122) Or car = Asc("a")) And (car <> 255) And (car <> 32) Then
         AsciiValidos = False
@@ -310,7 +310,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(UserPassword)
-        CharAscii = Asc(Mid$(UserPassword, loopc, 1))
+        CharAscii = Asc(mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta� permitido.")
             Exit Function
@@ -332,9 +332,9 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(nombrecuent)
-        CharAscii = Asc(Mid$(nombrecuent, loopc, 1))
+        CharAscii = Asc(mid$(nombrecuent, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
-            Call MsgBox("Cuenta invalida. El caracter " & Chr$(CharAscii) & " no esta� permitido.")
+            Call MsgBox("Cuenta invalida. El caracter " & Chr$(CharAscii) & " no esta.� permitido.")
             Exit Function
         End If
     Next loopc
@@ -405,17 +405,17 @@ frmMain.Visible = True
 End Sub
 Sub CargarTip()
 
-Dim n As Integer
-n = RandomNumber(1, UBound(Tips))
-If n > UBound(Tips) Then n = UBound(Tips)
-frmtip.tip.Caption = Tips(n)
+Dim N As Integer
+N = RandomNumber(1, UBound(Tips))
+If N > UBound(Tips) Then N = UBound(Tips)
+frmtip.tip.Caption = Tips(N)
 
 End Sub
 
 Sub MoveNorth()
 If Cartel Then Cartel = False
 
-If LegalPos(UserPos.X, UserPos.Y - 1) Then
+If LegalPos(UserPos.x, UserPos.y - 1) Then
     Call SendData("M" & NORTH)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
         Call MoveCharbyHead(UserCharIndex, NORTH)
@@ -431,7 +431,7 @@ End Sub
 
 Sub MoveEast()
 If Cartel Then Cartel = False
-If LegalPos(UserPos.X + 1, UserPos.Y) Then
+If LegalPos(UserPos.x + 1, UserPos.y) Then
     Call SendData("M" & EAST)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
         Call MoveCharbyHead(UserCharIndex, EAST)
@@ -448,7 +448,7 @@ End Sub
 Sub MoveSouth()
 If Cartel Then Cartel = False
 
-If LegalPos(UserPos.X, UserPos.Y + 1) Then
+If LegalPos(UserPos.x, UserPos.y + 1) Then
     Call SendData("M" & SOUTH)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
         MoveCharbyHead UserCharIndex, SOUTH
@@ -464,7 +464,7 @@ End Sub
 
 Sub MoveWest()
 If Cartel Then Cartel = False
-If LegalPos(UserPos.X - 1, UserPos.Y) Then
+If LegalPos(UserPos.x - 1, UserPos.y) Then
     Call SendData("M" & WEST)
     If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
             MoveCharbyHead UserCharIndex, WEST
@@ -558,8 +558,8 @@ Sub MoveScreen(Heading As Byte)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
-Dim X As Integer
-Dim Y As Integer
+Dim x As Integer
+Dim y As Integer
 Dim tX As Integer
 Dim tY As Integer
 
@@ -567,33 +567,33 @@ Dim tY As Integer
 Select Case Heading
 
     Case NORTH
-        Y = -1
+        y = -1
 
     Case EAST
-        X = 1
+        x = 1
 
     Case SOUTH
-        Y = 1
+        y = 1
     
     Case WEST
-        X = -1
+        x = -1
         
 End Select
 
 'Fill temp pos
-tX = UserPos.X + X
-tY = UserPos.Y + Y
+tX = UserPos.x + x
+tY = UserPos.y + y
 
 If Not (tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder) Then
-    AddtoUserPos.X = X
-    UserPos.X = tX
-    AddtoUserPos.Y = Y
-    UserPos.Y = tY
+    AddtoUserPos.x = x
+    UserPos.x = tX
+    AddtoUserPos.y = y
+    UserPos.y = tY
     UserMoving = 1
 
-    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
 Exit Sub
 Stop
     '[CODE 001]:MatuX'
@@ -646,7 +646,7 @@ Function NextOpenChar()
 Dim loopc As Integer
 
 loopc = 1
-Do While CharList(loopc).Active
+Do While CharList(loopc).active
     loopc = loopc + 1
 Loop
 
@@ -661,8 +661,8 @@ End Function
 Sub SwitchMap(Map As Integer, X_Pos As Integer, Y_Pos As Integer)
 
 Dim loopc As Integer
-Dim Y As Integer
-Dim X As Integer
+Dim y As Integer
+Dim x As Integer
 Dim tempint As Integer
 Dim mapName As String
 
@@ -682,9 +682,9 @@ frmMain.RecTxt.Refresh
 'En lugar de limpiar 10.000, solo limpiamos hasta el ultimo personaje conocido
 If LastChar > 0 Then
     For loopc = 1 To LastChar
-        If CharList(loopc).Active Then
+        If CharList(loopc).active Then
             'Limpieza directa de memoria sin llamadas a subrutinas pesadas
-            CharList(loopc).Active = 0
+            CharList(loopc).active = 0
             CharList(loopc).nombre = ""
         End If
     Next loopc
@@ -713,23 +713,23 @@ Get #1, , Buffer
 Close #1
 
 idx = 1
-For Y = YMinMapSize To YMaxMapSize
-    For X = XMinMapSize To XMaxMapSize
-        MapData(X, Y).Blocked = Buffer(idx).bloqueado
+For y = YMinMapSize To YMaxMapSize
+    For x = XMinMapSize To XMaxMapSize
+        MapData(x, y).Blocked = Buffer(idx).bloqueado
         For loopc = 1 To 4
-            MapData(X, Y).Graphic(loopc).GrhIndex = Buffer(idx).grafs(loopc)
-            MapData(X, Y).Graphic(loopc).Started = 0
-            MapData(X, Y).Graphic(loopc).FrameCounter = 1
+            MapData(x, y).Graphic(loopc).grhindex = Buffer(idx).grafs(loopc)
+            MapData(x, y).Graphic(loopc).Started = 0
+            MapData(x, y).Graphic(loopc).FrameCounter = 1
         Next loopc
-        MapData(X, Y).Trigger = Buffer(idx).Trigger
+        MapData(x, y).Trigger = Buffer(idx).Trigger
         
         'Reset de referencias
-        MapData(X, Y).CharIndex = 0
-        MapData(X, Y).ObjGrh.GrhIndex = 0
+        MapData(x, y).CharIndex = 0
+        MapData(x, y).ObjGrh.grhindex = 0
         
         idx = idx + 1
-    Next X
-Next Y
+    Next x
+Next y
 
 CurMap = Map
 MapInfo.Name = ""
@@ -753,11 +753,11 @@ LastPos = 0
 FieldNum = 0
 
 For i = 1 To Len(Text)
-    CurChar = Mid(Text, i, 1)
+    CurChar = mid(Text, i, 1)
     If CurChar = Seperator Then
         FieldNum = FieldNum + 1
         If FieldNum = Pos Then
-            ReadField = Mid(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
+            ReadField = mid(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
             Exit Function
         End If
         LastPos = i
@@ -766,7 +766,7 @@ Next i
 FieldNum = FieldNum + 1
 
 If FieldNum = Pos Then
-    ReadField = Mid(Text, LastPos + 1)
+    ReadField = mid(Text, LastPos + 1)
 End If
 
 
@@ -831,7 +831,7 @@ For i = 1 To Cont
     cur$ = ReadField(i, RawServersList, Asc(";"))
     ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
     ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
-    ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
+    ServersLst(i).Desc = ReadField(4, cur$, Asc(":"))
     ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
 Next i
 
@@ -932,7 +932,7 @@ If FileExist(App.Path & "\init\ao.dat", vbNormal) Then
     Close #53
 
     Musica = IIf(RenderMod.bNoMusic = 1, 1, 0)
-    Fx = IIf(RenderMod.bNoSound = 1, 1, 0)
+    fX = IIf(RenderMod.bNoSound = 1, 1, 0)
     
     'RenderMod.iImageSize = 0
     Select Case RenderMod.iImageSize
@@ -957,12 +957,13 @@ frmCargando.Refresh
 
 ' [CODE] - Inicializacion Motor DirectX 8 AoSpain
 engine.Engine_Init
+Call CargarDatos
 engine.setup_ambient
 
 UserParalizado = False
 
 frmConnect.version = "v" & App.Major & ".0" '& App.Minor & " Beta: 1"
-AddtoRichTextBox frmCargando.status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.Status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
 
 'frmMain.Inet1.URL = "http://www.caratula2000.net/power/poweraoiplist3.txt"
 'RawServersList = frmMain.Inet1.OpenURL
@@ -985,8 +986,8 @@ Call InitServersList(RawServersList)
 'IPdelServidor =
 'PuertoDelServidor = 7666
 
-AddtoRichTextBox frmCargando.status, "Ok", , , , 1
-AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.Status, "Ok", , , , 1
+AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
 
 ReDim Ciudades(1 To NUMCIUDADES) As String
 Ciudades(1) = "Ullathorpe"
@@ -1070,12 +1071,12 @@ AtributosNames(5) = "Constitucion"
 frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
 frmOldPersonaje.PasswordTxt.Text = ""
 
-AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 IniciarObjetosDirectX
 
-AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -1093,7 +1094,7 @@ ENDC = Chr(1)
 
     End If
 'Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extras.", 2, 51, 223, 1, 1)
-Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
 
 
 Call CargarAnimsExtra
@@ -1104,7 +1105,7 @@ Call CargarAnimArmas
 Call CargarAnimEscudos
 
 
-AddtoRichTextBox frmCargando.status, "                    !Bienvenido a Argentum Online!", , , , 1
+AddtoRichTextBox frmCargando.Status, "                    !Bienvenido a Argentum Online!", , , , 1
 
 
 Unload frmCargando
@@ -1137,12 +1138,12 @@ frmConnect.Visible = True
     MainViewRect.Left = MainViewLeft + 32 * RenderMod.iImageSize
     MainViewRect.Top = MainViewTop + 32 * RenderMod.iImageSize
     MainViewRect.Right = (MainViewRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
-    MainViewRect.Bottom = (MainViewRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
+    MainViewRect.bottom = (MainViewRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
 
     MainDestRect.Left = ((TilePixelWidth * TileBufferSize) - TilePixelWidth) + 32 * RenderMod.iImageSize
     MainDestRect.Top = ((TilePixelHeight * TileBufferSize) - TilePixelHeight) + 32 * RenderMod.iImageSize
     MainDestRect.Right = (MainDestRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
-    MainDestRect.Bottom = (MainDestRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
+    MainDestRect.bottom = (MainDestRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
 
     Dim OffsetCounterX As Integer
     Dim OffsetCounterY As Integer
@@ -1186,24 +1187,24 @@ Do While prgRun
                 End If
             'Call ShowNextFrame(frmMain.Top, frmMain.Left)
             '****** Move screen Left, Right, Up and Down if needed ******
-            If AddtoUserPos.X <> 0 Then
-                OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.X)))
-                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
+            If AddtoUserPos.x <> 0 Then
+                OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.x)))
+                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.x) Then
                     OffsetCounterX = 0
-                    AddtoUserPos.X = 0
+                    AddtoUserPos.x = 0
                     UserMoving = 0
                 End If
-            ElseIf AddtoUserPos.Y <> 0 Then
-                OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.Y))
-                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
+            ElseIf AddtoUserPos.y <> 0 Then
+                OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.y))
+                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.y) Then
                     OffsetCounterY = 0
-                    AddtoUserPos.Y = 0
+                    AddtoUserPos.y = 0
                     UserMoving = 0
                 End If
             End If
     
             '****** Update screen ******
-            Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+            Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
             'Call DoNightFX
             'Call DoLightFogata(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
             '[CODE 000]:MatuX
@@ -1269,7 +1270,7 @@ Loop
 
 EngineRun = False
 frmCargando.Show
-AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
 LiberarObjetosDX
 
 
@@ -1295,7 +1296,7 @@ Call EscribirGameIni(Config_Inicio)
 End
 
 ManejadorErrores:
-    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.Source
+    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.source
     End
     
 End Sub
@@ -1357,7 +1358,7 @@ End Function
             '4to test: Recorre todos los caracteres y los valada
             For lX = 0 To Len(sString) - 1 'el ultimo no porque ya lo probamos
                 If Not (lX = (lPos - 1)) Then
-                    iAsc = Asc(Mid(sString, (lX + 1), 1))
+                    iAsc = Asc(mid(sString, (lX + 1), 1))
                     If Not (iAsc = 46 And lX > (lPos - 1)) Then _
                         If Not CMSValidateChar_(iAsc) Then _
                             Exit Function
@@ -1381,11 +1382,11 @@ CMSValidateChar_ = IIf( _
 End Function
 
 
-Function HayAgua(X As Integer, Y As Integer) As Boolean
+Function HayAgua(x As Integer, y As Integer) As Boolean
 
-If MapData(X, Y).Graphic(1).GrhIndex >= 1505 And _
-   MapData(X, Y).Graphic(1).GrhIndex <= 1520 And _
-   MapData(X, Y).Graphic(2).GrhIndex = 0 Then
+If MapData(x, y).Graphic(1).grhindex >= 1505 And _
+   MapData(x, y).Graphic(1).grhindex <= 1520 And _
+   MapData(x, y).Graphic(2).grhindex = 0 Then
             HayAgua = True
 Else
             HayAgua = False

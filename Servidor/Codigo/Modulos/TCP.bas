@@ -1913,7 +1913,8 @@ If UserList(UserIndex).Flags.UserLogged Then UserList(UserIndex).Counters.IdleCo
                 tRespuesta = "Sin definir"
 
                 Call CreateAccount(NCuenta, Passw, Mail, tPregunta, tRespuesta, UserIndex)
-                Exit Sub            Case "TIRDAD"
+                Exit Sub
+            Case "TIRDAD"
                 'Case TIRDAD handled elsewhere if needed, but keeping it empty here as requested by context
         End Select
     End If
