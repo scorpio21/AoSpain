@@ -38,13 +38,14 @@ Se ha verificado que las funciones de renderizado (`Device_Box_Textured_Render`,
 
 ### Fase 1: Renderizado Híbrido (Actual)
 - [x] Inicialización del Engine.
-- [ ] Cargar texturas `.bmp` / `.png` usando `clsSurfaceManager`.
-- [ ] Lograr que `Draw_Grh` dibuje una imagen estática en pantalla (prueba de concepto).
+- [x] Cargar texturas `.png` usando `clsSurfaceManager`.
+- [x] Migración de `RenderScreen` en `TileEngine.bas` a DX8 (Suelos, Objetos y Personajes).
+- [ ] Lograr estabilidad visual total en el mapa.
 
 ### Fase 2: Sustitución de TileEngine
-- [ ] Reemplazar las llamadas a `BackBufferSurface.BltFast` en `TileEngine.bas` por llamadas a `engine.Render`.
-- [ ] Migrar el renderizado de capas (suelo, objetos, personajes, techos).
-- [ ] Eliminar dependencias de `DirectDraw7` (`DirectX7` se mantendrá para DirectSound/DirectInput por ahora).
+- [x] Reemplazar las llamadas a `BackBufferSurface.BltFast` en `TileEngine.bas` por llamadas a `engine.Draw_Grh`.
+- [ ] Migrar el renderizado de diálogos y nombres a DX8.
+- [ ] Eliminar dependencias de `DirectDraw7` (Limpieza de `DrawBackBufferSurface`).
 
 ### Fase 3: Efectos Visuales
 - [ ] Implementar sistema de luces dinámicas (antorchas, hechizos).
