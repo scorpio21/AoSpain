@@ -44,13 +44,13 @@ Se ha verificado que las funciones de renderizado (`Device_Box_Textured_Render`,
 
 ### Fase 2: Sustitución de TileEngine
 - [x] Reemplazar las llamadas a `BackBufferSurface.BltFast` en `TileEngine.bas` por llamadas a `engine.Draw_Grh`.
-- [ ] Migrar el renderizado de diálogos y nombres a DX8.
+- [x] Migrar el renderizado de diálogos y nombres a DX8 (`cDialogos.cls` usando `engine.Text_Render`).
 - [ ] Eliminar dependencias de `DirectDraw7` (Limpieza de `DrawBackBufferSurface`).
 
-### Fase 3: Efectos Visuales
+### Fase 3: Renderizado de Interfaz (GUI)
+- [ ] Migrar el renderizado del inventario a DX8 (`Modulo_DibujarInventario.bas`).
+- [ ] Migrar el renderizado de hechizos.
 - [ ] Implementar sistema de luces dinámicas (antorchas, hechizos).
-- [ ] Activar sistema de partículas (lluvia, meditaciones).
-- [ ] Efectos de mezcla (Alpha Blending) para transparencias suaves.
 
 ### Fase 4: Limpieza
 - [ ] Eliminar código muerto de DX7 (`DX_InIt.bas`, funciones GDI antiguas).
