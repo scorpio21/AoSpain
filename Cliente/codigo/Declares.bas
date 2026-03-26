@@ -78,7 +78,7 @@ Public RawServersList As String
 Public Type tServerInfo
     Ip As String
     Puerto As Integer
-    desc As String
+    Desc As String
     PassRecPort As Integer
 End Type
 
@@ -133,6 +133,131 @@ Public Enum E_Heading
     WEST = 4
 End Enum
 
+'Posicion en un mapa
+Public Type Position
+    x As Long
+    y As Long
+End Type
+
+'Posicion en el Mundo
+Public Type WorldPos
+    map As Integer
+    x As Integer
+    y As Integer
+End Type
+
+'Contiene info acerca de donde se puede encontrar un grh tamaño y animacion
+Public Type GrhData
+    sX As Integer
+    sY As Integer
+    
+    FileNum As Long
+    
+    pixelWidth As Integer
+    pixelHeight As Integer
+    
+    TileWidth As Single
+    TileHeight As Single
+    
+    NumFrames As Integer
+    Frames() As Long
+    
+    Speed As Single
+End Type
+
+'apunta a una estructura grhdata y mantiene la animacion
+Public Type Grh
+    grhindex As Long
+    FrameCounter As Single
+    Speed As Single
+    Started As Byte
+    Loops As Integer
+End Type
+
+'Lista de cuerpos
+Public Type BodyData
+    Walk(E_Heading.NORTH To E_Heading.WEST) As Grh
+    HeadOffset As Position
+End Type
+
+'Lista de cabezas
+Public Type HeadData
+    head(E_Heading.NORTH To E_Heading.WEST) As Grh
+End Type
+
+'Lista de las animaciones de las armas
+Public Type WeaponAnimData
+    WeaponWalk(E_Heading.NORTH To E_Heading.WEST) As Grh
+End Type
+
+'Lista de las animaciones de los escudos
+Public Type ShieldAnimData
+    ShieldWalk(E_Heading.NORTH To E_Heading.WEST) As Grh
+End Type
+
+'Apariencia del personaje
+Public Type Char
+    active As Byte
+    Heading As E_Heading
+    Pos As Position
+
+    iHead As Long
+    iBody As Long
+    body As BodyData
+    head As HeadData
+    Casco As HeadData
+    Arma As WeaponAnimData
+    Escudo As ShieldAnimData
+    UsandoArma As Boolean
+
+    fX As Grh
+    FxIndex As Long
+
+    Criminal As Byte
+
+    Nombre As String
+
+    scrollDirectionX As Integer
+    scrollDirectionY As Integer
+
+    Moving As Byte
+    MoveOffsetX As Single
+    MoveOffsetY As Single
+
+    pie As Boolean
+    muertO As Boolean
+    invisible As Boolean
+    priv As Byte
+End Type
+
+'Info de un objeto
+Public Type Obj
+    OBJIndex As Long
+    Amount As Integer
+End Type
+
+'Tipo de las celdas del mapa
+Public Type MapBlock
+    Graphic(1 To 4) As Grh
+    CharIndex As Long
+    ObjGrh As Grh
+
+    light_value(3) As Long
+
+    luz As Long
+    color(3) As Long
+
+    particle_group As Integer
+
+
+    NPCIndex As Long
+    OBJInfo As Obj
+    TileExit As WorldPos
+    Blocked As Byte
+
+    Trigger As Long
+End Type
+
 Public Dialogos As New cDialogos
 Public SurfaceDB As New clsSurfaceManDynDX8
 Public Audio As New clsAudio
@@ -153,11 +278,6 @@ Public Const LoopAdEternum = 999
 
 Public Const NUMCIUDADES = 3
 
-'Direcciones
-Public Const NORTH = 1
-Public Const EAST = 2
-Public Const SOUTH = 3
-Public Const WEST = 4
 
 'Objetos
 Public Const MAX_INVENTORY_OBJS = 10000
@@ -205,7 +325,7 @@ Public Const FundirMetal = 88
 Type Inventory
     OBJIndex As Integer
     Name As String
-    GrhIndex As Long
+    grhindex As Long
     '[Alejo]: tipo de datos ahora es Long
     Amount As Long
     '[/Alejo]
@@ -220,7 +340,7 @@ End Type
 Type NpCinV
     OBJIndex As Integer
     Name As String
-    GrhIndex As Long
+    grhindex As Long
     Amount As Integer
     Valor As Long
     ObjType As Integer
@@ -315,7 +435,7 @@ Public Ciudades() As String
 Public CityDesc() As String
 
 Public Musica As Byte
-Public Fx As Byte
+Public fX As Byte
 
 Public SkillPoints As Integer
 Public Alocados As Integer
@@ -359,14 +479,14 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 'Lista de cabezas
 Public Type tIndiceCabeza
-    Head(1 To 4) As Long
+    head(1 To 4) As Long
 End Type
 
 Public Miscabezas() As tIndiceCabeza
 Public MisCascos() As tIndiceCabeza
 
 Public Type tIndiceCuerpo
-    Body(1 To 4) As Long
+    body(1 To 4) As Long
     HeadOffsetX As Integer
     HeadOffsetY As Integer
 End Type
