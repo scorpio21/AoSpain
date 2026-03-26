@@ -51,33 +51,9 @@ Public Type WorldPos
     y As Integer
 End Type
 
-'Contiene info acerca de donde se puede encontrar un grh tama�o y animacion
-Public Type GrhData
-    sX As Integer
-    sY As Integer
-    
-    FileNum As Long
-    
-    pixelWidth As Integer
-    pixelHeight As Integer
-    
-    TileWidth As Single
-    TileHeight As Single
-    
-    NumFrames As Integer
-    Frames() As Long
-    
-    Speed As Single
-End Type
+' GrhData movido a Declares.bas
 
-'apunta a una estructura grhdata y mantiene la animacion
-Public Type Grh
-    grhindex As Long
-    FrameCounter As Single
-    Speed As Single
-    Started As Byte
-    Loops As Integer
-End Type
+' Grh movido a Declares.bas
 
 'Lista de cuerpos
 Public Type BodyData
