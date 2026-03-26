@@ -1073,7 +1073,8 @@ frmOldPersonaje.PasswordTxt.Text = ""
 
 AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
-IniciarObjetosDirectX
+' [CODE] - AoSpain DX8: Eliminada inicialización antigua de DX7
+' IniciarObjetosDirectX
 
 AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
 AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
