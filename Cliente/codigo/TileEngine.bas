@@ -662,11 +662,11 @@ Function GetBitmapDimensions(ByVal BmpFile As String, ByRef bmWidth As Long, ByR
     bmHeight = BINFOHeader.biHeight
 End Function
 
-Sub DrawGrhtoHdc(ByVal hdc As Long, ByVal grhindex As Integer, ByRef SourceRect As RECT, ByRef destRect As RECT)
+Sub DrawGrhtoHdc(ByVal hWnd As Long, ByVal hdc As Long, ByVal grhindex As Long, ByRef SourceRect As RECT, ByRef destRect As RECT)
 '*****************************************************************
 'Draws a Grh's portion to the given area of any Device Context
 '*****************************************************************
-    'Call SurfaceDB.Surface(GrhData(grhindex).FileNum).BltToDC(hdc, SourceRect, destRect)
+    'Call engine.Draw_Grh_Hdc(hdc, grhindex, SourceRect, destRect)
 End Sub
 
 
