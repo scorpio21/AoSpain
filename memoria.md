@@ -1,25 +1,26 @@
 # Memoria de Sesión - 25 de Marzo 2026
 
 ## 📌 Resumen de hoy
-Finalización de la infraestructura base para DirectX 8. El proyecto AoSpain ahora cuenta con un motor gráfico de 32 bits real, capaz de gestionar texturas PNG y renderizar mediante vértices en un control dedicado. Se ha verificado la carga robusta de recursos y la inicialización centralizada.
+Día de transición técnica profunda. Se ha realizado la migración estructural del motor gráfico de DirectX 7 (HDC) a DirectX 8 Puro (Vértices/Texturas). Se ha priorizado la arquitectura de 32 bits y la compatibilidad con archivos PNG.
 
-## 🛠️ Detalles Técnicos de la Sesión
+## 🛠️ Estado Actual y Bloqueos
+- **Estado de Compilación:** ⚠️ **Pendiente**. A pesar de eliminar los módulos principales de DX7, persisten errores de tipos no definidos o variables huérfanas en el código que deben ser depuradas una a una.
+- **Motor Gráfico:** Estructuralmente integrado (`clsDX8Engine`, `TileEngine.bas` DX8).
+- **Inventario:** Nueva infraestructura `clsGraphicalInventory` lista, pero requiere sincronización con el protocolo de red.
 
-### Corrección de Compilación (VBP)
-- **Registro de Clases:** Se actualizaron `Client.vbp` para incluir `clsSurfaceManDynDX8.cls` y `clsAudio.cls`, solucionando los errores de "tipo no definido" en las declaraciones globales de `SurfaceDB` y `Audio`.
+## ✅ Avances Realizados
+1. **Infraestructura DX8:** Integración de motor, gestor de superficies dinámico y audio.
+2. **Centralización de Datos:** Se movieron todos los `Types` y `Enums` a `Declares.bas` para eliminar dependencias circulares.
+3. **Limpieza de VBP:** Eliminados los módulos obsoletos de DX7 (`DX_InIt`, `MODOS_DE_VIDEO`, etc.).
+4. **Compatibilidad PNG:** El motor ahora busca y carga texturas `.png` con canal alpha.
 
-### Refactorización Final del Motor
-- **Consistencia de Tipos:** Se ha asegurado que el gestor de texturas (`clsSurfaceManDynDX8`) use tipos `Long` para los nombres de archivos y conteo de superficies, eliminando cualquier limitación de 16 bits.
-- **Estandarización:** Se renombró el método de arranque del gestor de superficies a `.Initialize` para seguir la convención del proyecto y se verificaron todas las llamadas en el motor principal.
-- **Compatibilidad PNG:** Confirmada la carga de gráficos `.png` con soporte de canal alpha para el renderizado moderno.
+## 🎯 Próximos Pasos (Urgente)
+1. **Depuración de Compilación:** Ejecutar "Compilar" y resolver quirúrgicamente cada error de "Variable no definida" o "Tipo no definido" que surja por la limpieza de DX7.
+2. **Sincronización TCP:** Actualizar `TCP.bas` para que use la instancia `Inventario`.
+3. **Validación de Sub Main:** Asegurar que el flujo de inicialización no rompa la carga de formularios.
 
-### Integración en el Bucle de Arranque
-- **Sub Main:** El punto de entrada del programa ahora orquesta la inicialización del motor 3D y la carga masiva de datos (`CargarDatos`) de forma secuencial y segura.
-
-## 🎯 Hoja de Ruta para la Próxima Sesión
-
-1. **Sincronización del Bucle:** Activar la llamada a `engine.Start` desde el sistema de cuentas para entrar formalmente al mundo en modo DX8.
-2. **Pruebas de Campo:** Renderizado del mapa inicial y validación de la estabilidad de FPS en el nuevo motor.
+## 📝 Nota Estratégica
+Se ha decidido seguir con la base actual (compatible con el protocolo de AoSpain) e importar funciones de "lujo" (partículas, clima) desde el motor de `ao-cliente` una vez que la base sea estable.
 
 ---
-*Sesión finalizada con éxito. El motor DirectX 8 está totalmente integrado y documentado.*
+*Sesión pausada. El objetivo principal de la próxima vez es lograr la primera compilación exitosa sin errores.*

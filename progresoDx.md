@@ -5,35 +5,33 @@ Este documento registra el avance en la integración del motor gráfico DirectX 
 ## 📅 Hitos Alcanzados (25 de Marzo 2026)
 
 ### 1. Sustitución del Motor Gráfico (DX7 -> DX8)
-Se ha realizado el cambio estructural del motor de renderizado, pasando de un sistema basado en `BitBlt` (HDC) a uno de vértices y texturas real de DirectX 8.
+- **Motor DX8 Real**: Integración de `clsDX8Engine.cls` y `TileEngine.bas` (DX8) con soporte completo de 32 bits (`Long`).
+- **Limpieza de Dependencias**: Se eliminaron los módulos obsoletos de DirectX 7 (`DX_InIt.bas`, `MODOS_DE_VIDEO.bas`, `Modulo_DibujarInventario.bas`, `Mod_Lighting.bas`) del proyecto para evitar conflictos de tipos como `DDSURFACEDESC2`.
 
-*   **`TileEngine.bas`**: Sustituido por la versión de DX8 adaptada para 32 bits.
-    *   *Soporte 32-bit:* Estructuras `Grh`, `MapBlock`, `Char`, `Obj` y `GrhData` ahora usan `Long`.
-*   **`clsDX8Engine.cls`**: Vinculado al nuevo control `renderer` en `frmMain.frm`.
-*   **`clsSurfaceManDynDX8.cls`**: Nuevo gestor de texturas dinámico optimizado para DX8 y PNG.
+### 2. Estabilización de la Compilación
+- **Centralización de Tipos**: Se eliminaron las **dependencias circulares** moviendo todas las estructuras globales (`Grh`, `MapBlock`, `Char`, `Position`, `E_Heading`) a `Declares.bas`.
+- **Registro de Clases**: Se registraron oficialmente en `Client.vbp` las clases `clsSurfaceManDynDX8`, `clsAudio` y la nueva `clsGraphicalInventory`.
 
-### 2. Compatibilidad PNG y 32-bit
-*   **Carga de Gráficos**: Implementada `LoadGrhData` en `modDX8Fifo.bas` con soporte para índices ilimitados y formato binario original.
-*   **Texturas PNG**: El motor carga exclusivamente archivos `.png`, aprovechando la transparencia nativa de DirectX 8.
-*   **Refactorización de Métodos**: Se estandarizó el método de inicialización del gestor de superficies a `.Initialize`.
+### 3. Inventario Gráfico DX8
+- **Nueva Clase**: Implementación de `clsGraphicalInventory.cls` para renderizar los items del inventario usando el motor de vértices y texturas de DX8.
+- **Integración en Bucle**: Activada la llamada a `Inventario.DrawInventory` en el motor principal, sustituyendo al antiguo sistema basado en HDC.
 
-### 3. Modernización de la Interfaz
-*   **Control Renderer**: Insertado `VB.PictureBox` (544x416 px) en `frmMain.frm`.
-*   **Inicialización**: Centralizada en `Sub Main` (General.bas) llamando a `engine.Engine_Init` y `CargarDatos`.
+### 4. Compatibilidad PNG y 32-bit
+- **Texturas PNG**: El gestor de superficies ahora carga exclusivamente archivos `.png` con canal alpha.
+- **Carga de Datos**: Corregida la función `LoadGrhData` para soportar índices de 32 bits y el formato binario original de AO.
 
 ---
 
 ## 🚀 Próximos Pasos (Hoja de Ruta DX8)
 
-### Fase 3: Bucle de Juego y Renderizado (Actual)
-- [x] Inicialización del Engine y Carga de Datos.
-- [x] Compatibilidad total con texturas `.png`.
-- [ ] **Bucle de Renderizado**: Activar `engine.Start` tras la selección de personaje.
-- [ ] **Validación de Mapa**: Renderizar el primer mapa base en DX8.
+### Fase 3: Integración de Red y HUD (Siguiente)
+- [ ] **Sincronización TCP**: Actualizar `TCP.bas` para que los paquetes de items (`CSI`, `NPCI`) utilicen `Inventario.SetItem`.
+- [ ] **Bucle de Juego**: Validar la transición fluida desde el panel de cuentas al mapa.
+- [ ] **Primer Mapa DX8**: Renderizado masivo de tiles y personajes en el mundo.
 
 ### Fase 4: Renderizado de Entidades
-- [ ] Dibujar personajes y objetos en el nuevo sistema de vértices.
-- [ ] Migrar sistema de diálogos flotantes.
+- [ ] Dibujar diálogos y nombres flotantes con el sistema de fuentes DX8.
+- [ ] Implementar efectos de clima (lluvia) y luces dinámicas nativas.
 
 ---
 *Documento mantenido automáticamente por Gemini CLI.*
