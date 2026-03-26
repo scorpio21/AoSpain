@@ -6,7 +6,7 @@ Finalización de la infraestructura base para DirectX 8. El proyecto AoSpain aho
 ## 🛠️ Detalles Técnicos de la Sesión
 
 ### Corrección de Compilación (VBP)
-- **Registro de Clase:** Se actualizó `Client.vbp` para incluir formalmente `clsSurfaceManDynDX8.cls`, solucionando el error de "tipo no definido" en la declaración global de `SurfaceDB`.
+- **Registro de Clases:** Se actualizaron `Client.vbp` para incluir `clsSurfaceManDynDX8.cls` y `clsAudio.cls`, solucionando los errores de "tipo no definido" en las declaraciones globales de `SurfaceDB` y `Audio`.
 
 ### Refactorización Final del Motor
 - **Consistencia de Tipos:** Se ha asegurado que el gestor de texturas (`clsSurfaceManDynDX8`) use tipos `Long` para los nombres de archivos y conteo de superficies, eliminando cualquier limitación de 16 bits.

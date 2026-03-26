@@ -57,6 +57,6 @@ frmCuent = 78, 78, 818, 512, , 208, 208, 855, 628, C
 DrawPJenPicture = 26, 26, 834, 516, 
 frmRecuperar = 208, 208, 1016, 698, , 130, 130, 777, 550, C
 clsDX8Engine = 78, 78, 824, 444, 
-clsSurfaceManager = 0, 0, 0, 0, C
+clsSurfaceManDynDX8 = 0, 0, 0, 0, C
 modDX8Requires = 130, 130, 875, 496, 
 modDX8Fifo = 104, 104, 849, 470, 
