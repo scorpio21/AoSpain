@@ -62,6 +62,7 @@ Form=codigo\Cuentas\frmRecuperar.frm
 Class=clsDX8Engine; CODIGO\clsDX8Engine.cls
 Class=clsSurfaceManDynDX8; CODIGO\clsSurfaceManDynDX8.cls
 Class=clsAudio; CODIGO\clsAudio.cls
+Class=clsGraphicalInventory; CODIGO\clsGraphicalInventory.cls
 Module=modDX8Requires; CODIGO\modDX8Requires.bas
 Module=modDX8Fifo; CODIGO\modDX8Fifo.bas
 IconForm="frmMain"

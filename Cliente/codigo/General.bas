@@ -1213,7 +1213,7 @@ Do While prgRun
                 If IScombate Then Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
                 If Dialogos.CantidadDialogos <> 0 Then Call Dialogos.MostrarTexto
                 If Cartel Then Call DibujarCartel
-                If bInvMod Then DibujarInv
+                If bInvMod Then Call Inventario.DrawInventory
     
                 ' [CODE] - AoSpain DX8: Presentación automática vía engine.Device_Present
                 ' Call DrawBackBufferSurface
