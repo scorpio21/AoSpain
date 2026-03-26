@@ -1088,20 +1088,18 @@ ENDC = Chr(1)
 
 'Call InitTileEngine(frmMain.hwnd, 152, 7, 32, 32, 13, 17, 9)
                                   
- If bNoResChange = False Then 'GS
-        Call InitTileEngine(frmMain.hwnd, frmMain.MainViewShp.Top + 23, frmMain.MainViewShp.Left + 3, 32, 32, Round(frmMain.MainViewShp.Height / 32), Round(frmMain.MainViewShp.Width / 32), 9) 'GS
-    Else
-        Call InitTileEngine(frmMain.hwnd, frmMain.MainViewShp.Top + 1, frmMain.MainViewShp.Left + 1, 32, 32, 13, 17, 9)
-
-    End If
+' If bNoResChange = False Then 'GS
+'        Call InitTileEngine(frmMain.hwnd, frmMain.MainViewShp.Top + 23, frmMain.MainViewShp.Left + 3, 32, 32, Round(frmMain.MainViewShp.Height / 32), Round(frmMain.MainViewShp.Width / 32), 9) 'GS
+'    Else
+'        Call InitTileEngine(frmMain.hwnd, frmMain.MainViewShp.Top + 1, frmMain.MainViewShp.Left + 1, 32, 32, 13, 17, 9)
+'
+'    End If
 'Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extras.", 2, 51, 223, 1, 1)
 Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
 
 
 Call CargarAnimsExtra
-Call CargarTips
 UserMap = 1
-Call CargarArrayLluvia
 Call CargarAnimArmas
 Call CargarAnimEscudos
 
@@ -1152,14 +1150,10 @@ frmConnect.Visible = True
 
 
 
-PrimeraVez = True
 prgRun = True
 pausa = False
 bInvMod = True
-lFrameLimiter = DirectX.TickCount
-'[CODE 001]:MatuX'
-    lFrameModLimiter = 60
-'[END]'
+
 Do While prgRun
 
     If RequestPosTimer > 0 Then
@@ -1172,68 +1166,12 @@ Do While prgRun
 
     Call RefreshAllChars
 
-    '[CODE 001]:MatuX
-    '
-    '   EngineRun
     If EngineRun Then
-        '[DO]:Dibuja el siguiente frame'
-        '[CODE 000]:MatuX'
-        'If frmMain.WindowState <> 1 And CurMap > 0 And EngineRun Then
-        If frmMain.WindowState <> 1 Then
-        '[END]'
-        
-        
-                 If bNoResChange = False Then 'GS+~
-                    Call ShowNextFrame(frmMain.Top, frmMain.Left)   'GS+~
-                End If
-            'Call ShowNextFrame(frmMain.Top, frmMain.Left)
-            '****** Move screen Left, Right, Up and Down if needed ******
-            If AddtoUserPos.x <> 0 Then
-                OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.x)))
-                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.x) Then
-                    OffsetCounterX = 0
-                    AddtoUserPos.x = 0
-                    UserMoving = 0
-                End If
-            ElseIf AddtoUserPos.y <> 0 Then
-                OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.y))
-                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.y) Then
-                    OffsetCounterY = 0
-                    AddtoUserPos.y = 0
-                    UserMoving = 0
-                End If
-            End If
-    
-            '****** Update screen ******
-            Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
-            'Call DoNightFX
-            'Call DoLightFogata(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
-            '[CODE 000]:MatuX
-                'Call MostrarFlags
-                If IScombate Then Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
-                If Dialogos.CantidadDialogos <> 0 Then Call Dialogos.MostrarTexto
-                If Cartel Then Call DibujarCartel
-                If bInvMod Then Call Inventario.DrawInventory
-    
-                ' [CODE] - AoSpain DX8: Presentación automática vía engine.Device_Present
-                ' Call DrawBackBufferSurface
-                
-                Call RenderSounds
-                
-                '[DO]:Inventario'
-                'Call DibujarInv(frmMain.picInv.hWnd, 0)
-                'If bInvMod Then DibujarInv  'lo mova arriba para
-                '                             que esta mas ordenadito
-                '[END]'
-    
-            '[END]'
-            
-            FramesPerSecCounter = FramesPerSecCounter + 1
+        If frmMain.WindowState <> vbMinimized Then
+            engine.Render
         End If
     End If
     
-    '[CODE 000]:MatuX'
-    'If ControlVelocidad(LastTime) Then
     If (GetTickCount - LastTime > 20) Then
         If Not pausa And frmMain.Visible And Not frmForo.Visible Then
             CheckKeys
@@ -1246,34 +1184,14 @@ Do While prgRun
             If Not Perf.IsPlaying(Seg, SegState) Then Play_Midi
         End If
     End If
-         'Musica = 0
-    'End If
-    '[END]'
-    
-    '[CODE 001]:MatuX
-    ' Frame Limiter
-        'FramesPerSec = FramesPerSec + 1
-        If DirectX.TickCount - lFrameTimer > 1000 Then
-            FramesPerSec = FramesPerSecCounter
-            If FPSFLAG Then frmMain.Caption = FramesPerSec
-            FramesPerSecCounter = 0
-            lFrameTimer = DirectX.TickCount
-        End If
-        
-        'While DirectX.TickCount - lFrameLimiter < lFrameModLimiter: Wend
-        
-        While DirectX.TickCount - lFrameLimiter < 55: Wend
-        lFrameLimiter = DirectX.TickCount
-    
-    '[END]'
+
     DoEvents
 Loop
 
 EngineRun = False
 frmCargando.Show
 AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
-LiberarObjetosDX
-
+engine.Engine_Deinit
 
 If bNoResChange = False Then
         Dim typDevM As typDevMODE

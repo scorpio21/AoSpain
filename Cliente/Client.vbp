@@ -32,7 +32,6 @@ Form=CODIGO\frmPasswd.frm
 Form=CODIGO\frmEntrenador.frm
 Form=CODIGO\frmSpawnList.frm
 Module=GameIni; codigo\GameIni.bas
-Module=Mod_Lighting; codigo\Mod_Lighting.bas
 Form=codigo\frmHerrero.frm
 Module=Mod_Wav; codigo\Mod_Wav.bas
 Form=codigo\frmCarp.frm

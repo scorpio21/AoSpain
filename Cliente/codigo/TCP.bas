@@ -802,8 +802,6 @@ Sub HandleData(ByVal Rdata As String)
     Select Case Left(sData, 4)
         Case "CEGU"
             UserCiego = True
-            Dim r As RECT
-            BackBufferSurface.BltColorFill r, 0
             Exit Sub
         Case "DUMB"
             UserEstupido = True

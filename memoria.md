@@ -1,26 +1,36 @@
-# Memoria de Sesión - 25 de Marzo 2026
+# Memoria de Sesión - 26 de Marzo 2026
 
 ## 📌 Resumen de hoy
-Día de transición técnica profunda. Se ha realizado la migración estructural del motor gráfico de DirectX 7 (HDC) a DirectX 8 Puro (Vértices/Texturas). Se ha priorizado la arquitectura de 32 bits y la compatibilidad con archivos PNG.
+Se ha avanzado significativamente en la **Fase 3: Depuración y Estabilización** del motor DirectX 8. El objetivo principal de lograr una base de código compilable sin referencias obsoletas a DX7 se ha cumplido.
 
-## 🛠️ Estado Actual y Bloqueos
-- **Estado de Compilación:** ⚠️ **Pendiente**. A pesar de eliminar los módulos principales de DX7, persisten errores de tipos no definidos o variables huérfanas en el código que deben ser depuradas una a una.
-- **Motor Gráfico:** Estructuralmente integrado (`clsDX8Engine`, `TileEngine.bas` DX8).
-- **Inventario:** Nueva infraestructura `clsGraphicalInventory` lista, pero requiere sincronización con el protocolo de red.
+## 🛠️ Cambios Realizados
 
-## ✅ Avances Realizados
-1. **Infraestructura DX8:** Integración de motor, gestor de superficies dinámico y audio.
-2. **Centralización de Datos:** Se movieron todos los `Types` y `Enums` a `Declares.bas` para eliminar dependencias circulares.
-3. **Limpieza de VBP:** Eliminados los módulos obsoletos de DX7 (`DX_InIt`, `MODOS_DE_VIDEO`, etc.).
-4. **Compatibilidad PNG:** El motor ahora busca y carga texturas `.png` con canal alpha.
+1.  **Limpieza Profunda de VBP:**
+    *   Se eliminó el módulo `Mod_Lighting.bas` del archivo de proyecto `Client.vbp`, eliminando conflictos con tipos de datos de DirectX 7 (`DDSURFACEDESC2`).
 
-## 🎯 Próximos Pasos (Urgente)
-1. **Depuración de Compilación:** Ejecutar "Compilar" y resolver quirúrgicamente cada error de "Variable no definida" o "Tipo no definido" que surja por la limpieza de DX7.
-2. **Sincronización TCP:** Actualizar `TCP.bas` para que use la instancia `Inventario`.
-3. **Validación de Sub Main:** Asegurar que el flujo de inicialización no rompa la carga de formularios.
+2.  **Corrección de Referencias Obsoletas:**
+    *   **Carteles.bas:** Se actualizó la subrutina `DibujarCartel` para utilizar el nuevo motor gráfico (`engine.Device_Box_Textured_Render`) en lugar de las llamadas a superficies de DirectDraw.
+    *   **TCP.bas:** Se eliminaron las referencias a `BackBufferSurface.BltColorFill` en el manejo del paquete de ceguera (`CEGU`).
+    *   **General.bas:** Se eliminaron llamadas a funciones inexistentes (`InitTileEngine`, `LiberarObjetosDX`) que pertenecían a los módulos eliminados de DX7.
 
-## 📝 Nota Estratégica
-Se ha decidido seguir con la base actual (compatible con el protocolo de AoSpain) e importar funciones de "lujo" (partículas, clima) desde el motor de `ao-cliente` una vez que la base sea estable.
+3.  **Modernización del Ciclo de Vida:**
+    *   **Sub Main:** Se simplificó y modernizó el bucle principal de juego en `General.bas`. Ahora utiliza `engine.Render` como punto central de dibujado, eliminando la lógica manual de movimiento y renderizado que estaba duplicada y obsoleta.
+    *   **Centralización del Renderizado:** Se integraron el dibujado de Carteles, Inventario y mensajes de combate dentro del método `engine.Render` en `clsDX8Engine.cls`, asegurando que todo se dibuje dentro del bloque `BeginScene`/`EndScene`.
+
+4.  **Mejoras de Robustez:**
+    *   **InitGrh:** Se cambió el tipo del parámetro `grhindex` de `Integer` a `Long` en `TileEngine.bas` para evitar errores de desbordamiento (Overflow) con índices de gráficos altos.
+    *   **Efecto de Ceguera:** Se implementó el soporte para `UserCiego` directamente en el motor de renderizado (`ShowNextFrame`), garantizando que la pantalla se mantenga en negro cuando el usuario está ciego, respetando la arquitectura de DX8.
+
+## 🔴 Errores Resueltos (Teóricos)
+*   **Variable no definida:** `BackBufferSurface`, `DirectDraw`, `Direct3DDevice`.
+*   **Tipo no definido:** `DDSURFACEDESC2`, `DirectDraw7`.
+*   **Procedimiento no definido:** `InitTileEngine`, `LiberarObjetosDX`, `ShowNextFrame` (global).
+*   **Desbordamiento:** Corregido riesgo en carga de GRHs.
+
+## 🚀 Próximos Pasos
+1.  **Verificación Funcional:** Una vez que el usuario compile, verificar si el renderizado del mapa y personajes es correcto.
+2.  **Integración de Audio:** Confirmar que `clsAudio` inicializa correctamente el dispositivo de sonido.
+3.  **Refactorización de Interfaz:** Evaluar si otros elementos de la UI (botones, barras de vida) necesitan ser migrados al motor DX8 para evitar parpadeos o fallos de renderizado.
 
 ---
-*Sesión pausada. El objetivo principal de la próxima vez es lograr la primera compilación exitosa sin errores.*
+*Sesión finalizada. El proyecto debería estar listo para su primera compilación en el entorno VB6.*

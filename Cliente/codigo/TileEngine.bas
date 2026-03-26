@@ -411,7 +411,7 @@ On Error Resume Next
     NumChars = NumChars - 1
 End Sub
 
-Public Sub InitGrh(ByRef Grh As Grh, ByVal grhindex As Integer, Optional ByVal Started As Byte = 2)
+Public Sub InitGrh(ByRef Grh As Grh, ByVal grhindex As Long, Optional ByVal Started As Byte = 2)
 '*****************************************************************
 'Sets up a grh. MUST be done before rendering
 '*****************************************************************

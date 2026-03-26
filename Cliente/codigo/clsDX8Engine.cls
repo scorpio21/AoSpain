@@ -671,6 +671,13 @@ End If
     
     Call Dialogos.Render
     Call DialogosClanes.Draw
+    
+    If Cartel Then Call DibujarCartel
+    If bInvMod Then Call Inventario.DrawInventory
+    If IScombate Then Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
+    
+    Call RenderSounds
+    
 D3DDevice.EndScene
 D3DDevice.Present ByVal 0, ByVal 0, 0, ByVal 0
 
@@ -684,6 +691,7 @@ End Sub
 
 
 Sub ShowNextFrame()
+    If UserCiego Then Exit Sub
     Static OffsetCounterX As Single
     Static OffsetCounterY As Single
         If UserMoving Then

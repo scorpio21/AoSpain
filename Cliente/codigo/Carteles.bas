@@ -1,10 +1,10 @@
 Attribute VB_Name = "Carteles"
 'Argentum Online 0.9.0.9
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Mï¿½rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matï¿½as Fernando Pequeï¿½o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@ Attribute VB_Name = "Carteles"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nï¿½mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Cï¿½digo Postal 1900
+'Pablo Ignacio Mï¿½rquez
 
 Option Explicit
 Const XPosCartel = 360
@@ -89,12 +89,19 @@ If Not Cartel Then Exit Sub
 Dim X As Integer, Y As Integer
 X = XPosCartel + 20
 Y = YPosCartel + 60
-Call DDrawTransGrhIndextoSurface(BackBufferSurface, textura, XPosCartel, YPosCartel, 0, 0)
+
+Dim rgb_list(3) As Long
+rgb_list(0) = base_light
+rgb_list(1) = base_light
+rgb_list(2) = base_light
+rgb_list(3) = base_light
+
+Call engine.Device_Box_Textured_Render(textura, XPosCartel, YPosCartel, GrhData(textura).pixelWidth, GrhData(textura).pixelHeight, rgb_list(), GrhData(textura).sX, GrhData(textura).sY, False)
 Dim j As Integer, desp As Integer
 
 For j = 0 To UBound(LeyendaFormateada)
 Dialogos.DrawText X, Y + desp, LeyendaFormateada(j), vbWhite
-  desp = desp + (frmMain.Font.Size) + 5
+  desp = desp + (frmMain.Font.size) + 5
 Next
 End Sub
 
