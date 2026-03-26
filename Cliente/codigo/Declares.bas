@@ -126,6 +126,13 @@ Public Const PrimerBodyBarco = 84
 Public Const UltimoBodyBarco = 87
 
 
+Public Enum E_Heading
+    NORTH = 1
+    EAST = 2
+    SOUTH = 3
+    WEST = 4
+End Enum
+
 Public Dialogos As New cDialogos
 Public SurfaceDB As New clsSurfaceManDynDX8
 Public Audio As New clsAudio
