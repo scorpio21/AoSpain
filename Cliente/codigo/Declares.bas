@@ -94,6 +94,8 @@ Public Site As String
 Public UserCiego As Boolean
 Public UserEstupido As Boolean
 
+Public LastTime As Long
+
 '[Alejo-21-5]
 Public Type tConfEnviada
     ModoPaquetes As Long

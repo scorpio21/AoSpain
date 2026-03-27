@@ -2,7 +2,8 @@
 
 ## 📌 Resumen de hoy
 Se ha avanzado significativamente en la **Fase 3: Depuración y Estabilización** del motor DirectX 8. El objetivo principal de lograr una base de código compilable sin referencias obsoletas a DX7 se ha cumplido.
-
+## recuerda PowerShell no admite &&
+no admite &&
 ## 🛠️ Cambios Realizados
 
 1.  **Limpieza Profunda de VBP:**

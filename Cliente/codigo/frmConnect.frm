@@ -280,7 +280,7 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
         Call SaveGameini
         prgRun = False
         
-        LiberarObjetosDX
+        engine.Engine_Deinit
         Call UnloadAllForms
     End If
 End Sub
@@ -320,7 +320,7 @@ Private Sub Conectar_Click(Index As Integer)
 
     ' ValidaciÃ³n de campos
     If NameTxt.Text = "" Or PasswordTxt.Text = "" Then
-        MsgBox "Ingrese Nombre de Cuenta y Contraseña.", vbExclamation
+        MsgBox "Ingrese Nombre de Cuenta y Contraseï¿½a.", vbExclamation
         Exit Sub
     End If
 
@@ -362,11 +362,11 @@ Private Sub EliminarCuenta_Click()
     If sAccount = "" Then Exit Sub
     
     Dim sConfirm As String
-    sConfirm = InputBox("Para borrar la cuenta " & sAccount & " escriba su CONTRASEÑA, CORREO y RESPUESTA SECRETA separados por comas:", "VALIDACION DE SEGURIDAD")
+    sConfirm = InputBox("Para borrar la cuenta " & sAccount & " escriba su CONTRASEï¿½A, CORREO y RESPUESTA SECRETA separados por comas:", "VALIDACION DE SEGURIDAD")
     
     If sConfirm = "" Then Exit Sub
     
-    ' Si el socket no esta¡ conectado, intentamos conectar para enviar el paquete
+    ' Si el socket no estaï¿½ conectado, intentamos conectar para enviar el paquete
     If Not frmMain.Socket1.Connected Then
         frmMain.Socket1.HostAddress = CurServerIp
         frmMain.Socket1.RemotePort = CurServerPort

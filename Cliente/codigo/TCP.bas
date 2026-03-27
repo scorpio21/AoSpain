@@ -302,14 +302,14 @@ Sub HandleData(ByVal Rdata As String)
                 Else
                     'vers incorrecta
                     MsgBox "Error en los mapas, algun archivo ha sido modificado o esta daaado."
-                    Call LiberarObjetosDX
+                    Call engine.Engine_Deinit
                     Call UnloadAllForms
                     End
                 End If
             Else
                 'no encontramos el mapa en el hd
                 MsgBox "Error en los mapas, algun archivo ha sido modificado o esta daaado."
-                Call LiberarObjetosDX
+                Call engine.Engine_Deinit
                 Call UnloadAllForms
                 Call EscribirGameIni(Config_Inicio)
                 End
