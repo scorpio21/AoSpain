@@ -96,6 +96,12 @@ Public UserEstupido As Boolean
 
 Public LastTime As Long
 Public ItemElegido As Long
+Public OffsetDelInv As Long
+Public Const XCantItems = 5
+Public mx As Long
+Public my As Long
+
+Public bNoResChange As Boolean
 
 '[Alejo-21-5]
 Public Type tConfEnviada

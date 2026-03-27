@@ -11,9 +11,9 @@ Este documento registra el avance en la integración del motor gráfico DirectX 
 ### 2. Estabilización de la Compilación (Finalizada ✅)
 - **Eliminación de Referencias Obsoletas**: Corregidas las llamadas a `BackBufferSurface`, `PrimarySurface`, `InitTileEngine`, `LiberarObjetosDX`, `CargarAnimsExtra` y cálculos manuales de rectángulos en `General.bas`.
 - **Centralización de Tipos**: Se eliminaron las **dependencias circulares** y **nombres ambiguos** centralizando todas las estructuras en `Declares.bas`.
-- **Corrección de Audio**: Migración completa de `frmMain.Play` y `frmMain.StopSound` al nuevo motor `clsAudio`. Eliminación de `SegState` y `Perf` (DX7).
+- **Corrección de Audio**: Migración completa de `frmMain.Play` y `frmMain.StopSound` al nuevo motor `clsAudio`.
 - **Sintaxis VB6**: Corregida la ubicación de declaraciones de variables en `frmMain.frm`.
-- **Recuperación de Variables**: Declarada `ItemElegido` globalmente para el correcto funcionamiento del inventario gráfico.
+- **Recuperación de Variables**: Declaradas `ItemElegido`, `OffsetDelInv`, `XCantItems`, `mx`, `my` y `bNoResChange` globalmente para el correcto funcionamiento del cliente.
 
 ### 3. Modernización del Ciclo de Vida y Renderizado
 - **Bucle de Juego Centralizado**: El bucle principal en `Sub Main` (`General.bas`) ahora utiliza `engine.Render` como punto único de dibujado.

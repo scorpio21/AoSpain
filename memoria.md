@@ -1,26 +1,26 @@
-# Memoria de Sesión - 26 de Marzo 2026 (Sesión 4)
+# Memoria de Sesión - 26 de Marzo 2026 (Sesión 5)
 
 ## 📌 Resumen de hoy
-Consolidación de la **Fase 3: Depuración y Estabilización**. Se han recuperado variables globales esenciales que se perdieron en la limpieza de módulos y se ha eliminado rastro de objetos DirectX 7 que aún se intentaban utilizar en el bucle principal.
+Refuerzo de la estabilidad del código en la **Fase 3**. Se han recuperado más variables globales necesarias para la navegación del inventario y el control de la resolución, que se habían perdido durante la limpieza de módulos antiguos.
 
 ## 🛠️ Cambios Realizados
 
-1.  **Restauración de Variable de Inventario:**
-    *   Se declaró `Public ItemElegido As Long` en `Declares.bas`. Esta variable es fundamental para rastrear qué slot del inventario tiene seleccionado el usuario, permitiendo el uso de items, equipamiento y descarte de objetos.
+1.  **Recuperación de Variables de Inventario:**
+    *   Se declararon `Public OffsetDelInv As Long`, `Public Const XCantItems = 5`, `Public mx As Long` y `Public my As Long` en `Declares.bas`.
+    *   Estas variables son críticas para que los botones de scroll del inventario en `frmMain` funcionen y para que el sistema de renderizado sepa qué items mostrar.
 
-2.  **Limpieza Final de DirectMusic (DX7):**
-    *   Se comentaron las líneas en `General.bas` que utilizaban `SegState` y `Perf` para verificar si la música estaba sonando.
-    *   Estos objetos pertenecían al sistema de música de DirectX 7. El nuevo motor `clsAudio` gestiona la música de forma independiente y compatible con DirectX 8.
+2.  **Control de Resolución:**
+    *   Se declaró `Public bNoResChange As Boolean` en `Declares.bas`. Esta variable controla si el cliente debe o no cambiar la resolución del monitor al iniciar, evitando errores en las condiciones `If bNoResChange = False` presentes en `General.bas`.
 
-3.  **Correcciones de Sintaxis VB6:**
-    *   Se verificó que todas las declaraciones de nuevas variables globales sigan el estándar de VB6 para evitar errores de "Variable no definida" durante el proceso de compilación.
+3.  **Sincronización de Tipos:**
+    *   Se aseguró que todas las nuevas declaraciones sigan la convención de 32 bits (usando `Long` para índices) para mantener la compatibilidad total con el motor DirectX 8.
 
 ## 🔴 Errores Resueltos
-*   **Variable no definida:** `SegState`, `Perf`, `ItemElegido`.
+*   **Variable no definida:** `bNoResChange`, `OffsetDelInv`, `XCantItems`, `mx`, `my`.
 
 ## 🚀 Próximos Pasos
-1.  **Validación de Inventario:** Confirmar que al hacer click en un item, la variable `ItemElegido` se actualiza correctamente y permite realizar acciones (U), (T), (E).
-2.  **Pruebas de Estabilidad:** Una vez lograda la compilación, monitorear el uso de CPU para asegurar que el bucle modernizado es eficiente.
+1.  **Validación de UI:** Verificar que los botones "+" y "-" del inventario desplazan correctamente los items sin errores de desbordamiento.
+2.  **Test de Compilación:** El cliente debería estar ya en un punto donde casi no quedan errores de "Variable no definida".
 
 ---
-*Sesión finalizada. El proyecto debería estar listo para una compilación limpia.*
+*Sesión finalizada. Base de datos de declaraciones actualizada y completa.*
