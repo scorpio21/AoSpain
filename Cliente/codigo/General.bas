@@ -126,12 +126,12 @@ AuxInteger2 = SDM(N)
 ValidarLoginMSG = Complex(AuxInteger + AuxInteger2)
 End Function
 
-Sub PlayWaveAPI(File As String)
+Sub PlayWaveAPI(file As String)
 
 On Error Resume Next
 Dim rc As Integer
 
-rc = sndPlaySound(File, SND_ASYNC)
+rc = sndPlaySound(file, SND_ASYNC)
 
 End Sub
 
@@ -197,23 +197,23 @@ Sub Addtostatus(RichTextBox As RichTextBox, Text As String, RED As Byte, GREEN A
 'apperance!
 '******************************************
 
-frmCargando.Status.SelStart = Len(RichTextBox.Text)
-frmCargando.Status.SelLength = 0
-frmCargando.Status.SelColor = RGB(RED, GREEN, BLUE)
+frmCargando.status.SelStart = Len(RichTextBox.Text)
+frmCargando.status.SelLength = 0
+frmCargando.status.SelColor = RGB(RED, GREEN, BLUE)
 
 If bold Then
-    frmCargando.Status.SelBold = True
+    frmCargando.status.SelBold = True
 Else
-    frmCargando.Status.SelBold = False
+    frmCargando.status.SelBold = False
 End If
 
 If italic Then
-    frmCargando.Status.SelItalic = True
+    frmCargando.status.SelItalic = True
 Else
-    frmCargando.Status.SelItalic = False
+    frmCargando.status.SelItalic = False
 End If
 
-frmCargando.Status.SelText = Chr(13) & Chr(10) & Text
+frmCargando.status.SelText = Chr(13) & Chr(10) & Text
 
 End Sub
 
@@ -258,8 +258,8 @@ Sub RefreshAllChars()
 Dim loopc As Integer
 
 For loopc = 1 To LastChar
-    If CharList(loopc).active = 1 Then
-        MapData(CharList(loopc).Pos.x, CharList(loopc).Pos.y).CharIndex = loopc
+    If charlist(loopc).active = 1 Then
+        MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
     End If
 Next loopc
 
@@ -283,7 +283,7 @@ Dim i As Integer
 cad = LCase$(cad)
 
 For i = 1 To Len(cad)
-    car = Asc(mid$(cad, i, 1))
+    car = Asc(Mid$(cad, i, 1))
     
     If ((car < 97 Or car > 122) Or car = Asc("a")) And (car <> 255) And (car <> 32) Then
         AsciiValidos = False
@@ -310,7 +310,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(UserPassword)
-        CharAscii = Asc(mid$(UserPassword, loopc, 1))
+        CharAscii = Asc(Mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta� permitido.")
             Exit Function
@@ -332,7 +332,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(nombrecuent)
-        CharAscii = Asc(mid$(nombrecuent, loopc, 1))
+        CharAscii = Asc(Mid$(nombrecuent, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             Call MsgBox("Cuenta invalida. El caracter " & Chr$(CharAscii) & " no esta.� permitido.")
             Exit Function
@@ -423,7 +423,7 @@ If LegalPos(UserPos.x, UserPos.y - 1) Then
         DoFogataFx
     End If
 Else
-    If CharList(UserCharIndex).Heading <> NORTH Then
+    If charlist(UserCharIndex).Heading <> NORTH Then
             Call SendData("CHEA" & NORTH)
     End If
 End If
@@ -439,7 +439,7 @@ If LegalPos(UserPos.x + 1, UserPos.y) Then
         Call DoFogataFx
     End If
 Else
-    If CharList(UserCharIndex).Heading <> EAST Then
+    If charlist(UserCharIndex).Heading <> EAST Then
             Call SendData("CHEA" & EAST)
     End If
 End If
@@ -456,7 +456,7 @@ If LegalPos(UserPos.x, UserPos.y + 1) Then
         DoFogataFx
     End If
 Else
-    If CharList(UserCharIndex).Heading <> SOUTH Then
+    If charlist(UserCharIndex).Heading <> SOUTH Then
             Call SendData("CHEA" & SOUTH)
     End If
 End If
@@ -472,7 +472,7 @@ If LegalPos(UserPos.x - 1, UserPos.y) Then
             DoFogataFx
     End If
 Else
-    If CharList(UserCharIndex).Heading <> WEST Then
+    If charlist(UserCharIndex).Heading <> WEST Then
             Call SendData("CHEA" & WEST)
     End If
 End If
@@ -646,7 +646,7 @@ Function NextOpenChar()
 Dim loopc As Integer
 
 loopc = 1
-Do While CharList(loopc).active
+Do While charlist(loopc).active
     loopc = loopc + 1
 Loop
 
@@ -658,7 +658,7 @@ Public Function DirMapas() As String
 DirMapas = App.Path & "\" & Config_Inicio.DirMapas & "\"
 End Function
 
-Sub SwitchMap(Map As Integer, X_Pos As Integer, Y_Pos As Integer)
+Sub SwitchMap(map As Integer, X_Pos As Integer, Y_Pos As Integer)
 
 Dim loopc As Integer
 Dim y As Integer
@@ -667,14 +667,14 @@ Dim tempint As Integer
 Dim mapName As String
 
 'Intentamos obtener el nombre del mapa desde el archivo .dat
-mapName = GetVar(DirMapas & "Mapa" & Map & ".dat", "Mapa" & Map, "Name")
+mapName = GetVar(DirMapas & "Mapa" & map & ".dat", "Mapa" & map, "Name")
 
 'Imprimimos mensaje detallado de transicion en consola con coordenadas
 If mapName <> "" Then
-    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " (" & mapName & ") en X:" & X_Pos & " Y:" & Y_Pos, 100, 100, 120, True, False, False)
+    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & map & " (" & mapName & ") en X:" & X_Pos & " Y:" & Y_Pos, 100, 100, 120, True, False, False)
     'Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " (" & mapName & ") en X:" & X_Pos & " Y:" & Y_Pos, 255, 255, 255, 0, 0, True)
 Else
-    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " en X:" & X_Pos & " Y:" & Y_Pos, 100, 100, 120, True, False, False)
+    Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & map & " en X:" & X_Pos & " Y:" & Y_Pos, 100, 100, 120, True, False, False)
     'Call AddtoRichTextBox(frmMain.RecTxt, "Transicion al mapa " & Map & " en X:" & X_Pos & " Y:" & Y_Pos, 255, 255, 255, 0, 0, True)
 End If
 frmMain.RecTxt.Refresh
@@ -682,10 +682,10 @@ frmMain.RecTxt.Refresh
 'En lugar de limpiar 10.000, solo limpiamos hasta el ultimo personaje conocido
 If LastChar > 0 Then
     For loopc = 1 To LastChar
-        If CharList(loopc).active Then
+        If charlist(loopc).active Then
             'Limpieza directa de memoria sin llamadas a subrutinas pesadas
-            CharList(loopc).active = 0
-            CharList(loopc).nombre = ""
+            charlist(loopc).active = 0
+            charlist(loopc).nombre = ""
         End If
     Next loopc
 End If
@@ -698,7 +698,7 @@ NumChars = 0
 Dim Buffer(1 To ((YMaxMapSize - YMinMapSize + 1) * (XMaxMapSize - XMinMapSize + 1))) As TileMap
 Dim idx As Integer
 
-Open DirMapas & "Mapa" & Map & ".map" For Binary Access Read As #1
+Open DirMapas & "Mapa" & map & ".map" For Binary Access Read As #1
 Seek #1, 1
         
 Get #1, , MapInfo.MapVersion
@@ -731,7 +731,7 @@ For y = YMinMapSize To YMaxMapSize
     Next x
 Next y
 
-CurMap = Map
+CurMap = map
 MapInfo.Name = ""
 MapInfo.Music = ""
 
@@ -753,11 +753,11 @@ LastPos = 0
 FieldNum = 0
 
 For i = 1 To Len(Text)
-    CurChar = mid(Text, i, 1)
+    CurChar = Mid(Text, i, 1)
     If CurChar = Seperator Then
         FieldNum = FieldNum + 1
         If FieldNum = Pos Then
-            ReadField = mid(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
+            ReadField = Mid(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
             Exit Function
         End If
         LastPos = i
@@ -766,14 +766,14 @@ Next i
 FieldNum = FieldNum + 1
 
 If FieldNum = Pos Then
-    ReadField = mid(Text, LastPos + 1)
+    ReadField = Mid(Text, LastPos + 1)
 End If
 
 
 End Function
 
-Function FileExist(File As String, FileType As VbFileAttribute) As Boolean
-If Dir(File, FileType) = "" Then
+Function FileExist(file As String, FileType As VbFileAttribute) As Boolean
+If Dir(file, FileType) = "" Then
     FileExist = False
 Else
     FileExist = True
@@ -831,7 +831,7 @@ For i = 1 To Cont
     cur$ = ReadField(i, RawServersList, Asc(";"))
     ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
     ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
-    ServersLst(i).Desc = ReadField(4, cur$, Asc(":"))
+    ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
     ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
 Next i
 
@@ -952,6 +952,9 @@ End If
 
 tipf = Config_Inicio.tip
 
+'Por default usamos el din�mico
+    Set SurfaceDB = New clsSurfaceManDynDX8
+    
 frmCargando.Show
 frmCargando.Refresh
 
@@ -963,7 +966,7 @@ engine.setup_ambient
 UserParalizado = False
 
 frmConnect.version = "v" & App.Major & ".0" '& App.Minor & " Beta: 1"
-AddtoRichTextBox frmCargando.Status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Buscando servidores de AOSpain....", 0, 0, 0, 0, 0, 1
 
 'frmMain.Inet1.URL = "http://www.caratula2000.net/power/poweraoiplist3.txt"
 'RawServersList = frmMain.Inet1.OpenURL
@@ -983,101 +986,26 @@ End If
 
 Call InitServersList(RawServersList)
 
+ 
 'IPdelServidor =
 'PuertoDelServidor = 7666
 
-AddtoRichTextBox frmCargando.Status, "Ok", , , , 1
-AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Ok", , , , 1
+AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
 
-ReDim Ciudades(1 To NUMCIUDADES) As String
-Ciudades(1) = "Ullathorpe"
-Ciudades(2) = "Arcadia"
-Ciudades(3) = "Banderbill"
-
-ReDim CityDesc(1 To NUMCIUDADES) As String
-CityDesc(1) = "Ullathorpe esta establecida en el medio de los grandes bosques de Argentum, es principalmente un pueblo de campesinos y leaadores. Su ubicacian hace de Ullathorpe un punto de paso obligado para todos los aventureros ya que se encuentra cerca de los lugares mas legendarios de este mundo."
-CityDesc(2) = "Arcadia es una gran ciudad. Edificada sobre la costa oeste del principal continente de Argentum."
-CityDesc(3) = "Banderbill se encuentra al norte de Ullathorpe y Arcadia, es una de las ciudades mas importantes de todo el imperio."
-
-ReDim ListaRazas(1 To NUMRAZAS) As String
-ListaRazas(1) = "Humano"
-ListaRazas(2) = "Elfo"
-ListaRazas(3) = "Elfo Oscuro"
-ListaRazas(4) = "Gnomo"
-ListaRazas(5) = "Enano"
-ListaRazas(6) = "Orco"
-ListaRazas(7) = "Hobbit"
-
-
-
-ReDim ListaClases(1 To NUMCLASES) As String
-ListaClases(1) = "Mago"
-ListaClases(2) = "Clerigo"
-ListaClases(3) = "Guerrero"
-ListaClases(4) = "Asesino"
-ListaClases(5) = "Ladron"
-ListaClases(6) = "Bardo"
-ListaClases(7) = "Druida"
-ListaClases(8) = "Bandido"
-ListaClases(9) = "Paladin"
-ListaClases(10) = "Cazador"
-ListaClases(11) = "Pescador"
-ListaClases(12) = "Herrero"
-ListaClases(13) = "Leaador"
-ListaClases(14) = "Minero"
-ListaClases(15) = "Carpintero"
-ListaClases(16) = "Pirata"
-ListaClases(17) = "Gladiador" 'Neptuno
-ListaClases(18) = "Arquero" 'Neptuno
-ListaClases(19) = "Chaman" 'Neptuno
-ListaClases(20) = "Aldeano" 'Neptuno
-'ListaClases(21) = "Wilord" 'Neptuno
-'ListaClases(22) = "Sastre" 'Neptuno
-
-ReDim SkillsNames(1 To NUMSKILLS) As String
-SkillsNames(1) = "Suerte"
-SkillsNames(2) = "Magia"
-SkillsNames(3) = "Robar"
-SkillsNames(4) = "Tacticas de combate"
-SkillsNames(5) = "Combate con armas"
-SkillsNames(6) = "Meditar"
-SkillsNames(7) = "Apuaalar"
-SkillsNames(8) = "Ocultarse"
-SkillsNames(9) = "Supervivencia"
-SkillsNames(10) = "Talar arboles"
-SkillsNames(11) = "Comercio"
-SkillsNames(12) = "Defensa con escudos"
-SkillsNames(13) = "Pesca"
-SkillsNames(14) = "Mineria"
-SkillsNames(15) = "Carpinteria"
-SkillsNames(16) = "Herreria"
-SkillsNames(17) = "Liderazgo"
-SkillsNames(18) = "Domar animales"
-SkillsNames(19) = "Armas de proyectiles"
-SkillsNames(20) = "Wresterling"
-SkillsNames(21) = "Navegacion"
-SkillsNames(22) = "Resistencia Magica"     '[Efestos]
-
-ReDim UserSkills(1 To NUMSKILLS) As Integer
-ReDim UserAtributos(1 To NUMATRIBUTOS) As Integer
-ReDim AtributosNames(1 To NUMATRIBUTOS) As String
-AtributosNames(1) = "Fuerza"
-AtributosNames(2) = "Agilidad"
-AtributosNames(3) = "Inteligencia"
-AtributosNames(4) = "Carisma"
-AtributosNames(5) = "Constitucion"
+Call InicializarNombres
 
 
 frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
 frmOldPersonaje.PasswordTxt.Text = ""
 
-AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 ' [CODE] - AoSpain DX8: Eliminada inicialización antigua de DX7
 ' IniciarObjetosDirectX
 
-AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -1095,7 +1023,7 @@ ENDC = Chr(1)
 '
 '    End If
 'Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extras.", 2, 51, 223, 1, 1)
-Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
 
 
 'Call CargarAnimsExtra
@@ -1104,7 +1032,7 @@ Call CargarAnimArmas
 Call CargarAnimEscudos
 
 
-AddtoRichTextBox frmCargando.Status, "                    !Bienvenido a Argentum Online!", , , , 1
+AddtoRichTextBox frmCargando.status, "                    !Bienvenido a Argentum Online!", , , , 1
 
 
 Unload frmCargando
@@ -1133,16 +1061,16 @@ LoopMidi = True
 frmConnect.Visible = True
 
 'Loop principal!
-'[CODE]:MatuX'
-    MainViewRect.Left = MainViewLeft + 32 * RenderMod.iImageSize
-    MainViewRect.Top = MainViewTop + 32 * RenderMod.iImageSize
-    MainViewRect.Right = (MainViewRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
-    MainViewRect.bottom = (MainViewRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
-
-    MainDestRect.Left = ((TilePixelWidth * TileBufferSize) - TilePixelWidth) + 32 * RenderMod.iImageSize
-    MainDestRect.Top = ((TilePixelHeight * TileBufferSize) - TilePixelHeight) + 32 * RenderMod.iImageSize
-    MainDestRect.Right = (MainDestRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
-    MainDestRect.bottom = (MainDestRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
+' [CODE] - AoSpain DX8: El motor gestiona estos rectángulos internamente
+'    MainViewRect.Left = MainViewLeft + 32 * RenderMod.iImageSize
+'    MainViewRect.Top = MainViewTop + 32 * RenderMod.iImageSize
+'    MainViewRect.Right = (MainViewRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
+'    MainViewRect.bottom = (MainViewRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
+'
+'    MainDestRect.Left = ((TilePixelWidth * TileBufferSize) - TilePixelWidth) + 32 * RenderMod.iImageSize
+'    MainDestRect.Top = ((TilePixelHeight * TileBufferSize) - TilePixelHeight) + 32 * RenderMod.iImageSize
+'    MainDestRect.Right = (MainDestRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
+'    MainDestRect.bottom = (MainDestRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
 
     Dim OffsetCounterX As Integer
     Dim OffsetCounterY As Integer
@@ -1190,7 +1118,7 @@ Loop
 
 EngineRun = False
 frmCargando.Show
-AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
 engine.Engine_Deinit
 
 If bNoResChange = False Then
@@ -1215,23 +1143,93 @@ Call EscribirGameIni(Config_Inicio)
 End
 
 ManejadorErrores:
-    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.source
+    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.Source
     End
     
 End Sub
+Private Sub InicializarNombres()
+
+Ciudades(1) = "Ullathorpe"
+Ciudades(2) = "Arcadia"
+Ciudades(3) = "Banderbill"
+
+CityDesc(1) = "Ullathorpe esta establecida en el medio de los grandes bosques de Argentum, es principalmente un pueblo de campesinos y leaadores. Su ubicacian hace de Ullathorpe un punto de paso obligado para todos los aventureros ya que se encuentra cerca de los lugares mas legendarios de este mundo."
+CityDesc(2) = "Arcadia es una gran ciudad. Edificada sobre la costa oeste del principal continente de Argentum."
+CityDesc(3) = "Banderbill se encuentra al norte de Ullathorpe y Arcadia, es una de las ciudades mas importantes de todo el imperio."
+
+ListaRazas(1) = "Humano"
+ListaRazas(2) = "Elfo"
+ListaRazas(3) = "Elfo Oscuro"
+ListaRazas(4) = "Gnomo"
+ListaRazas(5) = "Enano"
+ListaRazas(6) = "Orco"
+ListaRazas(7) = "Hobbit"
+
+ListaClases(1) = "Mago"
+ListaClases(2) = "Clerigo"
+ListaClases(3) = "Guerrero"
+ListaClases(4) = "Asesino"
+ListaClases(5) = "Ladron"
+ListaClases(6) = "Bardo"
+ListaClases(7) = "Druida"
+ListaClases(8) = "Bandido"
+ListaClases(9) = "Paladin"
+ListaClases(10) = "Cazador"
+ListaClases(11) = "Pescador"
+ListaClases(12) = "Herrero"
+ListaClases(13) = "Leaador"
+ListaClases(14) = "Minero"
+ListaClases(15) = "Carpintero"
+ListaClases(16) = "Pirata"
+ListaClases(17) = "Gladiador" 'Neptuno
+ListaClases(18) = "Arquero" 'Neptuno
+ListaClases(19) = "Chaman" 'Neptuno
+ListaClases(20) = "Aldeano" 'Neptuno
+'ListaClases(21) = "Wilord" 'Neptuno
+'ListaClases(22) = "Sastre" 'Neptuno
+
+SkillsNames(1) = "Suerte"
+SkillsNames(2) = "Magia"
+SkillsNames(3) = "Robar"
+SkillsNames(4) = "Tacticas de combate"
+SkillsNames(5) = "Combate con armas"
+SkillsNames(6) = "Meditar"
+SkillsNames(7) = "Apuaalar"
+SkillsNames(8) = "Ocultarse"
+SkillsNames(9) = "Supervivencia"
+SkillsNames(10) = "Talar arboles"
+SkillsNames(11) = "Comercio"
+SkillsNames(12) = "Defensa con escudos"
+SkillsNames(13) = "Pesca"
+SkillsNames(14) = "Mineria"
+SkillsNames(15) = "Carpinteria"
+SkillsNames(16) = "Herreria"
+SkillsNames(17) = "Liderazgo"
+SkillsNames(18) = "Domar animales"
+SkillsNames(19) = "Armas de proyectiles"
+SkillsNames(20) = "Wresterling"
+SkillsNames(21) = "Navegacion"
+SkillsNames(22) = "Resistencia Magica"     '[Efestos]
 
 
+AtributosNames(1) = "Fuerza"
+AtributosNames(2) = "Agilidad"
+AtributosNames(3) = "Inteligencia"
+AtributosNames(4) = "Carisma"
+AtributosNames(5) = "Constitucion"
+End Sub
 
-Sub WriteVar(File As String, Main As String, Var As String, value As String)
+
+Sub WriteVar(file As String, Main As String, Var As String, value As String)
 '*****************************************************************
 'Writes a var to a text file
 '*****************************************************************
 
-writeprivateprofilestring Main, Var, value, File
+writeprivateprofilestring Main, Var, value, file
 
 End Sub
 
-Function GetVar(File As String, Main As String, Var As String) As String
+Function GetVar(file As String, Main As String, Var As String) As String
 '*****************************************************************
 'Gets a Var from a text file
 '*****************************************************************
@@ -1246,7 +1244,7 @@ szReturn = ""
 sSpaces = Space(5000) ' This tells the computer how long the longest string can be. If you want, you can change the number 75 to any number you wish
 
 
-getprivateprofilestring Main, Var, szReturn, sSpaces, Len(sSpaces), File
+getprivateprofilestring Main, Var, szReturn, sSpaces, Len(sSpaces), file
 
 GetVar = RTrim(sSpaces)
 GetVar = Left(GetVar, Len(GetVar) - 1)
@@ -1277,7 +1275,7 @@ End Function
             '4to test: Recorre todos los caracteres y los valada
             For lX = 0 To Len(sString) - 1 'el ultimo no porque ya lo probamos
                 If Not (lX = (lPos - 1)) Then
-                    iAsc = Asc(mid(sString, (lX + 1), 1))
+                    iAsc = Asc(Mid(sString, (lX + 1), 1))
                     If Not (iAsc = 46 And lX > (lPos - 1)) Then _
                         If Not CMSValidateChar_(iAsc) Then _
                             Exit Function

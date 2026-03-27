@@ -78,7 +78,7 @@ Public RawServersList As String
 Public Type tServerInfo
     Ip As String
     Puerto As Integer
-    Desc As String
+    desc As String
     PassRecPort As Integer
 End Type
 
@@ -217,7 +217,7 @@ Public Type Char
 
     Criminal As Byte
 
-    Nombre As String
+    nombre As String
 
     scrollDirectionX As Integer
     scrollDirectionY As Integer
@@ -280,6 +280,18 @@ Public Tips() As String * 255
 Public Const LoopAdEternum = 999
 
 Public Const NUMCIUDADES = 3
+
+Public UserSkills(1 To NUMSKILLS) As Integer
+Public SkillsNames(1 To NUMSKILLS) As String
+
+Public UserAtributos(1 To NUMATRIBUTOS) As Integer
+Public AtributosNames(1 To NUMATRIBUTOS) As String
+
+Public Ciudades(1 To NUMCIUDADES) As String
+Public CityDesc(1 To NUMCIUDADES) As String
+
+Public ListaRazas(1 To NUMRAZAS) As String
+Public ListaClases(1 To NUMCLASES) As String
 
 
 'Objetos
@@ -371,9 +383,6 @@ Type tReputacion 'Fama del usuario
     Promedio As Long
 End Type
 
-Public ListaRazas() As String
-Public ListaClases() As String
-
 Public Nombres As Boolean
 
 Public MixedKey As Long
@@ -427,15 +436,6 @@ Public UserClase As String
 Public UserSexo As String
 Public UserRaza As String
 Public UserEmail As String
-
-Public UserSkills() As Integer
-Public SkillsNames() As String
-
-Public UserAtributos() As Integer
-Public AtributosNames() As String
-
-Public Ciudades() As String
-Public CityDesc() As String
 
 Public Musica As Byte
 Public fX As Byte

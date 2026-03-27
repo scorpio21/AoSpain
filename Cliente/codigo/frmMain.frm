@@ -624,6 +624,9 @@ Dim gFileName As String
 ' Dim Pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
+' Buffer para el sonido ambiental actual (lluvia, fuego, etc)
+Private AmbientBufferIndex As Long
+
 Dim endEvent As Long
 ' Implements DirectXEvent
 
