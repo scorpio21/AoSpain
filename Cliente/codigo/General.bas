@@ -1107,11 +1107,11 @@ Do While prgRun
         End If
     End If
     
-    If Musica = 0 Then
-        If Not SegState Is Nothing Then
-            If Not Perf.IsPlaying(Seg, SegState) Then Play_Midi
-        End If
-    End If
+'    If Musica = 0 Then
+'        If Not SegState Is Nothing Then
+'            If Not Perf.IsPlaying(Seg, SegState) Then Play_Midi
+'        End If
+'    End If
 
     DoEvents
 Loop

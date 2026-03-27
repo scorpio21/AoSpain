@@ -78,7 +78,7 @@ Public RawServersList As String
 Public Type tServerInfo
     Ip As String
     Puerto As Integer
-    desc As String
+    Desc As String
     PassRecPort As Integer
 End Type
 
@@ -95,6 +95,7 @@ Public UserCiego As Boolean
 Public UserEstupido As Boolean
 
 Public LastTime As Long
+Public ItemElegido As Long
 
 '[Alejo-21-5]
 Public Type tConfEnviada
@@ -281,17 +282,6 @@ Public Const LoopAdEternum = 999
 
 Public Const NUMCIUDADES = 3
 
-Public UserSkills(1 To NUMSKILLS) As Integer
-Public SkillsNames(1 To NUMSKILLS) As String
-
-Public UserAtributos(1 To NUMATRIBUTOS) As Integer
-Public AtributosNames(1 To NUMATRIBUTOS) As String
-
-Public Ciudades(1 To NUMCIUDADES) As String
-Public CityDesc(1 To NUMCIUDADES) As String
-
-Public ListaRazas(1 To NUMRAZAS) As String
-Public ListaClases(1 To NUMCLASES) As String
 
 
 'Objetos
@@ -311,6 +301,17 @@ Public Const FLAGORO = 777
 
 Public Const FOgata = 1521
 
+Public UserSkills(1 To NUMSKILLS) As Integer
+Public SkillsNames(1 To NUMSKILLS) As String
+
+Public UserAtributos(1 To NUMATRIBUTOS) As Integer
+Public AtributosNames(1 To NUMATRIBUTOS) As String
+
+Public Ciudades(1 To NUMCIUDADES) As String
+Public CityDesc(1 To NUMCIUDADES) As String
+
+Public ListaRazas(1 To NUMRAZAS) As String
+Public ListaClases(1 To NUMCLASES) As String
 
 Public Const Suerte = 1
 Public Const Magia = 2

@@ -1,28 +1,26 @@
-# Memoria de Sesión - 26 de Marzo 2026 (Sesión 3)
+# Memoria de Sesión - 26 de Marzo 2026 (Sesión 4)
 
 ## 📌 Resumen de hoy
-Refinamiento de la **Fase 3: Depuración y Estabilización**. Se han corregido errores de sintaxis específicos de Visual Basic 6 y se han eliminado remanentes de variables del motor antiguo que impedían la compilación tras la simplificación del bucle principal.
+Consolidación de la **Fase 3: Depuración y Estabilización**. Se han recuperado variables globales esenciales que se perdieron en la limpieza de módulos y se ha eliminado rastro de objetos DirectX 7 que aún se intentaban utilizar en el bucle principal.
 
 ## 🛠️ Cambios Realizados
 
-1.  **Corrección de Sintaxis en frmMain:**
-    *   Se movió la declaración de `AmbientBufferIndex` a la sección de **Declaraciones Generales** (al inicio del archivo). En VB6, las variables de ámbito de módulo/formulario deben declararse antes de cualquier procedimiento para evitar errores de compilación.
+1.  **Restauración de Variable de Inventario:**
+    *   Se declaró `Public ItemElegido As Long` en `Declares.bas`. Esta variable es fundamental para rastrear qué slot del inventario tiene seleccionado el usuario, permitiendo el uso de items, equipamiento y descarte de objetos.
 
-2.  **Limpieza de Variables Obsoletas en General.bas:**
-    *   Se comentó el bloque de código al final de `Sub Main` que intentaba calcular `MainViewRect` y `MainDestRect` utilizando variables eliminadas (`MainViewLeft`, `MainViewTop`, etc.).
-    *   Dado que el motor `clsDX8Engine` gestiona estos rectángulos de forma interna y privada, estos cálculos manuales en `General.bas` ya no son necesarios ni válidos.
+2.  **Limpieza Final de DirectMusic (DX7):**
+    *   Se comentaron las líneas en `General.bas` que utilizaban `SegState` y `Perf` para verificar si la música estaba sonando.
+    *   Estos objetos pertenecían al sistema de música de DirectX 7. El nuevo motor `clsAudio` gestiona la música de forma independiente y compatible con DirectX 8.
 
-3.  **Mantenimiento de la Estructura:**
-    *   Se aseguró que la inicialización del motor gráfico y la carga de datos sigan el orden correcto en `Sub Main`.
+3.  **Correcciones de Sintaxis VB6:**
+    *   Se verificó que todas las declaraciones de nuevas variables globales sigan el estándar de VB6 para evitar errores de "Variable no definida" durante el proceso de compilación.
 
 ## 🔴 Errores Resueltos
-*   **Variable no definida:** `MainViewLeft`, `MainViewTop`, `MainViewWidth`, `MainViewHeight`, `TileBufferSize`.
-*   **Error de Sintaxis:** "Los comentarios/declaraciones solamente pueden aparecer después de End sub..." (relacionado con la ubicación de `AmbientBufferIndex`).
+*   **Variable no definida:** `SegState`, `Perf`, `ItemElegido`.
 
 ## 🚀 Próximos Pasos
-1.  **Compilación de Prueba:** Intentar generar el ejecutable para confirmar que no quedan errores de referencia.
-2.  **Test de Entrada:** Validar que el usuario puede loguear y entrar al mapa sin cuelgues.
-3.  **Ajustes de UI:** Verificar que el área de renderizado (`frmMain.renderer`) está correctamente vinculada al dispositivo de DirectX 8.
+1.  **Validación de Inventario:** Confirmar que al hacer click en un item, la variable `ItemElegido` se actualiza correctamente y permite realizar acciones (U), (T), (E).
+2.  **Pruebas de Estabilidad:** Una vez lograda la compilación, monitorear el uso de CPU para asegurar que el bucle modernizado es eficiente.
 
 ---
-*Sesión finalizada. El código debería estar ahora libre de errores de declaración básicos.*
+*Sesión finalizada. El proyecto debería estar listo para una compilación limpia.*

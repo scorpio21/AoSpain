@@ -93,7 +93,6 @@ Begin VB.Form frmMain
    End
    Begin VB.PictureBox renderer 
       Appearance      =   0  'Flat
-      AutoRedraw      =   0   'False
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       CausesValidation=   0   'False
@@ -524,7 +523,7 @@ Begin VB.Form frmMain
    Begin RichTextLib.RichTextBox RecTxt 
       Height          =   1500
       Left            =   45
-      TabIndex        =   1
+      TabIndex        =   16
       TabStop         =   0   'False
       ToolTipText     =   "Mensajes del servidor"
       Top             =   45
@@ -533,7 +532,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmMain.frx":2CF54
@@ -659,10 +657,6 @@ Private Function LoadSoundBufferFromFile(sFile As String) As Integer
 '    LoadSoundBufferFromFile = 1
 End Function
 
-
-' Buffer para el sonido ambiental actual (lluvia, fuego, etc)
-Private AmbientBufferIndex As Long
-
 Public Sub Play(ByVal nombre As String, Optional ByVal LoopSound As Boolean = False)
     If fX = 1 Then Exit Sub
     
@@ -685,7 +679,7 @@ If logged And Not frmMain.Visible Then
     Unload frmConnect
     Unload frmCuent
     frmMain.Show
-End If    
+End If
 End Sub
 
 Private Sub SpoofCheck_Timer()
@@ -780,8 +774,8 @@ End Sub
 '     OTROS                          '
 ''''''''''''''''''''''''''''''''''''''
 
-Private Sub DespInv_Click(Index As Integer)
-    Select Case Index
+Private Sub DespInv_Click(index As Integer)
+    Select Case index
         Case 0:
             If OffsetDelInv > 0 Then
                 OffsetDelInv = OffsetDelInv - XCantItems
@@ -906,9 +900,9 @@ Private Sub Form_Load()
    
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    MouseX = X
-    MouseY = Y
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+    MouseX = x
+    MouseY = y
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -921,10 +915,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
     Call PlayWaveDS(SND_CLICK)
 
-    Select Case Index
+    Select Case index
         Case 0
             LlegaronAtrib = False
             LlegaronSkills = False
@@ -950,13 +944,13 @@ Private Sub Image1_Click(Index As Integer)
         Case 3
             Call frmayuda.Show(vbModeless, frmMain)
         Case 4
-            ShellExecute frmMain.hwnd, vbNullString, "http://caratula2000.redtotalonline.com/aospain/aospainmap.php", vbNullString, vbNullString, vbNormalFocus
+            ShellExecute frmMain.hWnd, vbNullString, "http://caratula2000.redtotalonline.com/aospain/aospainmap.php", vbNullString, vbNullString, vbNormalFocus
     End Select
     
 End Sub
 
-Private Sub Image3_Click(Index As Integer)
-    Select Case Index
+Private Sub Image3_Click(index As Integer)
+    Select Case index
         Case 0
             ItemElegido = FLAGORO
             If UserGLD > 0 Then
@@ -1008,25 +1002,25 @@ Private Sub picInv_DblClick()
     If ItemElegido <> 0 Then SendData "USA" & ItemElegido
 End Sub
 
-Private Sub picInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInv_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim mx As Integer
     Dim my As Integer
     Dim aux As Integer
-    mx = X \ 32 + 1
-    my = Y \ 32 + 1
+    mx = x \ 32 + 1
+    my = y \ 32 + 1
     aux = (mx + (my - 1) * 5) + OffsetDelInv
     If aux > 0 And aux < MAX_INVENTORY_SLOTS Then _
         picInv.ToolTipText = UserInventory(aux).Name
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     Call PlayWaveDS(SND_CLICK)
 
-    If (Button = vbRightButton) And (ClicEnItemElegido(CInt(X), CInt(Y))) Then
+    If (Button = vbRightButton) And (ClicEnItemElegido(CInt(x), CInt(y))) Then
         PopupMenu mnuObj
     End If
 
-    Call ItemClick(CInt(X), CInt(Y))
+    Call ItemClick(CInt(x), CInt(y))
 End Sub
 
 Private Sub RecTxt_Change()
