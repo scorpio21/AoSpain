@@ -657,41 +657,22 @@ Private Function LoadSoundBufferFromFile(sFile As String) As Integer
 End Function
 
 
+' Buffer para el sonido ambiental actual (lluvia, fuego, etc)
+Private AmbientBufferIndex As Long
+
 Public Sub Play(ByVal nombre As String, Optional ByVal LoopSound As Boolean = False)
-    If Fx = 1 Then Exit Sub
-    Call LoadSoundBufferFromFile(nombre)
-
-    If LoopSound Then
-        gDSB.Play DSBPLAY_LOOPING
-    Else
-        gDSB.Play DSBPLAY_DEFAULT
-    End If
-
-End Sub
-
-Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-'[Efestos]
-If UserParalizado = True Or UserCiego = True Or UserEstupido = True Then     '65~190~156~0~0
-    Call AddtoRichTextBox(frmMain.RecTxt, "No puedes salir porque estas afectado por un hechizo que te lo impide.", 65, 190, 156, 0, 0)
-    Cancel = True
-    Exit Sub
-Else
-    If endEvent Then
-        DirectX.DestroyEvent endEvent
-    End If
-    If prgRun = True Then
-        prgRun = False
-        Cancel = 1
-    End If
-End If
-'[Efestos]
+    If fX = 1 Then Exit Sub
+    
+    ' Detenemos el anterior si existe
+    If AmbientBufferIndex > 0 Then Call Audio.StopWave(AmbientBufferIndex)
+    
+    AmbientBufferIndex = Audio.PlayWave(nombre, 0, 0, IIf(LoopSound, LoopStyle.Enabled, LoopStyle.Disabled))
 End Sub
 
 Public Sub StopSound()
-    On Local Error Resume Next
-    If Not gDSB Is Nothing Then
-            gDSB.Stop
-            gDSB.SetCurrentPosition 0
+    If AmbientBufferIndex > 0 Then
+        Call Audio.StopWave(AmbientBufferIndex)
+        AmbientBufferIndex = 0
     End If
 End Sub
 

@@ -1098,7 +1098,7 @@ ENDC = Chr(1)
 Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
 
 
-Call CargarAnimsExtra
+'Call CargarAnimsExtra
 UserMap = 1
 Call CargarAnimArmas
 Call CargarAnimEscudos

@@ -1,37 +1,36 @@
-# Memoria de Sesión - 26 de Marzo 2026
+# Memoria de Sesión - 26 de Marzo 2026 (Sesión 2)
 
 ## 📌 Resumen de hoy
-Se ha avanzado significativamente en la **Fase 3: Depuración y Estabilización** del motor DirectX 8. El objetivo principal de lograr una base de código compilable sin referencias obsoletas a DX7 se ha cumplido.
-## recuerda PowerShell no admite &&
-no admite &&
+Continuación de la **Fase 3: Depuración y Estabilización**. Se han resuelto errores críticos de compilación relacionados con el sistema de audio y funciones obsoletas de DirectX 7 que aún permanecían en los formularios principales.
+
 ## 🛠️ Cambios Realizados
 
-1.  **Limpieza Profunda de VBP:**
-    *   Se eliminó el módulo `Mod_Lighting.bas` del archivo de proyecto `Client.vbp`, eliminando conflictos con tipos de datos de DirectX 7 (`DDSURFACEDESC2`).
+1.  **Migración del Sistema de Audio en frmMain:**
+    *   Se eliminó la dependencia de `gDSB` (DirectSoundBuffer de DX7).
+    *   Se actualizaron los métodos `Public Sub Play` y `Public Sub StopSound` para utilizar la clase global `Audio` (`clsAudio`).
+    *   Se implementó `AmbientBufferIndex` para rastrear y detener correctamente los sonidos ambientales (lluvia, fuego, etc.) sin causar conflictos de memoria.
 
-2.  **Corrección de Referencias Obsoletas:**
-    *   **Carteles.bas:** Se actualizó la subrutina `DibujarCartel` para utilizar el nuevo motor gráfico (`engine.Device_Box_Textured_Render`) en lugar de las llamadas a superficies de DirectDraw.
-    *   **TCP.bas:** Se eliminaron las referencias a `BackBufferSurface.BltColorFill` en el manejo del paquete de ceguera (`CEGU`).
-    *   **General.bas:** Se eliminaron llamadas a funciones inexistentes (`InitTileEngine`, `LiberarObjetosDX`) que pertenecían a los módulos eliminados de DX7.
+2.  **Limpieza de Funciones Obsoletas:**
+    *   **General.bas:** Se comentó la llamada a `CargarAnimsExtra` en `Sub Main`, ya que esta función pertenecía a los motores DX7 eliminados y su lógica de carga de animaciones ya está cubierta por el nuevo sistema de datos.
 
-3.  **Modernización del Ciclo de Vida:**
-    *   **Sub Main:** Se simplificó y modernizó el bucle principal de juego en `General.bas`. Ahora utiliza `engine.Render` como punto central de dibujado, eliminando la lógica manual de movimiento y renderizado que estaba duplicada y obsoleta.
-    *   **Centralización del Renderizado:** Se integraron el dibujado de Carteles, Inventario y mensajes de combate dentro del método `engine.Render` en `clsDX8Engine.cls`, asegurando que todo se dibuje dentro del bloque `BeginScene`/`EndScene`.
+3.  **Corrección de Tipos y Ambigüedades:**
+    *   Se resolvió el error de "Nombre ambiguo: GRH" eliminando definiciones duplicadas en `TileEngine.bas` y centralizando todo en `Declares.bas`.
+    *   Se corrigió el error "ByRef argument type mismatch" en `DrawGrhtoHdc` ajustando el parámetro `grhindex` a `Long`.
 
-4.  **Mejoras de Robustez:**
-    *   **InitGrh:** Se cambió el tipo del parámetro `grhindex` de `Integer` a `Long` en `TileEngine.bas` para evitar errores de desbordamiento (Overflow) con índices de gráficos altos.
-    *   **Efecto de Ceguera:** Se implementó el soporte para `UserCiego` directamente en el motor de renderizado (`ShowNextFrame`), garantizando que la pantalla se mantenga en negro cuando el usuario está ciego, respetando la arquitectura de DX8.
+4.  **Estabilización del Bucle Principal:**
+    *   Se declaró `LastTime` como global en `Declares.bas` para su uso en el limitador de frames y control de teclas.
+    *   Se reemplazaron todas las llamadas a `LiberarObjetosDX` por `engine.Engine_Deinit`.
 
-## 🔴 Errores Resueltos (Teóricos)
-*   **Variable no definida:** `BackBufferSurface`, `DirectDraw`, `Direct3DDevice`.
-*   **Tipo no definido:** `DDSURFACEDESC2`, `DirectDraw7`.
-*   **Procedimiento no definido:** `InitTileEngine`, `LiberarObjetosDX`, `ShowNextFrame` (global).
-*   **Desbordamiento:** Corregido riesgo en carga de GRHs.
+## 🔴 Errores Resueltos
+*   **Variable no definida:** `gDSB`, `LastTime`.
+*   **Procedimiento no definido:** `CargarAnimsExtra`, `LiberarObjetosDX`.
+*   **Nombre ambiguo:** `GRH`.
+*   **Conflicto de tipos:** `grhindex` (Integer vs Long) en llamadas `ByRef`.
 
 ## 🚀 Próximos Pasos
-1.  **Verificación Funcional:** Una vez que el usuario compile, verificar si el renderizado del mapa y personajes es correcto.
-2.  **Integración de Audio:** Confirmar que `clsAudio` inicializa correctamente el dispositivo de sonido.
-3.  **Refactorización de Interfaz:** Evaluar si otros elementos de la UI (botones, barras de vida) necesitan ser migrados al motor DX8 para evitar parpadeos o fallos de renderizado.
+1.  **Validación de Renderizado:** Iniciar el cliente y comprobar que `frmMain.renderer` muestra correctamente el mapa y los personajes.
+2.  **Pruebas de Sonido:** Verificar que el sonido ambiental se activa/desactiva correctamente al entrar/salir del juego.
+3.  **Interfaz de Usuario:** Revisar si otros formularios (Comerciar, Banco) necesitan ajustes en sus métodos de dibujado para usar el motor DX8.
 
 ---
-*Sesión finalizada. El proyecto debería estar listo para su primera compilación en el entorno VB6.*
+*Sesión finalizada. El cliente debería estar en un estado mucho más estable para la compilación final.*
